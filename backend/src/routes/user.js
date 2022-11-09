@@ -8,7 +8,7 @@ const route = express.Router();
 route.get('/', async (req, res) => {
   const [users] = await userModel.findAll();
 
-  res.status(200).json(users);
+  res.status(200).json({ users });
 });
 
 route.post('/', validateNewUser, (req, res) => {

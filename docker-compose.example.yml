@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    build: db/
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=<PASSWORD>
+    ports: 
+      - <PORT>:<DOCKER_PORT>
+  backend:
+    build: backend/
+    container_name: backend
+    environment:
+      - DB_HOST=<HOST>
+      - DB_USER=<USER>
+      - DB_ROOT_PASSWORD=<PASS>
+      - DB_PORT=<LOCAL_PORT>
+      - DB_NAME=<DATABASE>
+      - NODE_SERVER_PORT=<PORT>
+    ports:
+      - <PORT>:<DOCKER_PORT>
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
