@@ -6,6 +6,7 @@ const connection = mysql.createPool({
   port: process.env.MYSQL_PORT,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASS,
+  database: 'chat',
 });
 
 module.exports = connection;

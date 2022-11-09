@@ -5,7 +5,7 @@ services:
     build: db/
     container_name: db
     ports:
-      - "33061:3306"
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=pass
   backend:
