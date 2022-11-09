@@ -6,8 +6,8 @@ EXPOSE 3001
 
 ADD package.json .
 
-COPY . .
+COPY ./src ./src
 
-RUN npm i
+RUN npm install
 
-CMD ["npm", "start"]
+CMD npm start

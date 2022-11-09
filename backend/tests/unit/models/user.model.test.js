@@ -18,10 +18,10 @@ describe('funcionamento do model users', () => {
     expect(result).to.be.deep.equal(users);
   });
 
-  it('criação de um novo user', async () => {
+  it('criação de um novo usuário', async () => {
     sinon.stub(connection, 'execute').resolves([{ insertId: 30 }]);
 
-    const insertId = await userModel.insert(users[0]);
-    expect(insertId).to.be.equal(30);
+    const result = await userModel.insert(users[0]);
+    expect(result).to.be.equal(30);
   });
 });
