@@ -21,7 +21,7 @@ const insert = async (user) => {
 
   const [{ insertId }] = await connection.execute(
     `INSERT INTO users (${columns}) VALUES (${placeholders})`,
-    [...values],
+    values,
   );
 
   return insertId;

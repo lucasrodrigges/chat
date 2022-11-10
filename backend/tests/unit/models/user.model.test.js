@@ -1,8 +1,8 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const connection = require('../../../src/model/connection');
-const userModel = require('../../../src/model/user.model');
+const connection = require('../../../src/models/connection');
+const userModel = require('../../../src/models/user.model');
 
 const { users } = require('./mocks/user.model.mock');
 
