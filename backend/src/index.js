@@ -2,7 +2,7 @@ const express = require('express');
 const connection = require('./models/connection');
 require('dotenv').config();
 
-const userRoute = require('./routes/user');
+const userRoute = require('./routers/user.router');
 
 const app = express();
 const port = process.env.NODE_SERVER_PORT || 3333;
