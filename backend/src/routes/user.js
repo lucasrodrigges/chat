@@ -6,16 +6,18 @@ const userService = require('../services/user.service');
 const route = express.Router();
 
 route.get('/', async (req, res) => {
-  const [users] = await userModel.findAll();
+  const users = await userModel.findAll();
 
-  res.status(200).json({ users });
+  return res.status(200).json({ users });
 });
 
 route.post('/', async (req, res) => {
   const { name, password, picture } = req.body;
 
-  const insertId = await userService.createUser({ name, password, picture });
-  res.status(200).json({ insertId });
+  const output = await userService.createUser({ name, password, picture });
+
+  if (output.error) return res.status(400).json(output);
+  return res.status(200).json({ insertId: output });
 });
 
 module.exports = route;

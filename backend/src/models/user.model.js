@@ -1,4 +1,3 @@
-const { v4: uuidV4 } = require('uuid');
 const snakeize = require('snakeize');
 const connection = require('./connection');
 
@@ -21,8 +20,8 @@ const insert = async (user) => {
     .map((v) => v || null);
 
   const [{ insertId }] = await connection.execute(
-    `INSERT INTO users (${columns}, id) VALUES (${placeholders}, ?)`,
-    [...values, uuidV4()],
+    `INSERT INTO users (${columns}) VALUES (${placeholders})`,
+    [...values],
   );
 
   return insertId;
