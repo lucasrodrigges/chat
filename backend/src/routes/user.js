@@ -1,7 +1,7 @@
 const express = require('express');
-const userModel = require('../model/user.model');
 
-const { validateNewUser } = require('../utils/validations');
+const userModel = require('../models/user.model');
+const userService = require('../services/user.service');
 
 const route = express.Router();
 
@@ -11,10 +11,11 @@ route.get('/', async (req, res) => {
   res.status(200).json({ users });
 });
 
-route.post('/', validateNewUser, (req, res) => {
-  userModel.addUser(req.body);
+route.post('/', async (req, res) => {
+  const { name, password, picture } = req.body;
 
-  res.status(200).end();
+  const insertId = await userService.createUser({ name, password, picture });
+  res.status(200).json({ insertId });
 });
 
 module.exports = route;
