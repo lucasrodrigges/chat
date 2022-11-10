@@ -3,7 +3,7 @@ CREATE DATABASE chat;
 USE chat;
 
 CREATE TABLE users (
-  id VARCHAR(36),
+  id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(45) NOT NULL,
   password VARCHAR(45) NOT NULL,
   picture VARCHAR(200),
@@ -11,8 +11,8 @@ CREATE TABLE users (
 ) ENGINE=innodb;
 
 CREATE TABLE connections (
-  user1_id VARCHAR(36),
-  user2_id VARCHAR(36),
+  user1_id INT,
+  user2_id INT,
   PRIMARY KEY (user1_id, user2_id),
   FOREIGN KEY (user1_id) REFERENCES users (id),
   FOREIGN KEY (user2_id) REFERENCES users (id)
@@ -21,8 +21,8 @@ CREATE TABLE connections (
 CREATE TABLE messages (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   content TEXT NOT NULL,
-  from_user VARCHAR(36),
-  to_user VARCHAR(36),
+  from_user INT,
+  to_user INT,
   sent_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   read_date DATETIME,
   deleted DATETIME,
