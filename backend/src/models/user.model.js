@@ -17,9 +17,12 @@ const insert = async (user) => {
     .map(() => '?')
     .join(', ');
 
+  const values = Object.values(user)
+    .map((v) => v || null);
+
   const [{ insertId }] = await connection.execute(
-    `INSERT INTO (${columns}, id) VALUES (${placeholders}, ?)`,
-    [Object.values(user), uuidV4()],
+    `INSERT INTO users (${columns}, id) VALUES (${placeholders}, ?)`,
+    [...values, uuidV4()],
   );
 
   return insertId;

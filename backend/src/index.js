@@ -1,5 +1,5 @@
 const express = require('express');
-const connection = require('./model/connection');
+const connection = require('./models/connection');
 require('dotenv').config();
 
 const userRoute = require('./routes/user');
