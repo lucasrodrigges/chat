@@ -1,4 +1,4 @@
-const { mapError } = require('../utils/errorMap');
+const mapError = require('../utils/mapError');
 
 const userService = require('../services/user.service');
 const userModel = require('../models/user.model');
