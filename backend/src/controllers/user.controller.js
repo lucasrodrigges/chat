@@ -11,7 +11,6 @@ const getAllUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
   const { name, password, picture } = req.body;
-
   const { error, message } = await userService.createUser({ name, password, picture });
 
   if (error) return res.status(mapError(error)).json(message);

@@ -6,7 +6,7 @@ const userModel = require('../../../src/models/user.model');
 
 const { users } = require('./mocks/user.model.mock');
 
-describe('funcionamento do model users', () => {
+describe('funcionamento do model user', () => {
   afterEach(() => {
     sinon.restore();
   });

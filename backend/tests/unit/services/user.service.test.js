@@ -5,7 +5,7 @@ const userService = require('../../../src/services/user.service');
 
 const mocks = require('./mocks/user.service.mock');
 
-describe('funcionamento do service users', () => {
+describe('funcionamento do service user', () => {
   describe('cadastramento de novo usuário', () => {
     afterEach(sinon.restore);
 
