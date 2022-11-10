@@ -6,7 +6,10 @@ const createUser = async (user) => {
   const validation = validateNewUser(user);
 
   if (validation.error) return validation;
-  return userModel.insert(user);
+
+  const message = await userModel.insert(user);
+
+  return { message };
 };
 
 module.exports = {
