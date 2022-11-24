@@ -2,16 +2,24 @@ const { validateNewUser } = require('./validations/validate');
 
 const userModel = require('../models/user.model');
 
-const createUser = async (user) => {
-  const validation = validateNewUser(user);
-
-  if (validation.error) return validation;
-
-  const message = await userModel.insert(user);
-
-  return { message };
-};
-
 module.exports = {
-  createUser,
+  getUsers: async () => {
+    try {
+      return { error: null, output: await userModel.findAll() };
+    } catch (error) {
+      return { error };
+    }
+  },
+
+  createUser: async (user) => {
+    const validation = validateNewUser(user);
+
+    if (validation.error) return validation;
+
+    try {
+      return { error: null, output: await userModel.create(user) };
+    } catch (error) {
+      return { error };
+    }
+  },
 };
