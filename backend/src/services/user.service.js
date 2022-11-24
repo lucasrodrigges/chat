@@ -1,5 +1,3 @@
-const { validateNewUser } = require('./validations/validate');
-
 const userModel = require('../models/user.model');
 
 module.exports = {
@@ -7,19 +5,17 @@ module.exports = {
     try {
       return { error: null, output: await userModel.findAll() };
     } catch (error) {
-      return { error };
+      console.error(error);
+      return { error: 'INTERNAL_ERROR' };
     }
   },
 
   createUser: async (user) => {
-    const validation = validateNewUser(user);
-
-    if (validation.error) return validation;
-
     try {
-      return { error: null, output: await userModel.create(user) };
+      return { error: null, output: await userModel.crefate(user) };
     } catch (error) {
-      return { error };
+      console.error(error);
+      return { error: 'INTERNAL_ERROR' };
     }
   },
 };
