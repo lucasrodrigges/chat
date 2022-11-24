@@ -1,13 +1,15 @@
 const app = require('./app');
-const connection = require('./models/connection');
+const sequelize = require('./models/index');
 
 const port = process.env.NODE_SERVER_PORT || 3333;
 
 app.listen(port, async () => {
-  // eslint-disable-next-line no-console
-  console.log('Online');
+  console.log(`online on port ${port}`);
 
-  const [response] = await connection.execute('SELECT 1');
-  // eslint-disable-next-line no-console
-  if (response) console.log('Conectado ao banco de dados');
+  try {
+    await sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
 });

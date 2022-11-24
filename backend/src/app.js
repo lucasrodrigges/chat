@@ -4,9 +4,10 @@ const app = express();
 
 require('dotenv').config();
 
-const userRoute = require('./routers/user.router');
+const routers = require('./routers');
 
 app.use(express.json());
-app.use('/user', userRoute);
+
+app.use('/user', routers.userRouter);
 
 module.exports = app;

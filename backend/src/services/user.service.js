@@ -1,17 +1,21 @@
-const { validateNewUser } = require('./validations/validate');
-
 const userModel = require('../models/user.model');
 
-const createUser = async (user) => {
-  const validation = validateNewUser(user);
-
-  if (validation.error) return validation;
-
-  const message = await userModel.insert(user);
-
-  return { message };
-};
-
 module.exports = {
-  createUser,
+  getUsers: async () => {
+    try {
+      return { error: null, output: await userModel.findAll() };
+    } catch (error) {
+      console.error(error);
+      return { error: 'INTERNAL_ERROR' };
+    }
+  },
+
+  createUser: async (user) => {
+    try {
+      return { error: null, output: await userModel.crefate(user) };
+    } catch (error) {
+      console.error(error);
+      return { error: 'INTERNAL_ERROR' };
+    }
+  },
 };
