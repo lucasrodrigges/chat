@@ -14,7 +14,7 @@ module.exports = {
     const { id } = req.params;
     const { error, output } = await userService.getUserById(id);
 
-    if (error) return res.status(mapStatus(error)).end();
+    if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
     return res.status(200).json(output);
   },
@@ -31,9 +31,9 @@ module.exports = {
   deleteUser: async (req, res) => {
     const { id } = req.params;
 
-    const { error } = await userService.deleteUser(id);
+    const { error, output } = await userService.deleteUser(id);
 
-    if (error) return res.status(mapStatus(error)).end();
+    if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
     return res.status(204).end();
   },
