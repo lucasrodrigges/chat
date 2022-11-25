@@ -9,6 +9,14 @@ module.exports = {
       return { error: 'INTERNAL_ERROR' };
     }
   },
+  getUserById: async (id) => {
+    try {
+      return { error: null, output: await User.findByPk(id) };
+    } catch (error) {
+      console.error(error);
+      return { error: 'INTERNAL_ERROR' };
+    }
+  },
 
   createUser: async (user) => {
     try {

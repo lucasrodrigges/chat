@@ -7,6 +7,8 @@ const route = express.Router();
 
 route.get('/', userController.getUsers);
 
+route.get('/:id', userController.getUserById);
+
 route.post('/', validateUser, userController.createUser);
 
 module.exports = route;
