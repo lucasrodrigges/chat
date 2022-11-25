@@ -1,5 +1,7 @@
 const Joi = require('joi');
 
+const idSchema = Joi.number().integer().min(1);
+
 const userSchema = Joi.object({
   name: Joi.string().min(3).required(),
   password: Joi.string().min(8).required(),
@@ -8,4 +10,5 @@ const userSchema = Joi.object({
 
 module.exports = {
   userSchema,
+  idSchema,
 };

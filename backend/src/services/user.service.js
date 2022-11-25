@@ -26,4 +26,15 @@ module.exports = {
       return { error: 'INTERNAL_ERROR' };
     }
   },
+
+  deleteUser: async (id) => {
+    try {
+      await User.destroy({ where: { id } });
+
+      return { error: null };
+    } catch (error) {
+      console.error(error);
+      return { error: 'INTERNAL_ERROR' };
+    }
+  },
 };
