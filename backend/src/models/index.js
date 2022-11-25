@@ -6,13 +6,16 @@ const config = require('../config/database');
 
 const sequelize = new Sequelize(config);
 
-fs.readdirSync(__dirname)
+const models = fs.readdirSync(__dirname)
   .filter((file) => file.endsWith('.js') && file !== path.basename(__filename))
-  .forEach((file) => {
+  .reduce((arr, file) => {
     const modelPath = path.join(__dirname, '../models', file);
-    const model = require(modelPath);
+    return [...arr, require(modelPath)];
+  }, []);
 
-    model.init(sequelize);
-  });
+models.forEach((model) => model.init(sequelize));
+models.forEach((model) => {
+  if (model.associate) model.associate(sequelize.models);
+});
 
 module.exports = sequelize;

@@ -3,26 +3,24 @@ module.exports = {
     await queryInterface.createTable('connections', {
       user1_id: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         allowNull: false,
         references: { model: 'users', key: 'id' },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+        primaryKey: true,
       },
       user2_id: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
         allowNull: false,
         references: { model: 'users', key: 'id' },
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+        primaryKey: true,
       },
       created_At: {
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('NOW()'),
         allowNull: false,
       },
       updated_At: {
         type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('NOW()'),
         allowNull: false,
       },
     });

@@ -1,9 +1,9 @@
-const userModel = require('../models/user.model');
+const User = require('../models/User');
 
 module.exports = {
   getUsers: async () => {
     try {
-      return { error: null, output: await userModel.findAll() };
+      return { error: null, output: await User.findAll() };
     } catch (error) {
       console.error(error);
       return { error: 'INTERNAL_ERROR' };
@@ -12,7 +12,7 @@ module.exports = {
 
   createUser: async (user) => {
     try {
-      return { error: null, output: await userModel.crefate(user) };
+      return { error: null, output: await User.create(user) };
     } catch (error) {
       console.error(error);
       return { error: 'INTERNAL_ERROR' };

@@ -8,6 +8,15 @@ class User extends Model {
       picture: DataTypes.STRING,
     }, { sequelize });
   }
+
+  static associate(models) {
+    this.belongsToMany(models.User, {
+      as: 'friend',
+      through: 'connections',
+      foreignKey: 'user1_id',
+      otherKey: 'user2_id',
+    });
+  }
 }
 
 module.exports = User;
