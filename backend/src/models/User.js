@@ -10,7 +10,12 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.belongsToMany(models.User, { as: 'friend', through: 'connections' });
+    this.belongsToMany(models.User, {
+      as: 'friend',
+      through: 'connections',
+      foreignKey: 'user1_id',
+      otherKey: 'user2_id',
+    });
   }
 }
 

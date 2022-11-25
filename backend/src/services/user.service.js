@@ -3,10 +3,7 @@ const User = require('../models/User');
 module.exports = {
   getUsers: async () => {
     try {
-      const user = await User.findByPk(1);
-      const res = user.getUser();
-
-      return { error: null, output: res };
+      return { error: null, output: await User.findAll() };
     } catch (error) {
       console.error(error);
       return { error: 'INTERNAL_ERROR' };
