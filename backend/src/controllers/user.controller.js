@@ -28,6 +28,16 @@ module.exports = {
     return res.status(201).json(output);
   },
 
+  updateUser: async (req, res) => {
+    const { id } = req.params;
+    const { name, password, picture } = req.body;
+
+    const { error, output } = await userService.updateUser(id, { name, password, picture });
+
+    if (error) return res.status(mapStatus(error)).json(output && { message: output });
+    return res.status(200).json(output);
+  },
+
   deleteUser: async (req, res) => {
     const { id } = req.params;
 

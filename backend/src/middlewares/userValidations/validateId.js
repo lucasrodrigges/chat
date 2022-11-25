@@ -1,4 +1,4 @@
-const { validateIdType } = require('./validations/validate');
+const { validateIdType } = require('../validations/validate');
 
 const validateId = (req, res, next) => {
   const { id } = req.params;

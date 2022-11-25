@@ -8,7 +8,14 @@ const userSchema = Joi.object({
   picture: Joi.string(),
 });
 
+const completUserSchema = Joi.object({
+  name: Joi.string().min(3).required(),
+  password: Joi.string().min(8).required(),
+  picture: Joi.string().required(),
+});
+
 module.exports = {
   userSchema,
   idSchema,
+  completUserSchema,
 };

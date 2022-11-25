@@ -1,4 +1,4 @@
-const { validateUserFields } = require('./validations/validate');
+const { validateUserFields } = require('../validations/validate');
 
 const validateUser = (req, res, next) => {
   const { error, status } = validateUserFields(req.body);
