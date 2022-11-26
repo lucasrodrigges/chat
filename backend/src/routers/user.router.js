@@ -16,7 +16,7 @@ route.post('/', validateUser, userController.createUser);
 
 route.patch('/:id', validateId, userController.updateUser);
 
-route.put('/:id', validateId, userController.updateUser); // TODO criar uma validação para todos os inputs como REQUIRED
+route.put('/:id', validateId, validateUser, userController.updateUser); // TODO criar uma validação para todos os inputs como REQUIRED
 
 route.delete('/:id', validateId, userController.deleteUser);
 
