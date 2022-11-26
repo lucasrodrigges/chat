@@ -1,6 +1,8 @@
 const Joi = require('joi');
 
-const idSchema = Joi.number().integer().min(1);
+const idSchema = Joi.object({
+  userId: Joi.number().min(1),
+});
 
 const userSchema = Joi.object({
   name: Joi.string().min(3).required(),
@@ -14,8 +16,13 @@ const completUserSchema = Joi.object({
   picture: Joi.string().required(),
 });
 
+const connectionSchema = Joi.object({
+  followed: Joi.number().min(1),
+});
+
 module.exports = {
   userSchema,
   idSchema,
   completUserSchema,
+  connectionSchema,
 };

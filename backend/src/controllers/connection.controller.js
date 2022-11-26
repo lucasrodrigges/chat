@@ -3,8 +3,8 @@ const mapStatus = require('../utils/mapStatus');
 
 module.exports = {
   getConnections: async (req, res) => {
-    const { t } = req.query;
     const { id } = req.params;
+    const { t } = req.query;
 
     const { error, output } = await connectionService.getConnections({ id, t });
 
@@ -15,9 +15,9 @@ module.exports = {
 
   createConnection: async (req, res) => {
     const { id } = req.params;
-    const { f } = req.query;
+    const { followed } = req.body;
 
-    const { error, output } = await connectionService.createConnection(id, Number(f));
+    const { error, output } = await connectionService.createConnection(id, followed);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 

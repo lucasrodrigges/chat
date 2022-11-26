@@ -14,8 +14,6 @@ const models = fs.readdirSync(__dirname)
   }, []);
 
 models.forEach((model) => model.init(sequelize));
-models.forEach((model) => {
-  if (model.associate) model.associate(sequelize.models);
-});
+models.forEach((model) => model.associate && model.associate(sequelize.models));
 
 module.exports = sequelize;

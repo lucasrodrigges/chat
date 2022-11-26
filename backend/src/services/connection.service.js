@@ -2,20 +2,14 @@ const User = require('../models/User');
 
 module.exports = {
   getConnections: async ({ id, t }) => {
-    const user = await User.findByPk(id);
-
-    if (!user) return { error: 'NOT_FOUND' };
-
-    let result;
     try {
-      switch (t) {
-        case 'friend':
-          result = user.getFriend(); // tem que resolver isso depois kkk;
-          break;
-        default:
-          result = user.getFriend();
-          break;
-      }
+      const user = await User.findByPk(id);
+
+      if (!user) return { error: 'NOT_FOUND', output: 'User not found' };
+
+      let result;
+      if (t === 'f') result = user.getReciprocalFriends();
+      else result = user.getFriends();
 
       return { error: null, output: await result };
     } catch (error) {
@@ -26,12 +20,12 @@ module.exports = {
 
   createConnection: async (userId, followedId) => {
     try {
-      const user = await User.findByPk(userId);
-      const followed = await User.findByPk(followedId);
+      const [user, followed] = await Promise.all([userId, followedId]
+        .map(async (id) => User.findByPk(id)));
 
-      if (!user || !followed) return { error: 'NOT_FOUND' };
+      if (!user || !followed) return { error: 'NOT_FOUND', output: 'User not found' };
 
-      const result = await user.addFriend(followedId);
+      const result = await user.addFriends(followedId);
 
       return { error: null, output: result };
     } catch (error) {
