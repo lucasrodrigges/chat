@@ -1,4 +1,4 @@
-const { userSchema, idSchema } = require('./schemas');
+const { userSchema, idSchema, connectionSchema } = require('./schemas');
 
 const formatError = (error) => ({
   error: error.message,
@@ -6,7 +6,7 @@ const formatError = (error) => ({
 });
 
 const validateIdType = (id) => {
-  const { error } = idSchema.validate(id);
+  const { error } = idSchema.validate({ userId: id });
 
   if (error) return formatError(error);
 
@@ -21,7 +21,16 @@ const validateUserFields = (user) => {
   return { error: null };
 };
 
+const validateConnectionFields = (conn) => {
+  const { error } = connectionSchema.validate(conn);
+
+  if (error) return formatError(error);
+
+  return { error: null };
+};
+
 module.exports = {
   validateUserFields,
   validateIdType,
+  validateConnectionFields,
 };
