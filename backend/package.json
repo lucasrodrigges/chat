@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "migration": "npx sequelize db:migrate",
     "test": "mocha tests/**/*.js --exit",
     "test:coverage": "nyc --all --include src/models --include src/services --include src/controllers mocha tests/unit/**/*.js --exit",
     "dev": "nodemon src/index.js",

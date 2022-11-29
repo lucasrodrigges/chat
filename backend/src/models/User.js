@@ -16,6 +16,11 @@ class User extends Model {
       foreignKey: 'user1_id',
       otherKey: 'user2_id',
     });
+
+    this.hasMany(models.Post, {
+      foreignKey: 'owner',
+      as: 'posts',
+    });
   }
 
   async getAllFriends() {
