@@ -17,7 +17,7 @@ const completUserSchema = Joi.object({
 });
 
 const connectionSchema = Joi.object({
-  followed: Joi.number().min(1),
+  targetId: Joi.number().min(1),
 });
 
 module.exports = {

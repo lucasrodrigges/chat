@@ -21,8 +21,24 @@ route.put('/:id', validateId, validateUser, userController.updateUser); // TODO 
 
 route.delete('/:id', validateId, userController.deleteUser);
 
-route.get('/:id/connections', validateId, connectionController.getConnections);
+route.get(
+  '/:id/connections/',
+  validateId,
+  connectionController.getConnections,
+);
 
-route.post('/:id/connections', validateId, validateConnection, connectionController.createConnection);
+route.post(
+  '/:id/connections/:targetId',
+  validateId,
+  validateConnection,
+  connectionController.createConnection,
+);
+
+route.delete(
+  '/:id/connections/:targetId',
+  validateId,
+  validateConnection,
+  connectionController.deleteConnection,
+);
 
 module.exports = route;
