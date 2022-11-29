@@ -1,13 +1,11 @@
-FROM node:18-alpine3.15
-
-WORKDIR /backend
+FROM node:18.12.1
 
 EXPOSE 3001
 
 ADD package.json .
 
-COPY ./src ./src
+COPY . .
 
-RUN npm install
+RUN npm i
 
-CMD npm start
+# CMD npx sequelize db:create && npx sequelize db:migrate
