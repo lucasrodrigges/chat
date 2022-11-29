@@ -52,7 +52,7 @@ module.exports = {
       return { error: null };
     } catch (error) {
       console.error(error);
-      return { error: 'INTERNAL_ERROR' };
+      return { error: 'INTERNAL_ERROR' };  
     }
   },
 };

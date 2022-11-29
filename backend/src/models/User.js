@@ -21,6 +21,12 @@ class User extends Model {
       foreignKey: 'owner',
       as: 'posts',
     });
+
+    this.belongsToMany(models.Post, {
+      foreignKey: 'user_id',
+      through: 'votes',
+      as: 'likedPosts',
+    });
   }
 
   async getAllFriends() {

@@ -53,6 +53,15 @@ module.exports = {
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
-    return res.status(204).json('aaaa');
+    return res.status(204).end();
   },
+
+  addVote: async (req, res) => {
+    const { id, userId } = req.params;
+    const { error, output } = await postService.addVote(id, userId);
+
+    if (error) return res.status(mapStatus(error)).json(output && { message: output });
+
+    return res.status(201).json(output);
+  }
 };

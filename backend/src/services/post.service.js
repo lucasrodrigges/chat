@@ -97,4 +97,20 @@ module.exports = {
       return { error: 'INTERNAL_ERROR' };
     }
   },
+
+  addVote: async (id, userId) => {
+    try {
+      const post = await Post.findByPk(id);
+
+      if (!post) return { error: 'NOT_FOUND', output: 'Post not found.' };
+
+      const result = await post.addVote(userId);
+
+      return { error: null, output: result };
+    } catch (error) {
+      console.error(error);
+
+      return { error: 'INTERNAL_ERROR' };
+    }
+  },
 };
