@@ -6,7 +6,7 @@ module.exports = {
     const { id } = req.params;
     const { t } = req.query;
 
-    const { error, output } = await connectionService.getConnections({ id, t });
+    const { error, output } = await connectionService.getConnections(id, t);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
@@ -14,13 +14,22 @@ module.exports = {
   },
 
   createConnection: async (req, res) => {
-    const { id } = req.params;
-    const { followed } = req.body;
+    const { id, targetId } = req.params;
 
-    const { error, output } = await connectionService.createConnection(id, followed);
+    const { error, output } = await connectionService.createConnection(id, targetId);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
     return res.status(201).json(output);
+  },
+
+  deleteConnection: async (req, res) => {
+    const { id, targetId } = req.params;
+
+    const { error, output } = await connectionService.deleteConnection(id, targetId);
+
+    if (error) return res.status(mapStatus(error)).json(output && { message: output });
+
+    return res.status(204).end();
   },
 };
