@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha tests/**/*.js --exit",
+    "test:coverage": "nyc --all --include src/models --include src/services --include src/controllers mocha tests/unit/**/*.js --exit",
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
   },
@@ -12,7 +13,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "eslint-config-airbnb": "^19.0.4",
@@ -20,17 +20,18 @@
     "joi": "^17.7.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.25.8",
-    "sinon-chai": "^3.7.0",
     "snakeize": "^0.1.0"
   },
   "devDependencies": {
     "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
     "eslint": "^8.27.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "mocha": "^10.1.0",
     "nodemon": "^2.0.20",
     "sequelize-cli": "^6.5.2",
-    "sinon": "^14.0.2"
+    "sinon": "^14.0.2",
+    "sinon-chai": "^3.7.0"
   }
 }
