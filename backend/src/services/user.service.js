@@ -9,6 +9,7 @@ module.exports = {
       return { error: 'INTERNAL_ERROR' };
     }
   },
+
   getUserById: async (id) => {
     try {
       const user = await User.findByPk(id);
