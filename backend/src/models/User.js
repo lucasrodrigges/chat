@@ -4,6 +4,8 @@ class User extends Model {
   static init(sequelize) {
     super.init({
       name: DataTypes.STRING,
+      user_name: DataTypes.STRING,
+      email: DataTypes.STRING,
       password: DataTypes.STRING,
       picture: DataTypes.STRING,
     }, { sequelize });
@@ -15,6 +17,11 @@ class User extends Model {
       through: 'connections',
       foreignKey: 'user1_id',
       otherKey: 'user2_id',
+    });
+
+    this.hasMany(models.Post, {
+      foreignKey: 'owner',
+      as: 'posts',
     });
   }
 
