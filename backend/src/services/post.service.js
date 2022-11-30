@@ -7,35 +7,29 @@ module.exports = {
       return {
         error: null,
         output: await Post.findAll({
-          include: {
+          include: [{
             model: User,
             as: 'author',
-          },
+          }],
         }),
       };
     } catch (error) {
       console.error(error);
-
       return { error: 'INTERNAL_ERROR' };
     }
   },
 
   getPostById: async (id) => {
     try {
-      const post = await Post.findOne({
-        where: { id },
-        include: {
-          model: User,
-          as: 'author',
-        },
-      });
+      const post = await Post.findByPk(id);
 
       if (!post) return { error: 'NOT_FOUND', output: 'Post not found.' };
+
+      post.dataValues.rate = await post.countVotes();
 
       return { error: null, output: post };
     } catch (error) {
       console.error(error);
-
       return { error: 'INTERNAL_ERROR' };
     }
   },
@@ -46,13 +40,9 @@ module.exports = {
 
       if (!user) return { error: 'NOT_FOUND', output: 'User not found.' };
 
-      return {
-        error: null,
-        output: await Post.findAll({
-          where: { owner: userId },
-          // joinTableAttributes: [],
-        }),
-      };
+      const posts = await user.getUserPosts();
+
+      return { error: null, output: posts };
     } catch (error) {
       console.error(error);
       return { error: 'INTERNAL_ERROR' };
@@ -65,9 +55,7 @@ module.exports = {
 
       if (!user) return { error: 'NOT_FOUND', output: 'User not found.' };
 
-      const post = new Post();
-
-      return { error: null, output: await post.getFriendsPosts(userId) };
+      return { error: null, output: await user.getFriendsPosts() };
     } catch (error) {
       console.error(error);
       return { error: 'INTERNAL_ERROR' };
@@ -79,7 +67,6 @@ module.exports = {
       return { error: null, output: await Post.create(post) };
     } catch (error) {
       console.error(error);
-
       return { error: 'INTERNAL_ERROR' };
     }
   },
@@ -93,7 +80,21 @@ module.exports = {
       return { error: null };
     } catch (error) {
       console.error(error);
+      return { error: 'INTERNAL_ERROR' };
+    }
+  },
 
+  addVote: async (id, userId) => {
+    try {
+      const post = await Post.findByPk(id);
+
+      if (!post) return { error: 'NOT_FOUND', output: 'Post not found.' };
+
+      const result = await post.addVote(userId);
+
+      return { error: null, output: result };
+    } catch (error) {
+      console.error(error);
       return { error: 'INTERNAL_ERROR' };
     }
   },

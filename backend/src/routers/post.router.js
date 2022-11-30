@@ -12,6 +12,8 @@ route.get('/user/:id/friends', postController.getPostsByFriends);
 
 route.post('/', postController.createPost);
 
+route.post('/:id/vote/:userId', postController.addVote);
+
 route.delete('/:id', postController.deletePost);
 
 module.exports = route;

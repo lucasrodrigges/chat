@@ -1,4 +1,3 @@
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('posts', {
@@ -12,15 +11,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-
       body: {
         type: Sequelize.TEXT,
         allowNull: false,
-      },
-      rate: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
       },
       owner: {
         type: Sequelize.INTEGER,
