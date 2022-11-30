@@ -11,15 +11,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-
       body: {
         type: Sequelize.TEXT,
         allowNull: false,
-      },
-      rate: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
       },
       owner: {
         type: Sequelize.INTEGER,
