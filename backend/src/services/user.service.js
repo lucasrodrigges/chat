@@ -32,14 +32,19 @@ module.exports = {
     }
   },
 
-  updateUser: async (id, { name, password, picture }) => {
-    const user = await User.findByPk(id);
+  updateUser: async (id, newUser) => {
+    try {
+      const user = await User.findByPk(id);
 
-    if (!user) return { error: 'NOT_FOUND', output: 'User not found.' };
+      if (!user) return { error: 'NOT_FOUND', output: 'User not found.' };
 
-    await User.update({ name, password, picture }, { where: { id } });
+      await User.update(newUser, { where: { id } });
 
-    return { error: null, output: await User.findByPk(id) };
+      return { error: null, output: await User.findByPk(id) };
+    } catch (error) {
+      console.error(error);
+      return { error: 'INTERNAL_ERROR' };
+    }
   },
 
   deleteUser: async (id) => {
@@ -53,7 +58,7 @@ module.exports = {
       return { error: null };
     } catch (error) {
       console.error(error);
-      return { error: 'INTERNAL_ERROR' };  
+      return { error: 'INTERNAL_ERROR' };
     }
   },
 };

@@ -11,15 +11,11 @@ const route = express.Router();
 
 route.get('/', userController.getUsers);
 
-route.get('/:id', validateId, userController.getUserById);
-
-route.post('/', validateUser, userController.createUser);
-
-route.patch('/:id', validateId, userController.updateUser);
-
-route.put('/:id', validateId, validateUser, userController.updateUser); // TODO criar uma validação para todos os inputs como REQUIRED
-
-route.delete('/:id', validateId, userController.deleteUser);
+route.get(
+  '/:id',
+  validateId,
+  userController.getUserById,
+);
 
 route.get(
   '/:id/connections/',
@@ -28,10 +24,35 @@ route.get(
 );
 
 route.post(
+  '/',
+  validateUser,
+  userController.createUser,
+);
+
+route.post(
   '/:id/connections/:targetId',
   validateId,
   validateConnection,
   connectionController.createConnection,
+);
+
+route.put(
+  '/:id',
+  validateId,
+  validateUser,
+  userController.updateUser,
+); // TODO criar uma validação para todos os inputs como REQUIRED
+
+route.patch(
+  '/:id',
+  validateId,
+  userController.updateUser,
+);
+
+route.delete(
+  '/:id',
+  validateId,
+  userController.deleteUser,
 );
 
 route.delete(
