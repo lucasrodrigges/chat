@@ -6,6 +6,7 @@ module.exports = (reqValue) => {
 
   res.status = sinon.stub().returns(res);
   res.json = sinon.stub().returns();
+  res.end = sinon.stub().returns();
 
   return { req, res };
 };

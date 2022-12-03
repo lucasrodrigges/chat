@@ -1,4 +1,3 @@
-
 const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
@@ -19,11 +18,26 @@ describe('POST /user/controller', () => {
   it('Sucesso na criação de usuário', async () => {
     sinon.stub(userService, 'createUser').resolves(mocks.service.sucess);
 
-    const { req, res } = mockController({ body: mocks.user });
+    const body = mocks.user;
+    const { req, res } = mockController({ body });
 
     await userController.createUser(req, res);
 
+    expect(userService.createUser).to.calledWith(body);
     expect(res.status).to.calledWith(201);
     expect(res.json).to.calledWith(mocks.user);
+  });
+
+  it('Sucesso no login', async () => {
+    sinon.stub(userService, 'login').resolves(mocks.service.loginSuccessfully);
+
+    const body = mocks.login;
+    const { req, res } = mockController({ body });
+
+    await userController.login(req, res);
+
+    expect(userService.login).to.calledWith(body);
+    expect(res.status).to.calledWith(200);
+    expect(res.json).to.calledWith(mocks.controller.loginSuccessfully);
   });
 });

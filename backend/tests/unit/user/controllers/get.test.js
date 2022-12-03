@@ -18,12 +18,14 @@ describe('GET /user/controller', () => {
   it('Sucesso na obtenção de usuário', async () => {
     sinon.stub(userService, 'getUserById').resolves(mocks.service.sucess);
 
-    const { req, res } = mockController({ params: { id: 24 }});
+    const params = { id: 4 };
+    const { req, res } = mockController({ params });
 
     await userController.getUserById(req, res);
 
+    expect(userService.getUserById).to.calledWith(params.id);
     expect(res.status).to.calledWith(200);
-    expect(res.json).to.calledWith(mocks.user);
+    expect(res.json).to.calledWith(mocks.controller.sucess);
   });
 
   it('Busca por usuário inexistente', async () => {
