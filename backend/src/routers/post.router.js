@@ -1,46 +1,50 @@
 const route = require('express').Router();
 
-const userValidations = require('../auth/token');
+const userValidations = require('../middlewares/userValidations');
 const postController = require('../controllers/post.controller');
+const validateId = require('../middlewares/validateId');
 
 route.get(
-  '/',
+  '/post',
   userValidations.validateToken,
   postController.getPosts,
 );
 
 route.get(
-  '/:id',
+  '/post/:id',
   userValidations.validateToken,
+  validateId,
   postController.getPostById,
 );
 
 route.get(
-  '/user/:id',
+  '/post/user/:id',
   userValidations.validateToken,
+  validateId,
   postController.getPostsByUser,
 );
 
 route.get(
-  '/user/:id/friends',
+  '/post/user/:id/friends',
   userValidations.validateToken,
+  validateId,
   postController.getPostsByFriends,
 );
 
 route.post(
-  '/',
+  '/post',
   userValidations.validateToken,
   postController.createPost,
 );
 
 route.post(
-  '/:id/vote/:userId',
+  '/post/vote/:targetId',
   userValidations.validateToken,
   postController.addVote,
 );
 
 route.delete(
-  '/:id',
+  '/post/:id',
   userValidations.validateToken,
   postController.deletePost,
 );
