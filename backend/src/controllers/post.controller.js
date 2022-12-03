@@ -44,7 +44,7 @@ module.exports = {
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
-    return res.status(200).json(output);
+    return res.status(201).json(output);
   },
 
   deletePost: async (req, res) => {
@@ -54,7 +54,7 @@ module.exports = {
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
-    return res.status(204).end();
+    return res.status(200).end();
   },
 
   addVote: async (req, res) => {
