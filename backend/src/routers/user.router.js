@@ -6,16 +6,22 @@ const connectionController = require('../controllers/connection.controller');
 
 const route = express.Router();
 
-route.get('/', userController.getUsers);
+route.get(
+  '/',
+  userValidations.validateToken,
+  userController.getUsers,
+);
 
 route.get(
   '/:id',
+  userValidations.validateToken,
   userValidations.validateId,
   userController.getUserById,
 );
 
 route.get(
   '/:id/connections/',
+  userValidations.validateToken,
   userValidations.validateId,
   connectionController.getConnections,
 );
@@ -28,6 +34,7 @@ route.post(
 
 route.post(
   '/:id/connections/:targetId',
+  userValidations.validateToken,
   userValidations.validateId,
   userValidations.validateConnection,
   connectionController.createConnection,
@@ -35,6 +42,7 @@ route.post(
 
 route.put(
   '/:id',
+  userValidations.validateToken,
   userValidations.validateId,
   userValidations.validateUser,
   userController.updateUser,
@@ -42,18 +50,21 @@ route.put(
 
 route.patch(
   '/:id',
+  userValidations.validateToken,
   userValidations.validateId,
   userController.updateUser,
 );
 
 route.delete(
   '/:id',
+  userValidations.validateToken,
   userValidations.validateId,
   userController.deleteUser,
 );
 
 route.delete(
   '/:id/connections/:targetId',
+  userValidations.validateToken,
   userValidations.validateId,
   userValidations.validateConnection,
   connectionController.deleteConnection,

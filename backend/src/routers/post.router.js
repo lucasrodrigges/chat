@@ -1,19 +1,48 @@
 const route = require('express').Router();
 
+const userValidations = require('../auth/token');
 const postController = require('../controllers/post.controller');
 
-route.get('/', postController.getPosts);
+route.get(
+  '/',
+  userValidations.validateToken,
+  postController.getPosts,
+);
 
-route.get('/:id', postController.getPostById);
+route.get(
+  '/:id',
+  userValidations.validateToken,
+  postController.getPostById,
+);
 
-route.get('/user/:id', postController.getPostsByUser);
+route.get(
+  '/user/:id',
+  userValidations.validateToken,
+  postController.getPostsByUser,
+);
 
-route.get('/user/:id/friends', postController.getPostsByFriends);
+route.get(
+  '/user/:id/friends',
+  userValidations.validateToken,
+  postController.getPostsByFriends,
+);
 
-route.post('/', postController.createPost);
+route.post(
+  '/',
+  userValidations.validateToken,
+  postController.createPost,
+);
 
-route.post('/:id/vote/:userId', postController.addVote);
+route.post(
+  '/:id/vote/:userId',
+  userValidations.validateToken,
+  postController.addVote,
+);
 
-route.delete('/:id', postController.deletePost);
+route.delete(
+  '/:id',
+  userValidations.validateToken,
+  postController.deletePost,
+);
 
 module.exports = route;
