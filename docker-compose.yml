@@ -6,9 +6,10 @@ services:
     container_name: backend
     tty: true
     stdin_open: true
-    working_dir: /home/node/app
+    working_dir: /app
+    command: zsh
     volumes:
-      - ./backend:/home/node/app
+      - ./backend:/app
     ports:
       - 3001:3001
     environment:

@@ -1,4 +1,4 @@
-FROM node:18.12.1
+FROM ubuntu:22.04
 
 EXPOSE 3001
 
@@ -6,6 +6,6 @@ ADD package.json .
 
 COPY . .
 
-RUN npm i
+RUN bash ./script/install.sh
 
-# CMD npx sequelize db:create && npx sequelize db:migrate
+RUN npm i
