@@ -9,6 +9,6 @@ const routers = require('./routers');
 app.use(express.json());
 
 app.use(routers.userRouter);
-app.use('/post', routers.postRouter);
+app.use(routers.postRouter);
 
 module.exports = app;

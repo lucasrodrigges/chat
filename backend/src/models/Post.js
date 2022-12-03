@@ -5,7 +5,6 @@ class Post extends Model {
     super.init({
       title: DataTypes.STRING,
       body: DataTypes.TEXT,
-      rate: DataTypes.INTEGER,
     }, {
       sequelize,
     });

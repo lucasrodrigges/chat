@@ -19,15 +19,6 @@ module.exports = {
     return next();
   },
 
-  validateId: (req, res, next) => {
-    const { id } = req.params;
-    const { error, message } = validations.idType(id);
-
-    if (error) return res.status(error).json({ message });
-
-    return next();
-  },
-
   validateLogin: (req, res, next) => {
     const { error, message } = validations.loginFields(req.body);
 

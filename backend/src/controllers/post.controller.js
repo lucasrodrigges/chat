@@ -39,8 +39,8 @@ module.exports = {
   },
 
   createPost: async (req, res) => {
-    const { title, body, owner } = req.body;
-    const { error, output } = await postService.createPost({ title, body, owner });
+    const { userId } = req.headers;
+    const { error, output } = await postService.createPost(userId, req.body);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
@@ -48,8 +48,9 @@ module.exports = {
   },
 
   deletePost: async (req, res) => {
+    const { userId } = req.headers;
     const { id } = req.params;
-    const { error, output } = await postService.deletePost(id);
+    const { error, output } = await postService.deletePost(userId, id);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
@@ -57,11 +58,12 @@ module.exports = {
   },
 
   addVote: async (req, res) => {
-    const { id, userId } = req.params;
-    const { error, output } = await postService.addVote(id, userId);
+    const { userId } = req.headers;
+    const { targetId } = req.params;
+    const { error, output } = await postService.addVote(userId, targetId);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
     return res.status(201).json(output);
-  }
+  },
 };

@@ -30,7 +30,7 @@ module.exports = {
 
       if (!user) return { error: 'NOT_FOUND', output: 'User not found' };
 
-      if (user.dataValues.password !== password) {
+      if (user.password !== password) {
         return { error: 'UNAUTHORIZED', output: 'Wrong password' };
       }
 
