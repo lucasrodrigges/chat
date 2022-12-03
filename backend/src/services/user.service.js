@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { createToken } = require('../auth/token');
 
 module.exports = {
   getUsers: async () => {
@@ -23,9 +24,37 @@ module.exports = {
     }
   },
 
-  createUser: async (user) => {
+  login: async ({ email, password }) => {
     try {
-      return { error: null, output: await User.create(user) };
+      const user = await User.findOne({ where: { email } });
+
+      if (!user) return { error: 'NOT_FOUND', output: 'User not found' };
+
+      if (user.password !== password) {
+        return { error: 'UNAUTHORIZED', output: 'Wrong password' };
+      }
+
+      const output = { token: createToken({ id: user.id }) };
+
+      return { error: null, output };
+    } catch (error) {
+      console.error(error);
+      return { error: 'INTERNAL_ERROR' };
+    }
+  },
+
+  createUser: async (newUser) => {
+    try {
+      const [user, created] = await User.findOrCreate({
+        where: { email: newUser.email },
+        defaults: newUser,
+      });
+
+      if (!created) return { error: 'CONFLICT', output: 'This email is already registered' };
+
+      const output = { token: createToken({ id: user.id }) };
+
+      return { error: null, output };
     } catch (error) {
       console.error(error);
       return { error: 'INTERNAL_ERROR' };

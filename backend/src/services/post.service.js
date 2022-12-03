@@ -4,15 +4,7 @@ const User = require('../models/User');
 module.exports = {
   getPosts: async () => {
     try {
-      return {
-        error: null,
-        output: await Post.findAll({
-          include: [{
-            model: User,
-            as: 'author',
-          }],
-        }),
-      };
+      return { error: null, output: await Post.findAll() };
     } catch (error) {
       console.error(error);
       return { error: 'INTERNAL_ERROR' };
@@ -25,7 +17,7 @@ module.exports = {
 
       if (!post) return { error: 'NOT_FOUND', output: 'Post not found.' };
 
-      post.dataValues.rate = await post.countVotes();
+      post.rate = await post.countVotes();
 
       return { error: null, output: post };
     } catch (error) {
@@ -62,20 +54,24 @@ module.exports = {
     }
   },
 
-  createPost: async (post) => {
+  createPost: async (owner, post) => {
     try {
-      return { error: null, output: await Post.create(post) };
+      return { error: null, output: await Post.create({ owner, ...post }) };
     } catch (error) {
       console.error(error);
       return { error: 'INTERNAL_ERROR' };
     }
   },
 
-  deletePost: async (id) => {
+  deletePost: async (userId, id) => {
     try {
-      await Post.destroy({
-        where: { id },
-      });
+      const post = await Post.findOne({ where: { id } });
+
+      if (post.owner !== userId) {
+        return { error: 'UNAUTHORIZED', output: 'Unauthorized user' };
+      }
+
+      await post.destroy();
 
       return { error: null };
     } catch (error) {

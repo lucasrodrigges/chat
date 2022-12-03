@@ -14,9 +14,10 @@ module.exports = {
   },
 
   createConnection: async (req, res) => {
-    const { id, targetId } = req.params;
+    const { targetId } = req.params;
+    const { userId } = req.headers;
 
-    const { error, output } = await connectionService.createConnection(id, targetId);
+    const { error, output } = await connectionService.createConnection(userId, targetId);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
@@ -24,9 +25,10 @@ module.exports = {
   },
 
   deleteConnection: async (req, res) => {
-    const { id, targetId } = req.params;
+    const { targetId } = req.params;
+    const { userId } = req.headers;
 
-    const { error, output } = await connectionService.deleteConnection(id, targetId);
+    const { error, output } = await connectionService.deleteConnection(userId, targetId);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 
