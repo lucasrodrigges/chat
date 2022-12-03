@@ -67,9 +67,9 @@ module.exports = {
 
       if (!user) return { error: 'NOT_FOUND', output: 'User not found.' };
 
-      await User.update(newUser, { where: { id } });
+      await user.update(newUser);
 
-      return { error: null, output: await User.findByPk(id) };
+      return { error: null, output: user };
     } catch (error) {
       console.error(error);
       return { error: 'INTERNAL_ERROR' };
@@ -82,7 +82,7 @@ module.exports = {
 
       if (!user) return { error: 'NOT_FOUND', output: 'User not found.' };
 
-      await User.destroy({ where: { id } });
+      await user.destroy();
 
       return { error: null };
     } catch (error) {
