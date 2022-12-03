@@ -1,11 +1,8 @@
 const express = require('express');
 
 const userController = require('../controllers/user.controller');
+const userValidations = require('../middlewares/userValidations');
 const connectionController = require('../controllers/connection.controller');
-
-const validateUser = require('../middlewares/userValidations/validadeUser');
-const validateConnection = require('../middlewares/userValidations/validateConnection');
-const validateId = require('../middlewares/userValidations/validateId');
 
 const route = express.Router();
 
@@ -13,52 +10,52 @@ route.get('/', userController.getUsers);
 
 route.get(
   '/:id',
-  validateId,
+  userValidations.validateId,
   userController.getUserById,
 );
 
 route.get(
   '/:id/connections/',
-  validateId,
+  userValidations.validateId,
   connectionController.getConnections,
 );
 
 route.post(
   '/',
-  validateUser,
+  userValidations.validateUser,
   userController.createUser,
 );
 
 route.post(
   '/:id/connections/:targetId',
-  validateId,
-  validateConnection,
+  userValidations.validateId,
+  userValidations.validateConnection,
   connectionController.createConnection,
 );
 
 route.put(
   '/:id',
-  validateId,
-  validateUser,
+  userValidations.validateId,
+  userValidations.validateUser,
   userController.updateUser,
 ); // TODO criar uma validação para todos os inputs como REQUIRED
 
 route.patch(
   '/:id',
-  validateId,
+  userValidations.validateId,
   userController.updateUser,
 );
 
 route.delete(
   '/:id',
-  validateId,
+  userValidations.validateId,
   userController.deleteUser,
 );
 
 route.delete(
   '/:id/connections/:targetId',
-  validateId,
-  validateConnection,
+  userValidations.validateId,
+  userValidations.validateConnection,
   connectionController.deleteConnection,
 );
 
