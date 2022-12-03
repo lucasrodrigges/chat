@@ -4,70 +4,76 @@ const userController = require('../controllers/user.controller');
 const userValidations = require('../middlewares/userValidations');
 const connectionController = require('../controllers/connection.controller');
 
-const route = express.Router();
+const router = express.Router();
 
-route.get(
-  '/',
+router.get(
+  '/user/',
   userValidations.validateToken,
   userController.getUsers,
 );
 
-route.get(
-  '/:id',
+router.get(
+  '/user/:id',
   userValidations.validateToken,
   userValidations.validateId,
   userController.getUserById,
 );
 
-route.get(
-  '/:id/connections/',
+router.get(
+  '/user/:id/connections/',
   userValidations.validateToken,
   userValidations.validateId,
   connectionController.getConnections,
 );
 
-route.post(
-  '/',
+router.post(
+  '/user',
   userValidations.validateUser,
   userController.createUser,
 );
 
-route.post(
-  '/:id/connections/:targetId',
+router.post(
+  '/login',
+  userValidations.validateLogin,
+  userController.login,
+);
+
+router.post(
+  '/user/:id/connections/:targetId',
   userValidations.validateToken,
   userValidations.validateId,
   userValidations.validateConnection,
   connectionController.createConnection,
 );
 
-route.put(
-  '/:id',
+router.put(
+  '/user/:id',
   userValidations.validateToken,
   userValidations.validateId,
   userValidations.validateUser,
   userController.updateUser,
 ); // TODO criar uma validação para todos os inputs como REQUIRED
 
-route.patch(
-  '/:id',
+router.patch(
+  '/user/:id',
   userValidations.validateToken,
   userValidations.validateId,
   userController.updateUser,
 );
 
-route.delete(
-  '/:id',
+router.delete(
+  '/user/:id',
   userValidations.validateToken,
   userValidations.validateId,
   userController.deleteUser,
 );
 
-route.delete(
-  '/:id/connections/:targetId',
+router.delete(
+  '/user/:id/connections/:targetId',
   userValidations.validateToken,
   userValidations.validateId,
   userValidations.validateConnection,
   connectionController.deleteConnection,
 );
 
-module.exports = route;
+module.exports = router;
