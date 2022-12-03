@@ -19,29 +19,35 @@ module.exports = {
     return res.status(200).json(output);
   },
 
-  createUser: async (req, res) => {
-    const { name, password, picture } = req.body;
-    const { error, output } = await userService.createUser({ name, password, picture });
+  login: async (req, res) => {
+    const { error, output } = await userService.login(req.body);
 
-    if (error) return res.status(mapStatus(error)).end();
+    if (error) return res.status(mapStatus(error)).json({ message: output });
+
+    return res.status(200).json(output);
+  },
+
+  createUser: async (req, res) => {
+    const { error, output } = await userService.createUser(req.body);
+
+    if (error) return res.status(mapStatus(error)).json({ message: output });
 
     return res.status(201).json(output);
   },
 
   updateUser: async (req, res) => {
-    const { id } = req.params;
-    const { name, password, picture } = req.body;
+    const { userId } = req.headers;
 
-    const { error, output } = await userService.updateUser(id, { name, password, picture });
+    const { error, output } = await userService.updateUser(userId, req.body);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
     return res.status(200).json(output);
   },
 
   deleteUser: async (req, res) => {
-    const { id } = req.params;
+    const { userId } = req.headers;
 
-    const { error, output } = await userService.deleteUser(id);
+    const { error, output } = await userService.deleteUser(userId);
 
     if (error) return res.status(mapStatus(error)).json(output && { message: output });
 

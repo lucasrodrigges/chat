@@ -1,65 +1,75 @@
 const express = require('express');
 
 const userController = require('../controllers/user.controller');
+const userValidations = require('../middlewares/userValidations');
 const connectionController = require('../controllers/connection.controller');
+const validateId = require('../middlewares/validateId');
 
-const validateUser = require('../middlewares/userValidations/validadeUser');
-const validateConnection = require('../middlewares/userValidations/validateConnection');
-const validateId = require('../middlewares/userValidations/validateId');
+const router = express.Router();
 
-const route = express.Router();
+router.get(
+  '/user',
+  userValidations.validateToken,
+  userController.getUsers,
+);
 
-route.get('/', userController.getUsers);
-
-route.get(
-  '/:id',
+router.get(
+  '/user/:id',
+  userValidations.validateToken,
   validateId,
   userController.getUserById,
 );
 
-route.get(
-  '/:id/connections/',
+router.get(
+  '/user/:id/connections/',
+  userValidations.validateToken,
   validateId,
   connectionController.getConnections,
 );
 
-route.post(
-  '/',
-  validateUser,
+router.post(
+  '/user',
+  userValidations.validateUser,
   userController.createUser,
 );
 
-route.post(
-  '/:id/connections/:targetId',
-  validateId,
-  validateConnection,
+router.post(
+  '/login',
+  userValidations.validateLogin,
+  userController.login,
+);
+
+router.post(
+  '/user/connections/:targetId',
+  userValidations.validateToken,
+  userValidations.validateConnection,
   connectionController.createConnection,
 );
 
-route.put(
-  '/:id',
-  validateId,
-  validateUser,
+router.put(
+  '/user',
+  userValidations.validateToken,
+  userValidations.validateUser,
   userController.updateUser,
 ); // TODO criar uma validação para todos os inputs como REQUIRED
 
-route.patch(
-  '/:id',
-  validateId,
+router.patch(
+  '/user',
+  userValidations.validateToken,
   userController.updateUser,
 );
 
-route.delete(
-  '/:id',
-  validateId,
+router.delete(
+  '/user/me',
+  userValidations.validateToken,
   userController.deleteUser,
 );
 
-route.delete(
-  '/:id/connections/:targetId',
-  validateId,
-  validateConnection,
+router.delete(
+  '/user/connections/:targetId',
+  userValidations.validateToken,
+  userValidations.validateConnection,
   connectionController.deleteConnection,
 );
 
-module.exports = route;
+module.exports = router;
