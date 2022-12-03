@@ -1,4 +1,4 @@
-const { userSchema, connectionSchema, idSchema } = require('./schemas');
+const schemas = require('./schemas');
 
 const formatError = (error) => ({
   error: error.details[0].type.endsWith('required') ? 400 : 422,
@@ -6,24 +6,32 @@ const formatError = (error) => ({
 });
 
 module.exports = {
-  validateUserFields: (user) => {
-    const { error } = userSchema.validate(user);
+  userFields: (user) => {
+    const { error } = schemas.user.validate(user);
 
     if (error) return formatError(error);
 
     return { error: null };
   },
 
-  validateConnectionFields: (conn) => {
-    const { error } = connectionSchema.validate(conn);
+  connectionFields: (conn) => {
+    const { error } = schemas.connection.validate(conn);
 
     if (error) return formatError(error);
 
     return { error: null };
   },
 
-  validateIdType: (id) => {
-    const { error } = idSchema.validate({ userId: id });
+  loginFields: (login) => {
+    const { error } = schemas.login.validate(login);
+
+    if (error) return formatError(error);
+
+    return { error: null };
+  },
+
+  idType: (id) => {
+    const { error } = schemas.id.validate({ userId: id });
 
     if (error) return formatError(error);
 
