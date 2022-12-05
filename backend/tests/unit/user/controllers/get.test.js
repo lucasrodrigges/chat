@@ -7,7 +7,7 @@ const { expect } = chai;
 const userController = require('../../../../src/controllers/user.controller');
 const userService = require('../../../../src/services/user.service');
 
-const mockController = require('../../helpers/mockController');
+const mockController = require('../../../helpers/mockController');
 const mocks = require('../mocks');
 
 chai.use(sinonChai);
@@ -24,6 +24,20 @@ describe('GET /user/controller', () => {
     await userController.getUserById(req, res);
 
     expect(userService.getUserById).to.calledWith(params.id);
+    expect(res.status).to.calledWith(200);
+    expect(res.json).to.calledWith(mocks.controller.sucess);
+  });
+
+  it('Sucesso na obtenção de conexões', async () => {
+    sinon.stub(userService, 'getConnections').resolves(mocks.service.sucess);
+
+    const params = { id: 4 };
+    const query = { t: 'a' };
+    const { req, res } = mockController({ params, query });
+
+    await userController.getConnections(req, res);
+
+    expect(userService.getConnections).to.calledWith(params.id, query.t);
     expect(res.status).to.calledWith(200);
     expect(res.json).to.calledWith(mocks.controller.sucess);
   });

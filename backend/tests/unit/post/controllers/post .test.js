@@ -7,7 +7,7 @@ const { expect } = chai;
 const postController = require('../../../../src/controllers/post.controller');
 const postService = require('../../../../src/services/post.service');
 
-const mockController = require('../../helpers/mockController');
+const mockController = require('../../../helpers/mockController');
 const mocks = require('../mocks');
 
 chai.use(sinonChai);
