@@ -2,7 +2,6 @@ const express = require('express');
 
 const userController = require('../controllers/user.controller');
 const userValidations = require('../middlewares/userValidations');
-const connectionController = require('../controllers/connection.controller');
 const validateId = require('../middlewares/validateId');
 
 const router = express.Router();
@@ -24,7 +23,7 @@ router.get(
   '/user/:id/connections/',
   userValidations.validateToken,
   validateId,
-  connectionController.getConnections,
+  userController.getConnections,
 );
 
 router.post(
@@ -43,7 +42,7 @@ router.post(
   '/user/connections/:targetId',
   userValidations.validateToken,
   userValidations.validateConnection,
-  connectionController.createConnection,
+  userController.createConnection,
 );
 
 router.put(
@@ -69,7 +68,7 @@ router.delete(
   '/user/connections/:targetId',
   userValidations.validateToken,
   userValidations.validateConnection,
-  connectionController.deleteConnection,
+  userController.deleteConnection,
 );
 
 module.exports = router;

@@ -7,7 +7,7 @@ const { expect } = chai;
 const userController = require('../../../../src/controllers/user.controller');
 const userService = require('../../../../src/services/user.service');
 
-const mockController = require('../../helpers/mockController');
+const mockController = require('../../../helpers/mockController');
 const mocks = require('../mocks');
 
 chai.use(sinonChai);
@@ -24,6 +24,20 @@ describe('DELETE /user/controller', () => {
     await userController.deleteUser(req, res);
 
     expect(userService.deleteUser).to.calledWith(headers.userId);
+    expect(res.status).to.calledWith(204);
+    expect(res.end).to.calledWith();
+  });
+
+  it('Sucesso na deleção de conexão', async () => {
+    sinon.stub(userService, 'deleteConnection').resolves({ error: null });
+
+    const headers = { userId: 4 };
+    const params = { targetId: 20 };
+    const { req, res } = mockController({ headers, params });
+
+    await userController.deleteConnection(req, res);
+
+    expect(userService.deleteConnection).to.calledWith(headers.userId, params.targetId);
     expect(res.status).to.calledWith(204);
     expect(res.end).to.calledWith();
   });
