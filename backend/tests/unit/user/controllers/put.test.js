@@ -16,7 +16,7 @@ describe('PUT /user/controller', () => {
   afterEach(sinon.restore);
 
   it('Sucesso na edição de usuário', async () => {
-    sinon.stub(userService, 'updateUser').resolves(mocks.service.sucess);
+    sinon.stub(userService, 'updateUser').resolves(mocks.user);
 
     const headers = { userId: 4 };
     const body = mocks.user;
@@ -26,6 +26,6 @@ describe('PUT /user/controller', () => {
 
     expect(userService.updateUser).to.calledWith(headers.userId, body);
     expect(res.status).to.calledWith(200);
-    expect(res.json).to.calledWith(mocks.controller.sucess);
+    expect(res.json).to.calledWith(mocks.user);
   });
 });

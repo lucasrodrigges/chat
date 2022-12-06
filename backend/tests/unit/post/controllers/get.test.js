@@ -16,7 +16,7 @@ describe('GET /post/controller', () => {
   afterEach(sinon.restore);
 
   it('Sucesso na obtenção de post por id', async () => {
-    sinon.stub(postService, 'getPostById').resolves(mocks.service.sucess);
+    sinon.stub(postService, 'getPostById').resolves(mocks.post);
 
     const params = { id: 4 };
     const { req, res } = mockController({ params });
@@ -25,11 +25,11 @@ describe('GET /post/controller', () => {
 
     expect(postService.getPostById).to.calledWith(params.id);
     expect(res.status).to.calledWith(200);
-    expect(res.json).to.calledWith(mocks.controller.sucess);
+    expect(res.json).to.calledWith(mocks.post);
   });
 
   it('Sucesso na obtenção de posts por usuário', async () => {
-    sinon.stub(postService, 'getPostsByUser').resolves(mocks.service.sucess);
+    sinon.stub(postService, 'getPostsByUser').resolves(mocks.post);
 
     const params = { id: 4 };
     const { req, res } = mockController({ params });
@@ -38,11 +38,11 @@ describe('GET /post/controller', () => {
 
     expect(postService.getPostsByUser).to.calledWith(params.id);
     expect(res.status).to.calledWith(200);
-    expect(res.json).to.calledWith(mocks.controller.sucess);
+    expect(res.json).to.calledWith(mocks.post);
   });
 
   it('Sucesso na obtenção de posts por amigos', async () => {
-    sinon.stub(postService, 'getPostsByFriends').resolves(mocks.service.sucess);
+    sinon.stub(postService, 'getPostsByFriends').resolves(mocks.post);
 
     const params = { id: 4 };
     const { req, res } = mockController({ params });
@@ -51,6 +51,6 @@ describe('GET /post/controller', () => {
 
     expect(postService.getPostsByFriends).to.calledWith(params.id);
     expect(res.status).to.calledWith(200);
-    expect(res.json).to.calledWith(mocks.controller.sucess);
+    expect(res.json).to.calledWith(mocks.post);
   });
 });

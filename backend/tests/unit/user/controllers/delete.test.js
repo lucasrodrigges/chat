@@ -16,7 +16,7 @@ describe('DELETE /user/controller', () => {
   afterEach(sinon.restore);
 
   it('Sucesso na deleção de usuário', async () => {
-    sinon.stub(userService, 'deleteUser').resolves({ error: null });
+    sinon.stub(userService, 'deleteUser').resolves();
 
     const headers = { userId: 4 };
     const { req, res } = mockController({ headers });
@@ -29,7 +29,7 @@ describe('DELETE /user/controller', () => {
   });
 
   it('Sucesso na deleção de conexão', async () => {
-    sinon.stub(userService, 'deleteConnection').resolves({ error: null });
+    sinon.stub(userService, 'deleteConnection').resolves();
 
     const headers = { userId: 4 };
     const params = { targetId: 20 };

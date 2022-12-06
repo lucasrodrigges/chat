@@ -16,7 +16,7 @@ describe('POST /post/controller', () => {
   afterEach(sinon.restore);
 
   it('Sucesso na criação de post', async () => {
-    sinon.stub(postService, 'createPost').resolves(mocks.service.sucess);
+    sinon.stub(postService, 'createPost').resolves(mocks.post);
 
     const headers = { userId: 20 };
     const body = mocks.post;
@@ -26,11 +26,11 @@ describe('POST /post/controller', () => {
 
     expect(postService.createPost).to.calledWith(headers.userId, body);
     expect(res.status).to.calledWith(201);
-    expect(res.json).to.calledWith(mocks.controller.sucess);
+    expect(res.json).to.calledWith(mocks.post);
   });
 
   it('Sucesso na adição de voto', async () => {
-    sinon.stub(postService, 'addVote').resolves(mocks.service.sucess);
+    sinon.stub(postService, 'addVote').resolves(mocks.post);
 
     const headers = { userId: 20 };
     const params = { targetId: 4 };
@@ -40,6 +40,6 @@ describe('POST /post/controller', () => {
 
     expect(postService.addVote).to.calledWith(headers.userId, params.targetId);
     expect(res.status).to.calledWith(201);
-    expect(res.json).to.calledWith(mocks.controller.sucess);
+    expect(res.json).to.calledWith(mocks.post);
   });
 });
