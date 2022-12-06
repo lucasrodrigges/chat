@@ -16,7 +16,7 @@ describe('POST /user/controller', () => {
   afterEach(sinon.restore);
 
   it('Sucesso na criação de usuário', async () => {
-    sinon.stub(userService, 'createUser').resolves(mocks.service.sucess);
+    sinon.stub(userService, 'createUser').resolves(mocks.user);
 
     const body = mocks.user;
     const { req, res } = mockController({ body });
@@ -29,7 +29,7 @@ describe('POST /user/controller', () => {
   });
 
   it('Sucesso na criação de conexão', async () => {
-    sinon.stub(userService, 'createConnection').resolves(mocks.service.sucess);
+    sinon.stub(userService, 'createConnection').resolves(mocks.connection);
 
     const params = { targetId: 20 };
     const headers = { userId: 4 };
@@ -39,11 +39,11 @@ describe('POST /user/controller', () => {
 
     expect(userService.createConnection).to.calledWith(headers.userId, params.targetId);
     expect(res.status).to.calledWith(201);
-    expect(res.json).to.calledWith(mocks.user);
+    expect(res.json).to.calledWith(mocks.connection);
   });
 
   it('Sucesso no login', async () => {
-    sinon.stub(userService, 'login').resolves(mocks.service.loginSuccessfully);
+    sinon.stub(userService, 'login').resolves({ token: mocks.token });
 
     const body = mocks.login;
     const { req, res } = mockController({ body });
@@ -52,6 +52,6 @@ describe('POST /user/controller', () => {
 
     expect(userService.login).to.calledWith(body);
     expect(res.status).to.calledWith(200);
-    expect(res.json).to.calledWith(mocks.controller.loginSuccessfully);
+    expect(res.json).to.calledWith({ token: mocks.token });
   });
 });

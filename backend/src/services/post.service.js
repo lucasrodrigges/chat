@@ -1,97 +1,52 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
 
+const { HttpError } = require('../utils/errors');
+
 module.exports = {
-  getPosts: async () => {
-    try {
-      return { error: null, output: await Post.findAll() };
-    } catch (error) {
-      console.error(error);
-      return { error: 'INTERNAL_ERROR' };
-    }
-  },
+  getPosts: async () => Post.findAll(),
 
   getPostById: async (id) => {
-    try {
-      const post = await Post.findByPk(id);
+    const post = await Post.findByPk(id);
 
-      if (!post) return { error: 'NOT_FOUND', output: 'Post not found.' };
+    if (!post) throw new HttpError(404, 'Post not found');
 
-      post.rate = await post.countVotes();
+    post.dataValues.rate = await post.countVotes();
 
-      return { error: null, output: post };
-    } catch (error) {
-      console.error(error);
-      return { error: 'INTERNAL_ERROR' };
-    }
+    return post;
   },
 
   getPostsByUser: async (userId) => {
-    try {
-      const user = await User.findByPk(userId);
+    const user = await User.findByPk(userId);
 
-      if (!user) return { error: 'NOT_FOUND', output: 'User not found.' };
+    if (!user) throw new HttpError(404, 'User not found');
 
-      const posts = await user.getUserPosts();
-
-      return { error: null, output: posts };
-    } catch (error) {
-      console.error(error);
-      return { error: 'INTERNAL_ERROR' };
-    }
+    return user.getUserPosts();
   },
 
   getPostsByFriends: async (userId) => {
-    try {
-      const user = await User.findByPk(userId);
+    const user = await User.findByPk(userId);
 
-      if (!user) return { error: 'NOT_FOUND', output: 'User not found.' };
+    if (!user) throw new HttpError(404, 'User not found');
 
-      return { error: null, output: await user.getFriendsPosts() };
-    } catch (error) {
-      console.error(error);
-      return { error: 'INTERNAL_ERROR' };
-    }
+    return user.getFriendsPosts();
   },
 
-  createPost: async (owner, post) => {
-    try {
-      return { error: null, output: await Post.create({ owner, ...post }) };
-    } catch (error) {
-      console.error(error);
-      return { error: 'INTERNAL_ERROR' };
-    }
-  },
+  createPost: async (owner, post) => Post.create({ owner, ...post }),
 
   deletePost: async (userId, id) => {
-    try {
-      const post = await Post.findOne({ where: { id } });
+    const post = await Post.findOne({ where: { id } });
 
-      if (post.owner !== userId) {
-        return { error: 'UNAUTHORIZED', output: 'Unauthorized user' };
-      }
+    if (post.owner !== userId) throw new HttpError(401, 'UNAUTHORIZED');
 
-      await post.destroy();
-
-      return { error: null };
-    } catch (error) {
-      console.error(error);
-      return { error: 'INTERNAL_ERROR' };
-    }
+    return post.destroy();
   },
 
   addVote: async (id, userId) => {
-    try {
-      const post = await Post.findByPk(id);
+    const post = await Post.findByPk(id);
 
-      if (!post) return { error: 'NOT_FOUND', output: 'Post not found.' };
+    if (!post) throw new HttpError(404, 'Post not found');
 
-      const result = await post.addVote(userId);
-
-      return { error: null, output: result };
-    } catch (error) {
-      console.error(error);
-      return { error: 'INTERNAL_ERROR' };
-    }
+    return post.addVote(userId);
   },
 };

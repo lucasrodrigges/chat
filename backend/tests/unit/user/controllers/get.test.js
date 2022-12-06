@@ -16,7 +16,7 @@ describe('GET /user/controller', () => {
   afterEach(sinon.restore);
 
   it('Sucesso na obtenção de usuário', async () => {
-    sinon.stub(userService, 'getUserById').resolves(mocks.service.sucess);
+    sinon.stub(userService, 'getUserById').resolves(mocks.user);
 
     const params = { id: 4 };
     const { req, res } = mockController({ params });
@@ -25,11 +25,11 @@ describe('GET /user/controller', () => {
 
     expect(userService.getUserById).to.calledWith(params.id);
     expect(res.status).to.calledWith(200);
-    expect(res.json).to.calledWith(mocks.controller.sucess);
+    expect(res.json).to.calledWith(mocks.user);
   });
 
   it('Sucesso na obtenção de conexões', async () => {
-    sinon.stub(userService, 'getConnections').resolves(mocks.service.sucess);
+    sinon.stub(userService, 'getConnections').resolves(mocks.user);
 
     const params = { id: 4 };
     const query = { t: 'a' };
@@ -39,17 +39,6 @@ describe('GET /user/controller', () => {
 
     expect(userService.getConnections).to.calledWith(params.id, query.t);
     expect(res.status).to.calledWith(200);
-    expect(res.json).to.calledWith(mocks.controller.sucess);
-  });
-
-  it('Busca por usuário inexistente', async () => {
-    sinon.stub(userService, 'getUserById').resolves(mocks.service.notFound);
-
-    const { req, res } = mockController({ params: { id: 100 } });
-
-    await userController.getUserById(req, res);
-
-    expect(res.status).to.calledWith(404);
-    expect(res.json).to.calledWith(mocks.controller.notFound);
+    expect(res.json).to.calledWith(mocks.user);
   });
 });

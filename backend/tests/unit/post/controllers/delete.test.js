@@ -16,7 +16,7 @@ describe('DELETE /post/controller', () => {
   afterEach(sinon.restore);
 
   it('Sucesso na exclusão de post', async () => {
-    sinon.stub(postService, 'deletePost').resolves(mocks.service.sucess);
+    sinon.stub(postService, 'deletePost').resolves(mocks.post);
 
     const headers = { userId: 20 };
     const params = { id: 4 };

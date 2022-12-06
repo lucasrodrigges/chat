@@ -7,7 +7,7 @@
     "migration": "npx sequelize db:create; npx sequelize db:migrate",
     "seed": "npx sequelize db:seed:all",
     "drop": "npx sequelize db:drop",
-    "test": "mocha tests/**/*.js --exit",
+    "test": "mocha tests/**/*test.js --exit",
     "test:coverage": "nyc --all --include src/models --include src/services --include src/controllers mocha tests/unit/**/*.js --exit",
     "dev": "nodemon src/index.js",
     "start": "node src/index.js"
@@ -20,6 +20,7 @@
     "dotenv": "^16.0.3",
     "eslint-config-airbnb": "^19.0.4",
     "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",

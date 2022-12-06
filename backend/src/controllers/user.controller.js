@@ -1,11 +1,8 @@
 const userService = require('../services/user.service');
-const mapStatus = require('../utils/mapStatus');
 
 module.exports = {
   getUsers: async (_req, res) => {
-    const { error, output } = await userService.getUsers();
-
-    if (error) return res.status(mapStatus(error)).end();
+    const output = await userService.getUsers();
 
     return res.status(200).json(output);
   },
@@ -14,34 +11,26 @@ module.exports = {
     const { id } = req.params;
     const { t } = req.query;
 
-    const { error, output } = await userService.getConnections(id, t);
-
-    if (error) return res.status(mapStatus(error)).json(output && { message: output });
+    const output = await userService.getConnections(id, t);
 
     return res.status(200).json(output);
   },
 
   getUserById: async (req, res) => {
     const { id } = req.params;
-    const { error, output } = await userService.getUserById(id);
-
-    if (error) return res.status(mapStatus(error)).json(output && { message: output });
+    const output = await userService.getUserById(id);
 
     return res.status(200).json(output);
   },
 
   login: async (req, res) => {
-    const { error, output } = await userService.login(req.body);
-
-    if (error) return res.status(mapStatus(error)).json({ message: output });
+    const output = await userService.login(req.body);
 
     return res.status(200).json(output);
   },
 
   createUser: async (req, res) => {
-    const { error, output } = await userService.createUser(req.body);
-
-    if (error) return res.status(mapStatus(error)).json({ message: output });
+    const output = await userService.createUser(req.body);
 
     return res.status(201).json(output);
   },
@@ -50,9 +39,7 @@ module.exports = {
     const { targetId } = req.params;
     const { userId } = req.headers;
 
-    const { error, output } = await userService.createConnection(userId, targetId);
-
-    if (error) return res.status(mapStatus(error)).json(output && { message: output });
+    const output = await userService.createConnection(userId, Number(targetId));
 
     return res.status(201).json(output);
   },
@@ -60,18 +47,15 @@ module.exports = {
   updateUser: async (req, res) => {
     const { userId } = req.headers;
 
-    const { error, output } = await userService.updateUser(userId, req.body);
+    const output = await userService.updateUser(userId, req.body);
 
-    if (error) return res.status(mapStatus(error)).json(output && { message: output });
     return res.status(200).json(output);
   },
 
   deleteUser: async (req, res) => {
     const { userId } = req.headers;
 
-    const { error, output } = await userService.deleteUser(userId);
-
-    if (error) return res.status(mapStatus(error)).json(output && { message: output });
+    await userService.deleteUser(userId);
 
     return res.status(204).end();
   },
@@ -80,9 +64,7 @@ module.exports = {
     const { targetId } = req.params;
     const { userId } = req.headers;
 
-    const { error, output } = await userService.deleteConnection(userId, targetId);
-
-    if (error) return res.status(mapStatus(error)).json(output && { message: output });
+    await userService.deleteConnection(userId, targetId);
 
     return res.status(204).end();
   },
