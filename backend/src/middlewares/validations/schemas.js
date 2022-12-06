@@ -18,7 +18,11 @@ module.exports = {
   }),
 
   login: Joi.object({
-    email: Joi.string().email().required(),
+    email: Joi.string().email(),
+    userName: Joi.alternatives().conditional(
+      'email',
+      { is: Joi.exist(), then: Joi.string(), otherwise: Joi.string().required() },
+    ),
     password: Joi.string().min(8).required(),
   }),
 };
