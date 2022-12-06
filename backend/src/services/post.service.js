@@ -11,7 +11,7 @@ module.exports = {
 
     if (!post) throw new HttpError(404, 'Post not found');
 
-    post.dataValues.rate = await post.countVotes();
+    post.dataValues.rate = await post.countVote();
 
     return post;
   },
@@ -35,11 +35,12 @@ module.exports = {
   createPost: async (owner, post) => Post.create({ owner, ...post }),
 
   deletePost: async (userId, id) => {
-    const post = await Post.findOne({ where: { id } });
+    const post = await Post.findByPk(id);
 
-    if (post.owner !== userId) throw new HttpError(401, 'UNAUTHORIZED');
+    if (!post) throw new HttpError(404, 'Post not found');
+    if (post.owner !== userId) throw new HttpError(401, 'Unauthorized request');
 
-    return post.destroy();
+    await post.destroy();
   },
 
   addVote: async (id, userId) => {

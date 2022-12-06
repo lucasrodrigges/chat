@@ -12,6 +12,5 @@
         "ecmaVersion": "latest"
     },
     "rules": {
-        "devDependencies": true 
     }
 }

@@ -35,13 +35,17 @@ module.exports = {
     return result;
   },
 
-  login: async ({ email, password }) => {
-    const user = await User.findOne({ where: { email } });
+  login: async ({ email = '', userName = '', password }) => {
+    const user = await User.findOne({
+      where: {
+        [or]: [
+          { email, password },
+          { userName, password },
+        ],
+      },
+    });
 
-    if (!user) throw new HttpError(404, 'User not found');
-    if (user.password !== password) {
-      throw new HttpError(401, 'Wrong password');
-    }
+    if (!user) throw new HttpError(404, 'Incorrect username/email or password');
 
     return { token: createToken({ id: user.id }) };
   },
@@ -77,19 +81,15 @@ module.exports = {
   },
 
   updateUser: async (id, newUser) => {
-    const user = await User.findByPk(id);
+    const [updated] = await User.update(newUser, { where: { id } });
 
-    if (!user) throw new HttpError(404, 'User not found');
-
-    return user.update(newUser);
+    if (!updated) throw new HttpError(404, 'User not found');
   },
 
   deleteUser: async (id) => {
-    const user = await User.findByPk(id);
+    const deleted = await User.destroy({ where: { id } });
 
-    if (!user) throw new HttpError(404, 'User not found');
-
-    await user.destroy();
+    if (!deleted) throw new HttpError(404, 'User not found');
   },
 
   deleteConnection: async (userId, targetId) => {
