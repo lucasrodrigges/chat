@@ -3,7 +3,6 @@ const errorHandler = require('./utils/errorHandler');
 
 const app = express();
 
-require('dotenv').config();
 require('express-async-errors');
 
 const routers = require('./routers');
