@@ -15,13 +15,6 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.belongsToMany(models.User, {
-      as: 'friends',
-      through: 'connections',
-      foreignKey: 'user1_id',
-      otherKey: 'user2_id',
-    });
-
     this.hasMany(models.Post, {
       foreignKey: 'owner',
       as: 'posts',

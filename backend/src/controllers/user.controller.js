@@ -39,7 +39,7 @@ module.exports = {
     const { targetId } = req.params;
     const { userId } = req.headers;
 
-    const output = await userService.createConnection(userId, targetId);
+    const output = await userService.createConnection(userId, Number(targetId));
 
     return res.status(201).json(output);
   },

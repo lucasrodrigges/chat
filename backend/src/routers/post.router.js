@@ -41,7 +41,7 @@ route.post(
   '/post/vote/:targetId',
   userValidations.validateToken,
   postController.addVote,
-); // criar rota para remover voto
+);
 
 route.delete(
   '/post/:id',

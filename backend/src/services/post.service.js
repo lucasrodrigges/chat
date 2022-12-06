@@ -11,7 +11,9 @@ module.exports = {
 
     if (!post) throw new HttpError(404, 'Post not found');
 
-    return post.countVotes();
+    post.dataValues.rate = await post.countVotes();
+
+    return post;
   },
 
   getPostsByUser: async (userId) => {

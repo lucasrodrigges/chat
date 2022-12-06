@@ -1,3 +1,4 @@
+const { or } = require('sequelize').Op;
 const User = require('../models/User');
 
 const { HttpError } = require('../utils/errors');
@@ -47,13 +48,22 @@ module.exports = {
 
   createUser: async (newUser) => {
     const [user, created] = await User.findOrCreate({
-      where: { email: newUser.email },
+      where: {
+        [or]: [
+          { email: newUser.email },
+          { user_name: newUser.userName },
+        ],
+      },
       defaults: newUser,
     });
 
-    if (!created) throw new HttpError(409, 'Email already registered');
+    if (created) return { token: createToken({ id: user.id }) };
 
-    return { token: createToken({ id: user.id }) };
+    if (user.email === newUser.email) {
+      throw new HttpError(409, 'Email already registered');
+    }
+
+    throw new HttpError(409, 'User name is already in use');
   },
 
   createConnection: async (userId, targetId) => {
@@ -61,6 +71,7 @@ module.exports = {
       .map(async (id) => User.findByPk(id)));
 
     if (!user || !followed) throw new HttpError(404, 'User not found');
+    if (await user.hasFriend(targetId)) throw new HttpError(409, 'Already friends');
 
     return user.addFriends(targetId);
   },

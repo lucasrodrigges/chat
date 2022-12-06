@@ -4,7 +4,6 @@ module.exports = (req, res, next) => {
   const { id } = req.params;
 
   if (id === 'me') req.params.id = req.headers.userId;
-
   else {
     const { error, message } = validations.idType(id);
 

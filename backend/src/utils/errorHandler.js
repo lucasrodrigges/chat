@@ -1,9 +1,10 @@
-const { BaseError } = require('./errors');
+const { HttpError } = require('./errors');
 
 module.exports = (error, req, res, next) => {
-  if (error instanceof BaseError) {
-    return req.status(error.statusCode).json({ message: error.message, stack: error.stack });
+  if (error instanceof HttpError) {
+    return res.status(error.statusCode).json({ message: error.message });
   }
 
-  return req.status(500).json({ message: 'Something went wrong' });
+  console.log(error);
+  return res.status(500).json({ message: 'Something went wrong' });
 };
