@@ -1,8 +1,6 @@
 const app = require('./app');
 const sequelize = require('./models/index');
 
-require('dotenv').config();
-
 const port = process.env.NODE_SERVER_PORT || 3333;
 
 app.listen(port, async () => {
