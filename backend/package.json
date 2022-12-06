@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "migration": "npx sequelize db:create; npx sequelize db:migrate",
+    "migration": "npx sequelize db:create && npx sequelize db:migrate",
     "seed": "npx sequelize db:seed:all",
     "drop": "npx sequelize db:drop",
     "test": "mocha tests/**/*test.js --exit",
