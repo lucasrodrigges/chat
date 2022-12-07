@@ -6,7 +6,6 @@ const { describe } = require('mocha');
 const User = require('../../../../src/models/User');
 const mocks = require('./mocks/mocks');
 const userService = require('../../../../src/services/user.service');
-const tokenFunctions = require('../../../../src/auth/token');
 
 const { expect } = chai;
 
