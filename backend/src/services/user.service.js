@@ -25,19 +25,14 @@ module.exports = {
 
     if (!user) throw new HttpError(404, 'User not found');
 
-    let result;
     switch (type) {
       case 'a':
-        result = user.getAllFriends();
-        break;
+        return user.getFollowing();
       case 'r':
-        result = user.getFriendRequests();
-        break;
+        return user.getRequests();
       default:
-        result = user.getReciprocalFriends();
+        return user.getFriends();
     }
-
-    return result;
   },
 
   login: async ({ email = '', userName = '', password }) => {

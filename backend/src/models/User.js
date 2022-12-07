@@ -27,7 +27,7 @@ class User extends Model {
     });
   }
 
-  async getAllFriends() {
+  async getFollowing() {
     return this.sequelize.query(`
       SELECT u.name, u.id, u.picture
       FROM chat.connections c
@@ -38,7 +38,7 @@ class User extends Model {
     });
   }
 
-  async getReciprocalFriends() {
+  async getFriends() {
     return this.sequelize.query(`
       SELECT u.name, u.id, u.picture
       FROM chat.connections c1
@@ -52,7 +52,7 @@ class User extends Model {
     });
   }
 
-  async getFriendRequests() {
+  async getRequests() {
     return this.sequelize.query(`
       SELECT u.name, u.id, u.picture
       FROM chat.connections c1
