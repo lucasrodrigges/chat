@@ -1,4 +1,5 @@
 const { or } = require('sequelize').Op;
+const { genSaltSync, hashSync, compareSync } = require('bcrypt');
 const User = require('../models/User');
 
 const { HttpError } = require('../utils/errors');
@@ -39,18 +40,19 @@ module.exports = {
     const user = await User.findOne({
       where: {
         [or]: [
-          { email, password },
-          { userName, password },
+          { email }, { userName },
         ],
       },
     });
 
-    if (!user) throw new HttpError(404, 'Incorrect username/email or password');
+    if (!user || !compareSync(password, user.password)) {
+      throw new HttpError(404, 'Incorrect username/email or password');
+    }
 
     return { token: jwt.createToken({ id: user.id }) };
   },
 
-  createUser: async (newUser) => {
+  createUser: async ({ password, ...newUser }) => {
     const [user, created] = await User.findOrCreate({
       where: {
         [or]: [
@@ -58,7 +60,10 @@ module.exports = {
           { user_name: newUser.userName },
         ],
       },
-      defaults: newUser,
+      defaults: {
+        password: hashSync(password, genSaltSync(10)),
+        newUser,
+      },
     });
 
     if (created) return { token: jwt.createToken({ id: user.id }) };
