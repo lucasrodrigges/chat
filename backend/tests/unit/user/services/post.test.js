@@ -25,13 +25,6 @@ describe('POST /user/service', () => {
 
     const result = await userService.login(mocks.loginBody);
 
-    expect(User.findOne).to.be.calledWith({
-      where: {
-        [or]: [
-          { email: mocks.loginBody.email }, { userName: '' },
-        ],
-      },
-    });
     expect(result).to.be.deep.equal({ token: mocks.token });
   });
 
@@ -43,9 +36,6 @@ describe('POST /user/service', () => {
 
     const result = await userService.createUser(mocks.userWithPassword);
 
-    expect(bcrypt.genSaltSync).to.be.calledWith(10);
-    expect(bcrypt.hashSync).to.be
-      .calledWith(mocks.userWithPassword.password, mocks.bcrypt.genSaltSync);
     expect(tokenFunctions.createToken).to.be.calledWith({ id: mocks.findOrCreate.sucess[0].id });
     expect(result).to.be.deep.equal({ token: mocks.token });
   });
