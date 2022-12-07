@@ -2,7 +2,7 @@ const { or } = require('sequelize').Op;
 const User = require('../models/User');
 
 const { HttpError } = require('../utils/errors');
-const { createToken } = require('../auth/token');
+const jwt = require('../auth/token');
 
 module.exports = {
   getUsers: async () => User.findAll(),
@@ -47,7 +47,7 @@ module.exports = {
 
     if (!user) throw new HttpError(404, 'Incorrect username/email or password');
 
-    return { token: createToken({ id: user.id }) };
+    return { token: jwt.createToken({ id: user.id }) };
   },
 
   createUser: async (newUser) => {
@@ -61,7 +61,7 @@ module.exports = {
       defaults: newUser,
     });
 
-    if (created) return { token: createToken({ id: user.id }) };
+    if (created) return { token: jwt.createToken({ id: user.id }) };
 
     if (user.email === newUser.email) {
       throw new HttpError(409, 'Email already registered');

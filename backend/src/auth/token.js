@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 
+require('dotenv').config();
+
 const key = process.env.JWT_KEY;
 const config = {
   algorithm: 'HS256',
