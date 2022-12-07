@@ -10,6 +10,14 @@ module.exports = {
     return next();
   },
 
+  validateUpdateUser: (req, res, next) => {
+    const { error, message } = validations.userFieldsUpdate(req.body);
+
+    if (error) return res.status(error).json({ message });
+
+    return next();
+  },
+
   validateConnection: (req, res, next) => {
     const { targetId } = req.params;
     const { error, message } = validations.connectionFields({ targetId });
