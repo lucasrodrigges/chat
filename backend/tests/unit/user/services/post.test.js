@@ -3,8 +3,6 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const { describe } = require('mocha');
 
-const { or } = require('sequelize').Op;
-
 const bcrypt = require('bcrypt');
 const User = require('../../../../src/models/User');
 const mocks = require('./mocks/mocks');
