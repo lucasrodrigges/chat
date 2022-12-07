@@ -53,9 +53,10 @@ router.put(
 );
 
 router.patch(
-  '/user',
+  '/user/password',
   userValidations.validateToken,
-  userController.updateUser,
+  userValidations.validatePatchUser,
+  userController.changePassword,
 );
 
 router.delete(

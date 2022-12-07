@@ -6,10 +6,14 @@ const { HttpError } = require('../utils/errors');
 const jwt = require('../auth/token');
 
 module.exports = {
-  getUsers: async () => User.findAll(),
+  getUsers: async () => User.findAll({ attributes: { exclude: ['password'] } }),
 
   getUserById: async (id) => {
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(id, {
+      attributes: {
+        exclude: ['password'],
+      },
+    });
 
     if (!user) throw new HttpError(404, 'User not found');
 
@@ -93,6 +97,16 @@ module.exports = {
     user.update(newUser);
 
     return user;
+  },
+
+  changePassword: async (id, { password }) => {
+    const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
+
+    if (!user) throw new HttpError(404, 'User not found.');
+
+    const updated = user.update({ password: hashSync(password, genSaltSync(10)) });
+
+    console.log(updated);
   },
 
   deleteUser: async (id) => {

@@ -20,6 +20,10 @@ module.exports = {
     picture: Joi.string(),
   }).min(1),
 
+  userPatch: Joi.object({
+    password: Joi.string().min(8).required(),
+  }),
+
   connection: Joi.object({
     targetId: Joi.number().min(1),
   }),

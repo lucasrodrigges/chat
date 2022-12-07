@@ -52,6 +52,14 @@ module.exports = {
     return res.status(200).json(user);
   },
 
+  changePassword: async (req, res) => {
+    const { userId } = req.headers;
+
+    await userService.changePassword(userId, req.body);
+
+    return res.status(200).end();
+  },
+
   deleteUser: async (req, res) => {
     const { userId } = req.headers;
 
