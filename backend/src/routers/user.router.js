@@ -48,14 +48,15 @@ router.post(
 router.put(
   '/user',
   userValidations.validateToken,
-  userValidations.validateUser,
+  userValidations.validateUpdateUser,
   userController.updateUser,
-); // TODO criar uma validação para todos os inputs como REQUIRED
+);
 
 router.patch(
-  '/user',
+  '/user/password',
   userValidations.validateToken,
-  userController.updateUser,
+  userValidations.validatePatchUser,
+  userController.changePassword,
 );
 
 router.delete(

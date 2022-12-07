@@ -14,6 +14,22 @@ module.exports = {
     return { error: null };
   },
 
+  userFieldsUpdate: (user) => {
+    const { error } = schemas.userUpdate.validate(user);
+
+    if (error) return formatError(error);
+
+    return { error: null };
+  },
+
+  userFieldsPatch: (user) => {
+    const { error } = schemas.userPatch.validate(user);
+
+    if (error) return formatError(error);
+
+    return { error: null };
+  },
+
   connectionFields: (conn) => {
     const { error } = schemas.connection.validate(conn);
 

@@ -1,15 +1,19 @@
 const { or } = require('sequelize').Op;
-const { genSaltSync, hashSync, compareSync } = require('bcrypt');
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 const { HttpError } = require('../utils/errors');
-const { createToken } = require('../auth/token');
+const jwt = require('../auth/token');
 
 module.exports = {
-  getUsers: async () => User.findAll(),
+  getUsers: async () => User.findAll({ attributes: { exclude: ['password'] } }),
 
   getUserById: async (id) => {
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(id, {
+      attributes: {
+        exclude: ['password'],
+      },
+    });
 
     if (!user) throw new HttpError(404, 'User not found');
 
@@ -45,11 +49,11 @@ module.exports = {
       },
     });
 
-    if (!user || !compareSync(password, user.password)) {
+    if (!user || !bcrypt.compareSync(password, user.password)) {
       throw new HttpError(404, 'Incorrect username/email or password');
     }
 
-    return { token: createToken({ id: user.id }) };
+    return { token: jwt.createToken({ id: user.id }) };
   },
 
   createUser: async ({ password, ...newUser }) => {
@@ -61,12 +65,12 @@ module.exports = {
         ],
       },
       defaults: {
-        password: hashSync(password, genSaltSync(10)),
-        newUser,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+        ...newUser,
       },
     });
 
-    if (created) return { token: createToken({ id: user.id }) };
+    if (created) return { token: jwt.createToken({ id: user.id }) };
 
     if (user.email === newUser.email) {
       throw new HttpError(409, 'Email already registered');
@@ -86,9 +90,21 @@ module.exports = {
   },
 
   updateUser: async (id, newUser) => {
-    const [updated] = await User.update(newUser, { where: { id } });
+    const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
 
-    if (!updated) throw new HttpError(404, 'User not found');
+    if (!user) throw new HttpError(404, 'User not found.');
+
+    user.update(newUser);
+
+    return user;
+  },
+
+  changePassword: async (id, { password }) => {
+    const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
+
+    if (!user) throw new HttpError(404, 'User not found.');
+
+    user.update({ password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)) });
   },
 
   deleteUser: async (id) => {

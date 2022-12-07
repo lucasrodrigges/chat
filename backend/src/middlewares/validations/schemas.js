@@ -13,6 +13,17 @@ module.exports = {
     picture: Joi.string(),
   }),
 
+  userUpdate: Joi.object({
+    name: Joi.string().min(3),
+    userName: Joi.string().min(3),
+    email: Joi.string().email(),
+    picture: Joi.string(),
+  }).min(1),
+
+  userPatch: Joi.object({
+    password: Joi.string().min(8).required(),
+  }),
+
   connection: Joi.object({
     targetId: Joi.number().min(1),
   }),
