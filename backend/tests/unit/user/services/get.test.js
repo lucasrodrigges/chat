@@ -29,4 +29,37 @@ describe('GET /user/service', () => {
 
     expect(result).to.be.deep.equal(mocks.findByPk.sucess);
   });
+
+  it('Sucesso na obtenção de amizades', async () => {
+    sinon.stub(User, 'findByPk').resolves(mocks.getConnections);
+    sinon.stub(mocks.getConnections, 'getFriends').resolves(mocks.users);
+
+    const result = await userService.getConnections(mocks.user.id);
+
+    expect(User.findByPk).to.be.calledWith(mocks.user.id);
+    expect(mocks.getConnections.getFriends).to.be.calledWith();
+    expect(result).to.be.deep.equal(mocks.users);
+  });
+
+  it('Sucesso na obtenção de solicitações de amizade', async () => {
+    sinon.stub(User, 'findByPk').resolves(mocks.getConnections);
+    sinon.stub(mocks.getConnections, 'getRequests').resolves(mocks.users);
+
+    const result = await userService.getConnections(mocks.user.id, 'r');
+
+    expect(User.findByPk).to.be.calledWith(mocks.user.id);
+    expect(mocks.getConnections.getRequests).to.be.calledWith();
+    expect(result).to.be.deep.equal(mocks.users);
+  });
+
+  it('Sucesso na obtenção de seguidores', async () => {
+    sinon.stub(User, 'findByPk').resolves(mocks.getConnections);
+    sinon.stub(mocks.getConnections, 'getFollowing').resolves(mocks.users);
+
+    const result = await userService.getConnections(mocks.user.id, 'a');
+
+    expect(User.findByPk).to.be.calledWith(mocks.user.id);
+    expect(mocks.getConnections.getFollowing).to.be.calledWith();
+    expect(result).to.be.deep.equal(mocks.users);
+  });
 });

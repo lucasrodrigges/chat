@@ -45,6 +45,12 @@ const bcrypt = {
 
 const token = 'eyJhbGciOiJInR5cCI6IkpXVCJ9.eyJpZCI6iOatVDFq1M_NUYF_s.k8JvwezStm6OczGU6iOat';
 
+const getConnections = {
+  getFriends: () => {},
+  getRequests: () => {},
+  getFollowing: () => {},
+};
+
 module.exports = {
   findAll,
   findByPk,
@@ -55,4 +61,6 @@ module.exports = {
   user,
   userWithPassword,
   bcrypt,
+  users,
+  getConnections,
 };
