@@ -62,7 +62,7 @@ module.exports = {
       },
       defaults: {
         password: hashSync(password, genSaltSync(10)),
-        newUser,
+        ...newUser,
       },
     });
 
@@ -86,9 +86,13 @@ module.exports = {
   },
 
   updateUser: async (id, newUser) => {
-    const [updated] = await User.update(newUser, { where: { id } });
+    const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] } });
 
-    if (!updated) throw new HttpError(404, 'User not found');
+    if (!user) throw new HttpError(404, 'User not found.');
+
+    user.update(newUser);
+
+    return user;
   },
 
   deleteUser: async (id) => {

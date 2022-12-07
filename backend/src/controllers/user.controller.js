@@ -47,9 +47,9 @@ module.exports = {
   updateUser: async (req, res) => {
     const { userId } = req.headers;
 
-    await userService.updateUser(userId, req.body);
+    const user = await userService.updateUser(userId, req.body);
 
-    return res.status(200).json(req.body);
+    return res.status(200).json(user);
   },
 
   deleteUser: async (req, res) => {
