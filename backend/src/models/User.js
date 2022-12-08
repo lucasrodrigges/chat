@@ -14,13 +14,23 @@ class User extends Model {
     });
   }
 
-  static associate(models) {
-    this.hasMany(models.Post, {
+  static associate({ Post, Message }) {
+    this.hasMany(Message, {
+      foreignKey: 'sender',
+      as: 'sentMessages',
+    });
+
+    this.hasMany(Message, {
+      foreignKey: 'receiver',
+      as: 'receivedMessages',
+    });
+
+    this.hasMany(Post, {
       foreignKey: 'owner',
       as: 'posts',
     });
 
-    this.belongsToMany(models.Post, {
+    this.belongsToMany(Post, {
       foreignKey: 'user_id',
       through: 'votes',
       as: 'likedPosts',

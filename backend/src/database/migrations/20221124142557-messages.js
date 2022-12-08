@@ -11,31 +11,29 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      from_user: {
+      sender: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'users', key: 'id' },
       },
-      to_user: {
+      receiver: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'users', key: 'id' },
       },
       read_at: {
         type: Sequelize.DATE,
-        allowNull: true,
       },
-      deleted: {
+      deleted_at: {
         type: Sequelize.DATE,
-        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        // allowNull: false,
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        // allowNull: false,
       },
     });
   },

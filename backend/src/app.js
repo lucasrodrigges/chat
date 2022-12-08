@@ -12,6 +12,7 @@ app.use(express.json());
 
 app.use(routers.userRouter);
 app.use(routers.postRouter);
+app.use(routers.messageRouter);
 
 app.use(errorHandler);
 
