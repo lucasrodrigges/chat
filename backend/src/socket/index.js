@@ -1,7 +1,8 @@
 const socketio = require('socket.io');
-const events = require('./events');
+const { privateMessage } = require('./events');
 
 const { validateToken } = require('../middlewares/socketValidations');
+const { setOnline, setOffline } = require('./functions/user');
 
 const configIo = (server) => {
   const io = new socketio.Server(server, {
@@ -14,9 +15,11 @@ const configIo = (server) => {
   io.use(validateToken);
 
   io.on('connection', (socket) => {
-    console.log(`${socket.handshake.userId} is logged with id ${socket.id}`);
+    setOnline(socket);
 
-    socket.on('private message', events.privateMessage);
+    socket.on('private message', (data) => privateMessage.create(socket, data));
+
+    socket.on('disconnect', () => setOffline(socket));
   });
 };
 
