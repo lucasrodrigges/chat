@@ -11,7 +11,6 @@ class Message extends Model {
     }, {
       sequelize,
       underscored: true,
-      timestamps: false,
     });
   }
 

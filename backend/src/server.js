@@ -18,7 +18,6 @@ app.use(cors());
 
 app.use(routers.userRouter);
 app.use(routers.postRouter);
-app.use(routers.messageRouter);
 
 app.use(errorHandler);
 
