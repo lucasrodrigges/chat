@@ -1,0 +1,32 @@
+{
+  "name": "chat-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^2.2.0",
+    "axios": "^1.2.1",
+    "dotenv": "^16.0.3",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-combine-reducers": "^1.1.1",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.5",
+    "vite": "^3.2.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "eslint": "^8.29.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0"
+  }
+}
