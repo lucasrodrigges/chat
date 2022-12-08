@@ -1,9 +1,9 @@
-const app = require('./app');
+const server = require('./server');
 const sequelize = require('./models/index');
 
 const port = process.env.NODE_SERVER_PORT || 3333;
 
-app.listen(port, async () => {
+server.listen(port, async () => {
   console.log(`online on port ${port}`);
 
   try {
