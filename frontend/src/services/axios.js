@@ -1,10 +1,18 @@
 import axios from 'axios';
 import { getFromLS } from './localstorage';
 
-export default axios.create({
+const apiFetch = axios.create({
   baseURL: `${import.meta.env.VITE_PROTOCOL}://${import.meta.env.VITE_BASE_URL}/`,
   headers: {
     'Content-Type': 'application/json',
     Authorization: getFromLS('token'),
   },
 });
+
+export const postLogin = async (body) => (
+  apiFetch.post('/login', body)
+    .then(({ status, data: { token } }) => ({ status, token }))
+    .catch(({ response: { status, data: { message } } }) => ({ status, message }))
+);
+
+export const v = 'v';

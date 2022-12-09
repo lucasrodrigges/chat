@@ -1,7 +1,6 @@
 import React, { createContext, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { reducers, initialState } from './reducers';
-import axios from '../services/axios';
 
 const GlobalContext = createContext();
 
@@ -18,12 +17,8 @@ export default function GlobalProvider({ children }) {
   };
 
   const getUser = () => {
-    axios.get('/user/me')
-      .then(({ data }) => console.log(data))
-      .catch((err) => console.error(err));
-  };
 
-  getUser();
+  };
 
   const storage = useMemo(() => ({
     ...store,
