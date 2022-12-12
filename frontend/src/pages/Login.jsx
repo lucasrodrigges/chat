@@ -24,10 +24,10 @@ export default function Login() {
     const { entry, password } = user;
     const { method } = validations;
 
-    const { error, token } = await postLogin({ [method]: entry, password });
+    const { error, data } = await postLogin({ [method]: entry, password });
 
     if (!error) {
-      setToLS('token', token);
+      setToLS('token', data.token);
       navigate('/home');
     } else setErrorMsg(error);
   };
