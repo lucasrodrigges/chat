@@ -5,23 +5,15 @@ import { postLogin } from '../services/axios';
 import { setToLS } from '../services/localstorage';
 
 export default function Login() {
+  const [validations, setValidations] = useState({});
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
   const [user, setUser] = useState({
     entry: '',
     password: '',
   });
-  const [validations, setValidations] = useState({});
-  const [errorMsg, setErrorMsg] = useState('');
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const { entry, password } = user;
-    setValidations({
-      email: EMAIL_RGX.test(entry),
-      userName: entry.length >= 3,
-      password: password.length >= 8,
-    });
-  }, [user]);
 
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
@@ -30,27 +22,56 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { entry, password } = user;
-    const key = entry.includes('@') ? 'email' : 'userName';
+    const { method } = validations;
 
-    const { status, token, message } = await postLogin({ [key]: entry, password });
+    const { error, token } = await postLogin({ [method]: entry, password });
 
-    if (status !== 200) setErrorMsg(message);
-    else {
+    if (!error) {
       setToLS('token', token);
       navigate('/home');
-    }
+    } else setErrorMsg(error);
   };
 
+  useEffect(() => {
+    const { entry, password } = user;
+    const method = entry.includes('@') ? 'email' : 'userName';
+
+    setValidations({
+      validEntry: method === 'email' ? EMAIL_RGX.test(entry) : entry.length >= 3,
+      validPassword: password.length >= 8,
+      method,
+    });
+  }, [user]);
+
+  useEffect(() => {
+    const { validEntry, validPassword } = validations;
+
+    setIsDisabled(!validEntry || !validPassword);
+  }, [validations]);
+
   return (
-    <form action="" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <label htmlFor="entry">
-        <input type="text" name="entry" placeholder="Email or username" onChange={handleChange} />
+        <input
+          type="text"
+          name="entry"
+          onChange={handleChange}
+          className={validations.validEntry ? 'valid' : 'invalid'}
+        />
       </label>
+
       <label htmlFor="password">
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          className={validations.validPassword ? 'valid' : 'invalid'}
+        />
       </label>
+
       {errorMsg && <span>{errorMsg}</span>}
-      <button type="submit">Login</button>
+      <button type="submit" disabled={isDisabled}>Login</button>
     </form>
   );
 }
