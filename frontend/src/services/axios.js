@@ -12,7 +12,7 @@ const apiFetch = axios.create({
 export const postLogin = async (body) => (
   apiFetch.post('/login', body)
     .then(({ status, data: { token } }) => ({ status, token }))
-    .catch(({ response: { status, data: { message } } }) => ({ status, message }))
+    .catch(({ response: { status, data: { message } } }) => ({ status, error: message }))
 );
 
 export const v = 'v';
