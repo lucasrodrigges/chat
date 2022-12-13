@@ -1,10 +1,19 @@
+const { like } = require('sequelize').Op;
 const Post = require('../models/Post');
 const User = require('../models/User');
 
 const { HttpError } = require('../utils/errors');
 
 module.exports = {
-  getPosts: async () => Post.findAll(),
+  getPosts: async (q = '', p = 1) => Post.findAll({
+    where: {
+      body: {
+        [like]: `%${q}%`,
+      },
+    },
+    offset: 10 * (p - 1),
+    limit: 10,
+  }),
 
   getPostById: async (id) => {
     const post = await Post.findByPk(id);
