@@ -1,10 +1,10 @@
 import React from 'react';
 import Menu from '../components/Menu';
 
-export default function Home() {
+export default function Chat() {
   return (
     <div>
-      Home
+      Chat
       <Menu />
     </div>
   );
