@@ -24,10 +24,10 @@ export default function Login() {
     const { entry, password } = user;
     const { method } = validations;
 
-    const { error, token } = await postLogin({ [method]: entry, password });
+    const { error, data } = await postLogin({ [method]: entry, password });
 
     if (!error) {
-      setToLS('token', token);
+      setToLS('token', data.token);
       navigate('/home');
     } else setErrorMsg(error);
   };
@@ -45,16 +45,17 @@ export default function Login() {
 
   useEffect(() => {
     const { validEntry, validPassword } = validations;
-
     setIsDisabled(!validEntry || !validPassword);
   }, [validations]);
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1> Logo </h1>
       <label htmlFor="entry">
         <input
           type="text"
           name="entry"
+          placeholder="Username or email"
           onChange={handleChange}
           className={validations.validEntry ? 'valid' : 'invalid'}
         />
@@ -70,8 +71,17 @@ export default function Login() {
         />
       </label>
 
-      {errorMsg && <span>{errorMsg}</span>}
+      {errorMsg && <span className="error">{errorMsg}</span>}
       <button type="submit" disabled={isDisabled}>Login</button>
+
+      <button
+        className="signup"
+        onClick={() => navigate('/signup')}
+        type="button"
+      >
+        Create account
+
+      </button>
     </form>
   );
 }
