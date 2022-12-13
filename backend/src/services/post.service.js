@@ -12,6 +12,7 @@ module.exports = {
       },
     },
     offset: 10 * (p - 1),
+    order: [['createdAt', 'ASC']],
     limit: 10,
   }),
 
