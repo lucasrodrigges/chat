@@ -4,13 +4,13 @@ import PostCard from '../components/PostCard';
 import { GlobalContext } from '../context/GlobalProvider';
 
 export default function Feed() {
-  const { posts } = useContext(GlobalContext);
+  const { posts: { feed } } = useContext(GlobalContext);
 
   return (
     <div>
       Feed
       <Menu />
-      {posts.map((post) => (
+      {feed.map((post) => (
         <PostCard post={post} />
       ))}
     </div>

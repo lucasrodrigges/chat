@@ -1,6 +1,9 @@
 import { GET_POSTS } from '../types';
 
-export const postsInitialState = [];
+export const postsInitialState = {
+  feed: [],
+  trends: [],
+};
 
 export const postsReducer = (state, action) => {
   switch (action.type) {
