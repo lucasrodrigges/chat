@@ -1,0 +1,41 @@
+.menu {
+  display: flex;
+  align-items: center;
+  padding: 25px 0;
+  width: 55px;
+  flex-direction: column;
+  background-color: #333533;
+}
+
+.menu a {
+  margin-bottom: 60px;
+}
+
+.menu svg {
+  width: 27px;
+  height: 25px;
+  object-fit: fill;
+  color: #FFFFFF;
+}
+
+.menu svg:hover {
+  color: #f8dcc5;
+}
+
+.menu svg.active {
+  transition: 0.3s;
+  animation: activated 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  color: #FC9E4F;
+}
+
+@keyframes activated {
+  30%{
+    transform: translateY(-30%);
+  }
+  70%{
+    transform: translateY(5%);
+  }
+  100%{
+    transform: translateY(0);
+  }
+}
