@@ -1,10 +1,25 @@
+const { like } = require('sequelize').Op;
+const { fn, col } = require('sequelize');
 const Post = require('../models/Post');
 const User = require('../models/User');
 
 const { HttpError } = require('../utils/errors');
 
 module.exports = {
-  getPosts: async () => Post.findAll(),
+  getPosts: async (q = '', offset = 0) => Post.findAll({
+    include: [{
+      model: User,
+      as: 'author',
+      attributes: ['id', 'name', 'userName', 'picture'],
+    }],
+    where: {
+      body: {
+        [like]: `%${q}%`,
+      },
+    },
+    offset,
+    limit: 10,
+  }),
 
   getPostById: async (id) => {
     const post = await Post.findByPk(id);
@@ -43,7 +58,7 @@ module.exports = {
     await post.destroy();
   },
 
-  addVote: async (id, userId) => {
+  addVote: async (userId, id) => {
     const post = await Post.findByPk(id);
 
     if (!post) throw new HttpError(404, 'Post not found');
