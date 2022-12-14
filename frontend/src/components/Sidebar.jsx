@@ -6,6 +6,8 @@ import { getPosts, getUsers } from '../services/axios';
 import ReducedPostList from './ReducedPostList';
 import UserList from './UserList';
 
+import './Sidebar.css';
+
 let currentSearch;
 export default function Sidebar() {
   const [search, setSearch] = useState('');
@@ -78,24 +80,30 @@ export default function Sidebar() {
 
         <div className="search-types">
           <input
+            className={searchType === 'person' ? 'active' : 'inactive'}
             type="button"
-            value="persons"
+            value="Persons"
+            translate="no"
             onClick={() => setSearchType('person')}
           />
 
           <input
+            className={searchType === 'post' ? 'active' : 'inactive'}
             type="button"
-            value="posts"
+            value="Posts"
+            translate="no"
             onClick={() => setSearchType('post')}
           />
         </div>
       </div>
 
-      <SearchResults
-        results={results}
-        type={searchType}
-        nextPage={fetchNext}
-      />
+      <div className="sidebar-content">
+        <SearchResults
+          results={results}
+          type={searchType}
+          nextPage={fetchNext}
+        />
+      </div>
     </section>
   );
 }
