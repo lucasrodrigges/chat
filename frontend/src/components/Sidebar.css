@@ -1,6 +1,7 @@
 #sidebar {
   background:#e3e3e36b;
   max-width: 35vw;
+  min-width: 18vw;
   height: 100vh;
   overflow: hidden;
   box-shadow: 2px 0 7px 0 #0000002d;
@@ -19,11 +20,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 12px;
   width: 80%;
-  height: 40px;
+  height: 35px;
   margin-top: 25px;
-  border-radius: 15px;
+  border-radius: 12px;
   border: 1px solid #00000057;
 }
 
@@ -36,8 +37,8 @@
 }
 
 .search-bar img {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 }
 
 .search-types {
@@ -48,7 +49,7 @@
 
 .search-types input {
   color:  #000000a1;
-  font-size: 18px;
+  font-size: 14px;
   padding: 2px 0;
   border-bottom: 2px solid transparent;
 }
