@@ -1,13 +1,11 @@
 import React from 'react';
-
-import Sidebar from '../components/Sidebar';
 import Menu from '../components/Menu';
 
-export default function Home() {
+export default function Profile() {
   return (
     <div>
+      Profile
       <Menu />
-      <Sidebar />
     </div>
   );
 }

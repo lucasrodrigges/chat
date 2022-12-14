@@ -2,9 +2,9 @@ import React, { createContext, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { reducers, initialState } from './reducers';
 
-const GlobalContext = createContext();
+export const GlobalContext = createContext();
 
-export default function GlobalProvider({ children }) {
+export function GlobalProvider({ children }) {
   const [store, dispatch] = useReducer(reducers, initialState);
 
   const activate = (action) => {
