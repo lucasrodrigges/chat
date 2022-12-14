@@ -2,8 +2,8 @@ const postService = require('../services/post.service');
 
 module.exports = {
   getPosts: async (req, res) => {
-    const { q, p } = req.query;
-    const output = await postService.getPosts(q, p);
+    const { q, offset } = req.query;
+    const output = await postService.getPosts(q, Number(offset));
 
     return res.status(200).json(output);
   },

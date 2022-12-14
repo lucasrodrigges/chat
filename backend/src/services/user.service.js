@@ -6,7 +6,7 @@ const { HttpError } = require('../utils/errors');
 const jwt = require('../auth/token');
 
 module.exports = {
-  getUsers: async (q = '', p = 1) => User.findAll({
+  getUsers: async (q = '', offset = 0) => User.findAll({
     where: {
       [or]: {
         name: { [like]: `%${q}%` },
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
     attributes: { exclude: ['password'] },
-    offset: 10 * (p - 1),
+    offset,
     limit: 10,
   }),
 
