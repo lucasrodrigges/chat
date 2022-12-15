@@ -1,24 +1,10 @@
-const { like } = require('sequelize').Op;
 const Post = require('../models/Post');
 const User = require('../models/User');
 
 const { HttpError } = require('../utils/errors');
 
 module.exports = {
-  getPosts: async (q = '', offset = 0) => Post.findAll({
-    include: [{
-      model: User,
-      as: 'author',
-      attributes: ['id', 'name', 'userName', 'picture'],
-    }],
-    where: {
-      body: {
-        [like]: `%${q}%`,
-      },
-    },
-    offset,
-    limit: 10,
-  }),
+  getPosts: async (q = '', offset = 0) => Post.getAllPosts(q, offset),
 
   getPostById: async (id) => {
     const post = await Post.findByPk(id);
