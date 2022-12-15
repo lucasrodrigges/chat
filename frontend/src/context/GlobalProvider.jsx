@@ -1,8 +1,12 @@
 import React, { createContext, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { reducers, initialState } from './reducers';
-import { getPosts, getPostsByFriends } from '../services/axios';
-import { GET_FEED, GET_TRENDS } from './types';
+import {
+  getPostByOwner, getPosts, getPostsByFriends, getUserProfile,
+} from '../services/axios';
+import {
+  GET_FEED, GET_USER_POSTS, GET_TRENDS, GET_USER,
+} from './types';
 
 export const GlobalContext = createContext();
 
@@ -18,8 +22,11 @@ export function GlobalProvider({ children }) {
     }
   };
 
-  const getUser = () => {
-
+  const getUserById = (id) => {
+    getUserProfile(id).then(({ data, error }) => {
+      if (error) return console.error(error);
+      return activate({ type: GET_USER, payload: data });
+    });
   };
 
   const getFeed = () => {
@@ -36,11 +43,19 @@ export function GlobalProvider({ children }) {
     });
   };
 
+  const getUserPosts = (owner) => {
+    getPostByOwner(owner).then(({ data, error }) => {
+      if (error) return console.error(error);
+      return activate({ type: GET_USER_POSTS, payload: data });
+    });
+  };
+
   const storage = useMemo(() => ({
     ...store,
-    getUser,
+    getUserById,
     getTrends,
     getFeed,
+    getUserPosts,
   }));
 
   return (

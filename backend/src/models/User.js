@@ -79,13 +79,19 @@ class User extends Model {
   async getUserPosts() {
     return this.sequelize.query(`
       SELECT 
-      p.*, COUNT(v.post_id) AS 'rate'
+      p.*, COUNT(v.post_id) AS 'rate',
+      u.id AS 'author.id',
+      u.name AS 'author.name',
+      u.user_name AS 'author.userName',
+      u.picture AS 'author.picture'
       FROM chat.posts p
+        INNER JOIN chat.users u ON p.owner = u.id
         LEFT JOIN chat.votes v ON v.post_id = p.id
       WHERE p.owner = ?
       GROUP BY p.id`, {
       type: QueryTypes.SELECT,
       replacements: [this.id],
+      nest: true,
     });
   }
 
