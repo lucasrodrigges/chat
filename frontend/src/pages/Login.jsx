@@ -15,6 +15,8 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  useEffect(() => setToLS('token', null));
+
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
   };
