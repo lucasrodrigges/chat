@@ -48,19 +48,19 @@ class User extends Model {
     });
   }
 
-  // async getFriends() {
-  //   return this.sequelize.query(`
-  //     SELECT u.name, u.id, u.picture
-  //     FROM chat.connections c1
-  //       INNER JOIN chat.connections c2
-  //         ON c2.user2_id = c1.user1_id AND c1.user2_id = c2.user1_id
-  //       INNER JOIN chat.users u
-  //         ON c1.user2_id = u.id
-  //     WHERE c1.user1_id = ?`, {
-  //     type: QueryTypes.SELECT,
-  //     replacements: [this.id],
-  //   });
-  // }
+  async getFriends() {
+    return this.sequelize.query(`
+      SELECT u.name, u.id, u.picture
+      FROM chat.connections c1
+        INNER JOIN chat.connections c2
+          ON c2.user2_id = c1.user1_id AND c1.user2_id = c2.user1_id
+        INNER JOIN chat.users u
+          ON c1.user2_id = u.id
+      WHERE c1.user1_id = ?`, {
+      type: QueryTypes.SELECT,
+      replacements: [this.id],
+    });
+  }
 
   async getRequests() {
     return this.sequelize.query(`
@@ -98,15 +98,13 @@ class User extends Model {
   async getFriendsPosts() {
     return this.sequelize.query(`
       SELECT 
-        p.*, COUNT(v.post_id) AS 'rate',
-        u.name AS 'author.name',
-        u.picture AS 'author.picture',
-        u.id AS 'author.id',
-        u.user_name AS 'author.userName'
+        p.*, u.name AS 'user.name',
+        u.picture AS 'user.picture',
+        COUNT(v.post_id) AS 'rate'
       FROM chat.connections c
         INNER JOIN chat.posts p ON p.owner = c.user2_id
+        INNER JOIN chat.votes v ON v.post_id = p.id
         INNER JOIN chat.users u ON u.id = c.user2_id
-        LEFT JOIN chat.votes v ON v.post_id = p.id
       WHERE c.user1_id = ?
       GROUP BY p.id
       ORDER BY p.created_at DESC`, {

@@ -10,8 +10,9 @@
 .app {
   width: 100vw;
   height: 100vh;
-  background-color: #f4faff26;
   display: flex;
+  background-color: #f4faff26;
+  overflow: hidden;
 }
 
 button, input {
@@ -23,6 +24,27 @@ img {
   object-fit: cover;
 }
 
+li {
+  list-style: none;
+}
+
 ::-webkit-scrollbar {
   width: 0;
+}
+
+span {
+  color: #4B4B4B
+}
+
+svg {
+  width: 15px;
+  height: 15px;
+  color: #C4C2C2;
+}
+
+button:hover, svg:hover {
+  transition: 0.3s;
+  transform: scale(1.1);
+  cursor: pointer;
+  color: #fab47b;
 }

@@ -1,4 +1,5 @@
 const { Model, DataTypes, QueryTypes } = require('sequelize');
+const camelize = require('camelize');
 
 class Post extends Model {
   static init(sequelize) {
@@ -23,8 +24,8 @@ class Post extends Model {
     });
   }
 
-  static getAllPosts(q, offset) {
-    return this.sequelize.query(`
+  static async getAllPosts(q, offset) {
+    const result = await this.sequelize.query(`
     SELECT p.*, COUNT(v.post_id) AS rate, 
       u.name AS 'author.name', 
       u.id AS 'author.id', 
@@ -35,12 +36,14 @@ class Post extends Model {
         LEFT JOIN chat.votes v ON v.post_id = p.id
     WHERE p.body LIKE ?
     GROUP BY p.id
-    ORDER BY date(p.created_at), rate DESC
+    ORDER BY date(p.created_at) DESC, rate DESC
     LIMIT ?, 10`, {
       type: QueryTypes.SELECT,
       replacements: [`%${q}%`, offset],
       nest: true,
     });
+
+    return camelize(result);
   }
 }
 
