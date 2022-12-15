@@ -5,7 +5,7 @@ import {
   getPostByOwner, getPosts, getPostsByFriends, getUserProfile,
 } from '../services/axios';
 import {
-  GET_FEED, GET_USER_POSTS, GET_TRENDS, GET_USER,
+  GET_FEED, GET_USER_POSTS, GET_TRENDS, GET_USER, ADD_TRENDS,
 } from './types';
 
 export const GlobalContext = createContext();
@@ -43,6 +43,13 @@ export function GlobalProvider({ children }) {
     });
   };
 
+  const addTrends = (offset) => {
+    getPosts('', offset).then(({ data, error }) => {
+      if (error) return console.error(error);
+      return activate({ type: ADD_TRENDS, payload: data });
+    });
+  };
+
   const getUserPosts = (owner) => {
     getPostByOwner(owner).then(({ data, error }) => {
       if (error) return console.error(error);
@@ -56,6 +63,7 @@ export function GlobalProvider({ children }) {
     getTrends,
     getFeed,
     getUserPosts,
+    addTrends,
   }));
 
   return (
