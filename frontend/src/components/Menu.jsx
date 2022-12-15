@@ -1,10 +1,17 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { getFromLS } from '../services/localstorage';
 
 import './Menu.css';
 
 export default function Menu() {
   const { pathname } = useLocation();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!pathname.includes('trends') && !getFromLS('token')) navigate('/login');
+  }, [pathname]);
 
   return (
     <nav className="menu">

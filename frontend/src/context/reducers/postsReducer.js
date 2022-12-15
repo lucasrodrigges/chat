@@ -1,4 +1,4 @@
-import { GET_POSTS } from '../types';
+import { GET_POSTS, GET_TRENDS } from '../types';
 
 export const postsInitialState = {
   feed: [],
@@ -11,6 +11,11 @@ export const postsReducer = (state, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case GET_TRENDS:
+      return {
+        ...state,
+        trends: action.payload,
       };
     default: return state;
   }
