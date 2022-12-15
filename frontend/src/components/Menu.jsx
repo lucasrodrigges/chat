@@ -10,7 +10,7 @@ export default function Menu() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!pathname.includes('trends') && !getFromLS('token')) navigate('/login');
+    if (!pathname.includes('home') && !getFromLS('token')) navigate('/login');
   }, [pathname]);
 
   return (
