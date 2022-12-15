@@ -6,7 +6,6 @@ const validateId = require('../middlewares/validateId');
 
 route.get(
   '/post',
-  userValidations.validateToken,
   postController.getPosts,
 );
 
