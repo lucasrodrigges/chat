@@ -3,7 +3,7 @@ import { userReducer, userInitialState } from './userReducer';
 import { postsReducer, postsInitialState } from './postsReducer';
 
 const [reducers, initialState] = combineReducers({
-  user: [userReducer, userInitialState],
+  users: [userReducer, userInitialState],
   posts: [postsReducer, postsInitialState],
 });
 

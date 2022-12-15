@@ -15,12 +15,16 @@ const apiFetch = (route, method, body) => axios({
 
 export const postLogin = async (body) => apiFetch('/login', 'post', body);
 
+export const getUsers = async (q = '', offset = 0) => (
+  apiFetch(`/user/?q=${q}&offset=${offset}`, 'get')
+);
+
+export const getUserProfile = async (id) => apiFetch(`/user/${id}`, 'get');
+
 export const getPosts = async (q = '', offset = 0) => (
   apiFetch(`/post/?q=${q}&offset=${offset}`, 'get')
 );
 
 export const getPostsByFriends = async () => apiFetch('/post/user/me/friends', 'get');
 
-export const getUsers = async (q = '', offset = 0) => (
-  apiFetch(`/user/?q=${q}&offset=${offset}`, 'get')
-);
+export const getPostByOwner = async (owner) => apiFetch(`/post/user/${owner}`, 'get');
