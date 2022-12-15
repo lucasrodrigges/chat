@@ -1,8 +1,8 @@
 import React, { createContext, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { reducers, initialState } from './reducers';
-import { getPosts } from '../services/axios';
-import { GET_TRENDS } from './types';
+import { getPosts, getPostsByFriends } from '../services/axios';
+import { GET_FEED, GET_TRENDS } from './types';
 
 export const GlobalContext = createContext();
 
@@ -22,9 +22,17 @@ export function GlobalProvider({ children }) {
 
   };
 
+  const getFeed = () => {
+    getPostsByFriends().then(({ data, error }) => {
+      if (error) return console.error(error);
+      return activate({ type: GET_FEED, payload: data });
+    });
+  };
+
   const getTrends = () => {
-    getPosts().then(({ status, data }) => {
-      if (status === 200) activate({ type: GET_TRENDS, payload: data });
+    getPosts().then(({ data, error }) => {
+      if (error) return console.error(error);
+      return activate({ type: GET_TRENDS, payload: data });
     });
   };
 
@@ -32,6 +40,7 @@ export function GlobalProvider({ children }) {
     ...store,
     getUser,
     getTrends,
+    getFeed,
   }));
 
   return (
