@@ -1,5 +1,4 @@
 const { like } = require('sequelize').Op;
-const { fn, col } = require('sequelize');
 const Post = require('../models/Post');
 const User = require('../models/User');
 
