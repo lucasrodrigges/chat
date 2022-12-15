@@ -19,6 +19,8 @@ export const getPosts = async (q = '', offset = 0) => (
   apiFetch(`/post/?q=${q}&offset=${offset}`, 'get')
 );
 
+export const getPostsByFriends = async () => apiFetch('/post/user/me/friends', 'get');
+
 export const getUsers = async (q = '', offset = 0) => (
   apiFetch(`/user/?q=${q}&offset=${offset}`, 'get')
 );
