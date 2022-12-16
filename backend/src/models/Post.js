@@ -4,7 +4,6 @@ const camelize = require('camelize');
 class Post extends Model {
   static init(sequelize) {
     super.init({
-      title: DataTypes.STRING,
       body: DataTypes.TEXT,
     }, {
       sequelize,
