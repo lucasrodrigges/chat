@@ -22,7 +22,7 @@ export default function PostCard({ post }) {
           <h3>{name}</h3>
           <div>
             <span className="username">{`@${userName}`}</span>
-            <span>{ fromNow(createdAt) }</span>
+            <span translate="yes">{ fromNow(createdAt) }</span>
           </div>
         </div>
       </div>

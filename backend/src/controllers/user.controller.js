@@ -3,7 +3,7 @@ const userService = require('../services/user.service');
 module.exports = {
   getUsers: async (req, res) => {
     const { q, offset } = req.query;
-    const output = await userService.getUsers(q, Number(offset));
+    const output = await userService.getUsers(q, offset);
 
     return res.status(200).json(output);
   },

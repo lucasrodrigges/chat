@@ -4,7 +4,7 @@ const User = require('../models/User');
 const { HttpError } = require('../utils/errors');
 
 module.exports = {
-  getPosts: async (q = '', offset = 0) => Post.getAllPosts(q, offset),
+  getPosts: async (q = '', offset = 0) => Post.getAllPosts(q, Number(offset)),
 
   getPostById: async (id) => {
     const post = await Post.findByPk(id);

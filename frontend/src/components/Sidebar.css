@@ -4,7 +4,7 @@
   min-width: 18vw;
   height: 100vh;
   overflow: hidden;
-  box-shadow: 2px 0 7px 0 #0000002d;
+  box-shadow: 2px 0 7px 0 #0000001a;
 }
 
 .sidebar-search {
@@ -53,6 +53,8 @@
   padding: 2px 0;
   border-bottom: 2px solid transparent;
 }
+
+
 
 .search-types input.active {
   transition: 0.2s;
