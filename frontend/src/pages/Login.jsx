@@ -15,8 +15,6 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  useEffect(() => setToLS('token', null));
-
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
   };
@@ -33,6 +31,8 @@ export default function Login() {
       navigate('/home');
     } else setErrorMsg(error);
   };
+
+  useEffect(() => localStorage.clear());
 
   useEffect(() => {
     const { entry, password } = user;
