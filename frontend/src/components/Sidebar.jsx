@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import searchIcon from '../assets/icons/search.svg';
-import { getPosts, getUsers } from '../services/axios';
+import { GlobalContext } from '../context/GlobalProvider';
 
 import ReducedPostList from './ReducedPostList';
 import UserList from './UserList';
@@ -12,52 +12,20 @@ let currentSearch;
 export default function Sidebar() {
   const [search, setSearch] = useState('');
   const [searchType, setSearchType] = useState('person');
-  const [results, setRetuls] = useState({
-    persons: { data: [], lastPage: false },
-    posts: { data: [], lastPage: false },
-  });
 
-  const fetchResuls = async () => {
-    switch (searchType) {
-      case 'post': {
-        const { data } = await getPosts(currentSearch);
-        const lastPage = data.length < 10;
+  const context = useContext(GlobalContext);
+  const { users } = context;
 
-        return setRetuls((prev) => ({ ...prev, posts: { data, lastPage } }));
-      }
-      default: {
-        const { data } = await getUsers(currentSearch);
-        const lastPage = data.length < 10;
-
-        return setRetuls((prev) => ({ ...prev, persons: { data, lastPage } }));
-      }
-    }
+  const user = {
+    name: 'caralho',
+    userName: '@oCaralho',
   };
 
-  const fetchNext = async () => {
+  const fetchResults = () => {
     switch (searchType) {
-      case 'post': {
-        const offset = results.posts.data.length;
-        const { data } = await getPosts(currentSearch, offset);
-        const lastPage = data.length < 10;
-
-        return setRetuls((prev) => ({
-          ...prev,
-          posts:
-          { data: [...prev.posts.data, ...data], lastPage },
-        }));
-      }
-      default: {
-        const offset = results.persons.data.length;
-        const { data } = await getUsers(currentSearch, offset);
-        const lastPage = data.length < 10;
-
-        return setRetuls((prev) => ({
-          ...prev,
-          persons:
-          { data: [...prev.persons.data, ...data], lastPage },
-        }));
-      }
+      case 'post':
+        return context.getPostsToSidebar(currentSearch);
+      default: return context.getUsersToSidebar(currentSearch);
     }
   };
 
@@ -67,7 +35,7 @@ export default function Sidebar() {
     if (currentSearch === search || !search) return;
 
     currentSearch = search;
-    fetchResuls();
+    fetchResults();
   };
 
   return (
@@ -98,21 +66,42 @@ export default function Sidebar() {
       </div>
 
       <div className="sidebar-content">
-        <SearchResults
-          results={results}
-          type={searchType}
-          nextPage={fetchNext}
-        />
+        <SearchResults type={searchType} />
+      </div>
+
+      <div className="user_profile-sidebar">
+        <div>
+          <img className="user_image-circle" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="woman" />
+          <div>
+            <span>{user.name}</span>
+            <p>{ user.userName }</p>
+          </div>
+        </div>
+        <span>...</span>
       </div>
     </section>
   );
 }
 
-function SearchResults({ results, type, nextPage }) {
+function SearchResults({ type }) {
+  const { sidebar, addPostsToSidebar, addUsersToSidebar } = useContext(GlobalContext);
+
   switch (type) {
     case 'post':
-      return <ReducedPostList content={results.posts} nextPage={nextPage} />;
+      return (
+        <ReducedPostList
+          content={sidebar.posts}
+          lastPage={sidebar.lastPost}
+          nextPage={() => addPostsToSidebar(currentSearch)}
+        />
+      );
     default:
-      return <UserList content={results.persons} nextPage={nextPage} />;
+      return (
+        <UserList
+          content={sidebar.users}
+          lastPage={sidebar.lastUser}
+          nextPage={() => addUsersToSidebar(currentSearch)}
+        />
+      );
   }
 }

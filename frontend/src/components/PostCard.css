@@ -1,8 +1,6 @@
 .post-card {
   min-width: 260px;
   margin: 30px 0;
-  border-radius: 15px;
-  padding-top: 10px;
   animation: post-fade 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 }
 
@@ -18,13 +16,17 @@
   }
 }
 
+.post-card:hover .post_user-info {
+  background: linear-gradient(to left, #ddddddc7, transparent 100%)
+}
+
 .post_user-info {
   display: flex;
   align-items: center;
   padding: 10px 0;
   margin-bottom: 15px;
   border-radius: 0 10px 0 0;
-  background: linear-gradient(to left, #ebebebc7, transparent 110%)
+  background: linear-gradient(to left, #ebebebc7, transparent 100%)
 }
 
 .user_image-circle {
