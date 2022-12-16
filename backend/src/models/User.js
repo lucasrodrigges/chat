@@ -39,7 +39,7 @@ class User extends Model {
   }
 
   async getInfo() {
-    return this.sequelize.query(`
+    const [user] = await this.sequelize.query(`
       SELECT
         u.id, u.name, u.user_name AS userName, u.picture,
         (SELECT COUNT(user1_id) FROM connections c 
@@ -51,6 +51,8 @@ class User extends Model {
       type: QueryTypes.SELECT,
       replacements: [this.id],
     });
+
+    return user;
   }
 
   async getFollowing() {
@@ -116,8 +118,11 @@ class User extends Model {
   async getFriendsPosts() {
     const posts = await this.sequelize.query(`
       SELECT 
-        p.*, u.name AS 'user.name',
-        u.picture AS 'user.picture',
+        p.*,
+        u.id AS 'author.id',
+        u.name AS 'author.name',
+        u.user_name AS 'author.userName',
+        u.picture AS 'author.picture',
         COUNT(v.post_id) AS 'rate'
       FROM chat.connections c
         INNER JOIN chat.posts p ON p.owner = c.user2_id
