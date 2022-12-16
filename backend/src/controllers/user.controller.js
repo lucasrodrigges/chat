@@ -1,6 +1,26 @@
 const userService = require('../services/user.service');
 
 module.exports = {
+  getUser: async (req, res) => {
+    const { idOrUserName } = req.params;
+    const { userId } = req.headers;
+
+    if (/\d/i.test(idOrUserName)) {
+      const output = await userService.getUserById(idOrUserName);
+
+      return res.status(200).json(output);
+    }
+
+    if (idOrUserName === 'me') {
+      const output = await userService.getUserById(userId);
+
+      return res.status(200).json(output);
+    }
+
+    const output = await userService.getUserByUserName(idOrUserName);
+    return res.status(200).json(output);
+  },
+
   getUsers: async (req, res) => {
     const { q, offset } = req.query;
     const output = await userService.getUsers(q, offset);
@@ -20,6 +40,13 @@ module.exports = {
   getUserById: async (req, res) => {
     const { id } = req.params;
     const output = await userService.getUserById(id);
+
+    return res.status(200).json(output);
+  },
+
+  getUserByUserName: async (req, res) => {
+    const { userName } = req.params;
+    const output = await userService.getUserByUserName(userName);
 
     return res.status(200).json(output);
   },

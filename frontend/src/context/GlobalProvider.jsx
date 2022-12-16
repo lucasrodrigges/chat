@@ -1,4 +1,6 @@
-import React, { createContext, useReducer, useMemo } from 'react';
+import React, {
+  createContext, useReducer, useMemo, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { reducers, initialState } from './reducers';
 import {
@@ -14,6 +16,7 @@ import {
   GET_POSTS_SIDEBAR,
   GET_USERS_SIDEBAR,
 } from './types';
+import { getFromLS } from '../services/localstorage';
 
 export const GlobalContext = createContext();
 
@@ -29,7 +32,7 @@ export function GlobalProvider({ children }) {
     }
   };
 
-  const getUserById = (id) => {
+  const getUser = (id) => {
     getUserProfile(id).then(({ data, error }) => {
       if (error) return console.error(error);
       return activate({ type: GET_USER, payload: data });
@@ -92,9 +95,13 @@ export function GlobalProvider({ children }) {
     });
   };
 
+  useEffect(() => {
+    if (getFromLS('token')) getUser('me');
+  }, [getFromLS('token')]);
+
   const storage = useMemo(() => ({
     ...store,
-    getUserById,
+    getUser,
     getTrends,
     getFeed,
     getUserPosts,
