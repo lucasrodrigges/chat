@@ -13,10 +13,9 @@ router.get(
 );
 
 router.get(
-  '/user/:id',
+  '/user/:idOrUserName',
   userValidations.validateToken,
-  validateId,
-  userController.getUserById,
+  userController.getUser,
 );
 
 router.get(

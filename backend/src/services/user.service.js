@@ -30,6 +30,19 @@ module.exports = {
     return user.getInfo();
   },
 
+  getUserByUserName: async (userName) => {
+    const user = await User.findOne({
+      where: { userName },
+      attributes: {
+        exclude: ['password'],
+      },
+    });
+
+    if (!user) throw new HttpError(404, 'User not found');
+
+    return user.getInfo();
+  },
+
   getConnections: async (userId, type) => {
     const user = await User.findByPk(userId);
 
