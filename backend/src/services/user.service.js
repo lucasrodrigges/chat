@@ -27,7 +27,7 @@ module.exports = {
 
     if (!user) throw new HttpError(404, 'User not found');
 
-    return user;
+    return user.getInfo();
   },
 
   getConnections: async (userId, type) => {

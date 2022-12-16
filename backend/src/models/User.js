@@ -38,9 +38,26 @@ class User extends Model {
     });
   }
 
+  async getInfo() {
+    const [user] = await this.sequelize.query(`
+      SELECT
+        u.id, u.name, u.user_name AS userName, u.picture,
+        (SELECT COUNT(user1_id) FROM connections c 
+        WHERE c.user1_id = u.id ) AS following,
+        (SELECT COUNT(user2_id) FROM connections c 
+        WHERE c.user2_id = u.id ) AS followers
+      FROM chat.users u
+      WHERE id = ?`, {
+      type: QueryTypes.SELECT,
+      replacements: [this.id],
+    });
+
+    return user;
+  }
+
   async getFollowing() {
     return this.sequelize.query(`
-      SELECT u.name, u.id, u.picture
+      SELECT u.id, u.name, u.user_name AS userName, u.picture
       FROM chat.connections c
         INNER JOIN chat.users u ON u.id = c.user2_id
       WHERE c.user1_id = ?`, {
@@ -101,8 +118,11 @@ class User extends Model {
   async getFriendsPosts() {
     const posts = await this.sequelize.query(`
       SELECT 
-        p.*, u.name AS 'user.name',
-        u.picture AS 'user.picture',
+        p.*,
+        u.id AS 'author.id',
+        u.name AS 'author.name',
+        u.user_name AS 'author.userName',
+        u.picture AS 'author.picture',
         COUNT(v.post_id) AS 'rate'
       FROM chat.connections c
         INNER JOIN chat.posts p ON p.owner = c.user2_id
