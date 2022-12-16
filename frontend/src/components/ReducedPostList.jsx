@@ -3,12 +3,10 @@ import React from 'react';
 
 import './ReducedPostList.css';
 
-export default function ReducedPostList({ content, nextPage }) {
-  const { data, lastPage } = content;
-
+export default function ReducedPostList({ content, lastPage, nextPage }) {
   return (
     <ul className="reduced_post-list" translate="no">
-      {data.map(({
+      {content.map(({
         author, body, id, rate,
       }) => (
         <li key={id}>
@@ -28,7 +26,7 @@ export default function ReducedPostList({ content, nextPage }) {
         </li>
       ))}
 
-      { !lastPage && data.length ? (
+      { !lastPage && content.length ? (
         <button
           type="button"
           className="see_more"

@@ -4,3 +4,7 @@ export const GET_USER_POSTS = 'GET_USER_POSTS';
 export const GET_TRENDS = 'GET_TRENDS';
 export const GET_FEED = 'GET_FEED';
 export const ADD_TRENDS = 'ADD_TRENDS';
+export const ADD_POSTS_SIDEBAR = 'ADD_POSTS_SIDEBAR';
+export const GET_POSTS_SIDEBAR = 'GET_POSTS_SIDEBAR';
+export const ADD_USERS_SIDEBAR = 'ADD_USER_SIDEBAR';
+export const GET_USERS_SIDEBAR = 'GET_USERS_SIDEBAR';

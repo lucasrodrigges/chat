@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import fromNow from '../services/fromNow';
@@ -12,7 +12,7 @@ export default function PostCard({ post }) {
   const { userName, name, id } = author;
 
   return (
-    <li className='post-card_wrapper'>
+    <li className="post-card_wrapper">
       <div className="post-card">
         <div className="post_user-info">
           <Link to={`/profile/${id}`}>

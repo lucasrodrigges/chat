@@ -2,10 +2,17 @@ import React, { createContext, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { reducers, initialState } from './reducers';
 import {
-  getPostByOwner, getPosts, getPostsByFriends, getUserProfile,
+  getPostByOwner, getPosts, getPostsByFriends, getUserProfile, getUsers,
 } from '../services/axios';
 import {
-  GET_FEED, GET_USER_POSTS, GET_TRENDS, GET_USER, ADD_TRENDS,
+  GET_FEED,
+  GET_USER_POSTS,
+  GET_TRENDS, GET_USER,
+  ADD_TRENDS,
+  ADD_POSTS_SIDEBAR,
+  ADD_USERS_SIDEBAR,
+  GET_POSTS_SIDEBAR,
+  GET_USERS_SIDEBAR,
 } from './types';
 
 export const GlobalContext = createContext();
@@ -57,6 +64,34 @@ export function GlobalProvider({ children }) {
     });
   };
 
+  const getUsersToSidebar = (q) => {
+    getUsers(q).then(({ data, error }) => {
+      if (error) return console.error(error);
+      return activate({ type: GET_USERS_SIDEBAR, payload: data });
+    });
+  };
+
+  const addUsersToSidebar = (q) => {
+    getUsers(q, store.sidebar.users.length).then(({ data, error }) => {
+      if (error) return console.log(error);
+      return activate({ type: ADD_USERS_SIDEBAR, payload: data });
+    });
+  };
+
+  const getPostsToSidebar = (q) => {
+    getPosts(q).then(({ data, error }) => {
+      if (error) return console.log(error);
+      return activate({ type: GET_POSTS_SIDEBAR, payload: data });
+    });
+  };
+
+  const addPostsToSidebar = (q) => {
+    getPosts(q, store.sidebar.posts.length).then(({ data, error }) => {
+      if (error) return console.log(error);
+      return activate({ type: ADD_POSTS_SIDEBAR, payload: data });
+    });
+  };
+
   const storage = useMemo(() => ({
     ...store,
     getUserById,
@@ -64,6 +99,10 @@ export function GlobalProvider({ children }) {
     getFeed,
     getUserPosts,
     addTrends,
+    getUsersToSidebar,
+    addUsersToSidebar,
+    getPostsToSidebar,
+    addPostsToSidebar,
   }));
 
   return (
