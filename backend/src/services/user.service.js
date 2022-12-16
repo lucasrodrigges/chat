@@ -14,7 +14,7 @@ module.exports = {
       },
     },
     attributes: { exclude: ['password'] },
-    offset,
+    offset: Number(offset),
     limit: 10,
   }),
 

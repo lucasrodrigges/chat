@@ -3,7 +3,7 @@ const postService = require('../services/post.service');
 module.exports = {
   getPosts: async (req, res) => {
     const { q, offset } = req.query;
-    const output = await postService.getPosts(q, Number(offset));
+    const output = await postService.getPosts(q, offset);
 
     return res.status(200).json(output);
   },

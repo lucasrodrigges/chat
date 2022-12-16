@@ -1,4 +1,5 @@
 const { Model, DataTypes, QueryTypes } = require('sequelize');
+const camelize = require('camelize');
 
 class User extends Model {
   static init(sequelize) {
@@ -92,13 +93,13 @@ class User extends Model {
   }
 
   async getUserPosts() {
-    return this.sequelize.query(`
+    const posts = await this.sequelize.query(`
       SELECT 
-      p.*, COUNT(v.post_id) AS 'rate',
-      u.id AS 'author.id',
-      u.name AS 'author.name',
-      u.user_name AS 'author.userName',
-      u.picture AS 'author.picture'
+        p.*, COUNT(v.post_id) AS 'rate',
+        u.id AS 'author.id',
+        u.name AS 'author.name',
+        u.user_name AS 'author.userName',
+        u.picture AS 'author.picture'
       FROM chat.posts p
         INNER JOIN chat.users u ON p.owner = u.id
         LEFT JOIN chat.votes v ON v.post_id = p.id
@@ -108,10 +109,12 @@ class User extends Model {
       replacements: [this.id],
       nest: true,
     });
+
+    return camelize(posts);
   }
 
   async getFriendsPosts() {
-    return this.sequelize.query(`
+    const posts = await this.sequelize.query(`
       SELECT 
         p.*, u.name AS 'user.name',
         u.picture AS 'user.picture',
@@ -127,6 +130,8 @@ class User extends Model {
       replacements: [this.id],
       nest: true,
     });
+
+    return camelize(posts);
   }
 }
 

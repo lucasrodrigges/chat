@@ -5,6 +5,19 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+  scrollbar-color: #fc9d4f63 transparent; 
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #fc9d4f1c;
 }
 
 .app {
@@ -28,9 +41,6 @@ li {
   list-style: none;
 }
 
-::-webkit-scrollbar {
-  width: 0;
-}
 
 span {
   color: #4B4B4B
@@ -42,9 +52,8 @@ svg {
   color: #C4C2C2;
 }
 
-button:hover, svg:hover {
+button:hover, svg:hover, input[type="button"]:hover {
   transition: 0.3s;
-  transform: scale(1.1);
   cursor: pointer;
   color: #fab47b;
 }

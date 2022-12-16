@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="home">
       <ul className="posts">
-        {trends.length && trends.map((post) => (
+        {trends.map((post) => (
           <PostCard post={post} key={post.id} />
         ))}
 
