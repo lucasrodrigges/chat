@@ -14,6 +14,12 @@ export default function Sidebar() {
   const [searchType, setSearchType] = useState('person');
 
   const context = useContext(GlobalContext);
+  const { users } = context;
+
+  const user = {
+    name: 'caralho',
+    userName: '@oCaralho',
+  };
 
   const fetchResults = () => {
     switch (searchType) {
@@ -61,6 +67,17 @@ export default function Sidebar() {
 
       <div className="sidebar-content">
         <SearchResults type={searchType} />
+      </div>
+
+      <div className="user_profile-sidebar">
+        <div>
+          <img className="user_image-circle" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="woman" />
+          <div>
+            <span>{user.name}</span>
+            <p>{ user.userName }</p>
+          </div>
+        </div>
+        <span>...</span>
       </div>
     </section>
   );

@@ -43,7 +43,11 @@ li {
 
 
 span {
-  color: #4B4B4B
+  color: #414141;
+}
+
+p {
+  color: #535353;
 }
 
 svg {
