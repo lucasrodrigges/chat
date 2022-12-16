@@ -3,6 +3,19 @@
   margin: 30px 0;
   border-radius: 15px;
   padding-top: 10px;
+  animation: post-fade 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+@keyframes post-fade {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .post_user-info {
@@ -60,6 +73,7 @@
 }
 
 .post-body {
+  justify-content: space-between;
   padding: 15px 27px;
   min-height: 60px;
   width: 100%;
