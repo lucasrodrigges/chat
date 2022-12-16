@@ -26,7 +26,8 @@ export default function Sidebar() {
         return setRetuls((prev) => ({ ...prev, posts: { data, lastPage } }));
       }
       default: {
-        const { data } = await getUsers(currentSearch);
+        const { data, error } = await getUsers(currentSearch);
+        console.log(error);
         const lastPage = data.length < 10;
 
         return setRetuls((prev) => ({ ...prev, persons: { data, lastPage } }));
