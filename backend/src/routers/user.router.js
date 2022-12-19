@@ -2,7 +2,6 @@ const express = require('express');
 
 const userController = require('../controllers/user.controller');
 const userValidations = require('../middlewares/userValidations');
-const validateId = require('../middlewares/validateId');
 
 const router = express.Router();
 
@@ -21,7 +20,7 @@ router.get(
 router.get(
   '/user/:id/connections/',
   userValidations.validateToken,
-  validateId,
+  userValidations.validateId,
   userController.getConnections,
 );
 

@@ -4,7 +4,7 @@ const User = require('../models/User');
 const { HttpError } = require('../utils/errors');
 
 module.exports = {
-  getPosts: async (q = '', offset = 0) => Post.getAllPosts(q, Number(offset)),
+  getPosts: async (q = '', offset = 0, userId = 0) => Post.findPosts(q, Number(offset), userId),
 
   getPostById: async (id) => {
     const post = await Post.findByPk(id);
@@ -48,6 +48,14 @@ module.exports = {
 
     if (!post) throw new HttpError(404, 'Post not found');
 
-    return post.addVote(userId);
+    await post.addVote(userId);
+  },
+
+  removeVote: async (userId, id) => {
+    const post = await Post.findByPk(id);
+
+    if (!post) throw new HttpError(404, 'Post not found');
+
+    await post.removeVote(userId);
   },
 };

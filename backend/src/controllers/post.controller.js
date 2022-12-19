@@ -3,7 +3,8 @@ const postService = require('../services/post.service');
 module.exports = {
   getPosts: async (req, res) => {
     const { q, offset } = req.query;
-    const output = await postService.getPosts(q, offset);
+    const { userId } = req.headers;
+    const output = await postService.getPosts(q, offset, userId);
 
     return res.status(200).json(output);
   },
@@ -39,9 +40,20 @@ module.exports = {
   addVote: async (req, res) => {
     const { userId } = req.headers;
     const { targetId } = req.params;
-    const output = await postService.addVote(userId, targetId);
 
-    return res.status(201).json(output);
+    await postService.addVote(userId, targetId);
+
+    return res.status(200).end();
+  },
+
+  removeVote: async (req, res) => {
+    console.log('rodou');
+    const { userId } = req.headers;
+    const { targetId } = req.params;
+
+    await postService.removeVote(userId, targetId);
+
+    return res.status(200).end();
   },
 
   deletePost: async (req, res) => {

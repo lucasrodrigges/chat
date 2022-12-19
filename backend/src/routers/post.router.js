@@ -2,31 +2,31 @@ const route = require('express').Router();
 
 const userValidations = require('../middlewares/userValidations');
 const postController = require('../controllers/post.controller');
-const validateId = require('../middlewares/validateId');
+const userHelpers = require('../middlewares/userHelpers');
 
 route.get(
   '/post',
+  userHelpers.saveUserId,
   postController.getPosts,
 );
 
 route.get(
   '/post/:id',
   userValidations.validateToken,
-  validateId,
   postController.getPostById,
 );
 
 route.get(
   '/post/user/:id/friends',
   userValidations.validateToken,
-  validateId,
+  userValidations.validateId,
   postController.getPostsByFriends,
 );
 
 route.get(
   '/post/user/:id',
   userValidations.validateToken,
-  validateId,
+  userValidations.validateId,
   postController.getPostsByUser,
 );
 
@@ -37,9 +37,15 @@ route.post(
 );
 
 route.post(
-  '/post/vote/:targetId',
+  '/post/:targetId/vote',
   userValidations.validateToken,
   postController.addVote,
+);
+
+route.post(
+  '/post/:targetId/unvote',
+  userValidations.validateToken,
+  postController.removeVote,
 );
 
 route.delete(

@@ -3,10 +3,19 @@
   flex-direction: column;
   background:#e3e3e36b;
   max-width: 35vw;
-  min-width: 18vw;
+  min-width: 220px;
   height: 100vh;
   overflow: hidden;
   box-shadow: 2px 0 7px 0 #0000001a;
+  font-size: 0.8rem;
+}
+
+#sidebar span {
+  color: #181818;
+}
+
+#sidebar p {
+  font-size: 0.7rem;
 }
 
 .sidebar-search {
@@ -14,7 +23,7 @@
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  height: 20%;
+  min-height: 100px;
   border-bottom: 2px solid #00000033;
 }
 
@@ -77,14 +86,10 @@
   border-top: 1px solid #00000005;
 }
 
-.user_profile-sidebar p {
-  font-size: 0.6rem;
-}
-
 .user_profile-sidebar > div {
   display: flex;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   gap: 4px;
 }
 
@@ -98,4 +103,6 @@
   height: 35px;
 }
 
-
+.user_profile-sidebar svg {
+  color: #181818;
+}

@@ -4,7 +4,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { reducers, initialState } from './reducers';
 import {
-  getPostByOwner, getPosts, getPostsByFriends, getUserProfile, getUsers,
+  getPostByOwner, getPosts, getPostsByFriends, getUserProfile, getUsers, addVote, remoteVote,
 } from '../services/axios';
 import {
   GET_FEED,
@@ -15,6 +15,8 @@ import {
   ADD_USERS_SIDEBAR,
   GET_POSTS_SIDEBAR,
   GET_USERS_SIDEBAR,
+  ADD_LIKE_SIDEBAR,
+  REMOVE_LIKE_SIDEBAR,
 } from './types';
 import { getFromLS } from '../services/localstorage';
 
@@ -95,6 +97,20 @@ export function GlobalProvider({ children }) {
     });
   };
 
+  const likePostFromSidebar = (postId) => {
+    activate({ type: ADD_LIKE_SIDEBAR, payload: postId });
+    addVote(postId).then(({ error }) => {
+      if (error) console.log(error);
+    });
+  };
+
+  const unlikePostFromSidebar = (postId) => {
+    activate({ type: REMOVE_LIKE_SIDEBAR, payload: postId });
+    remoteVote(postId).then(({ error }) => {
+      if (error) console.log(error);
+    });
+  };
+
   useEffect(() => {
     if (getFromLS('token')) getUser('me');
   }, [getFromLS('token')]);
@@ -110,6 +126,8 @@ export function GlobalProvider({ children }) {
     addUsersToSidebar,
     getPostsToSidebar,
     addPostsToSidebar,
+    likePostFromSidebar,
+    unlikePostFromSidebar,
   }));
 
   return (
