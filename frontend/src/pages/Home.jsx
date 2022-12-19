@@ -5,7 +5,7 @@ import { GlobalContext } from '../context/GlobalProvider';
 import './Home.css';
 
 export default function Home() {
-  const { posts: { trends }, getTrends, addTrends } = useContext(GlobalContext);
+  const { posts: { trends, lastTrend }, getTrends, addTrends } = useContext(GlobalContext);
 
   useEffect(() => getTrends(), []);
 
@@ -16,7 +16,7 @@ export default function Home() {
           <PostCard post={post} key={post.id} />
         ))}
 
-        { trends.length ? (
+        { !lastTrend && trends.length ? (
           <button
             type="button"
             className="see_more"

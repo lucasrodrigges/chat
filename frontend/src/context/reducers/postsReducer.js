@@ -6,6 +6,7 @@ export const postsInitialState = {
   feed: [],
   trends: [],
   userPosts: [],
+  lastTrend: false,
 };
 
 export const postsReducer = (state, action) => {
@@ -14,6 +15,7 @@ export const postsReducer = (state, action) => {
       return {
         ...state,
         trends: action.payload,
+        lastTrend: action.payload.length < 10,
       };
     case GET_FEED:
       return {
@@ -29,6 +31,7 @@ export const postsReducer = (state, action) => {
       return {
         ...state,
         trends: [...state.trends, ...action.payload],
+        lastTrend: action.payload.length < 10,
       };
     default: return state;
   }
