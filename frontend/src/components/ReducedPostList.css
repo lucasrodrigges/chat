@@ -16,12 +16,12 @@
 
 .reduced_post-list li > div {
   display: flex;
+  max-width: 78%;
+  overflow: hidden;
 }
 
 .reduced_post-list li p {
   color: #000000b8;
-  max-width: 90%;
-  font-size: 0.8rem;
 }
 
 .reduced_post-list li img {
