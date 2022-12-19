@@ -1,5 +1,10 @@
 import {
-  GET_POSTS_SIDEBAR, GET_USERS_SIDEBAR, ADD_POSTS_SIDEBAR, ADD_USERS_SIDEBAR,
+  GET_POSTS_SIDEBAR,
+  GET_USERS_SIDEBAR,
+  ADD_POSTS_SIDEBAR,
+  ADD_USERS_SIDEBAR,
+  ADD_LIKE_SIDEBAR,
+  REMOVE_LIKE_SIDEBAR,
 } from '../types';
 
 export const sidebarInitialState = {
@@ -34,6 +39,28 @@ export const sidebarReducer = (state, action) => {
         ...state,
         posts: [...state.posts, ...action.payload],
         lastPost: action.payload.length < 10,
+      };
+    case ADD_LIKE_SIDEBAR:
+      return {
+        ...state,
+        posts: state.posts.map((post) => (
+          post.id === action.payload ? {
+            ...post,
+            isVoted: true,
+            rate: post.rate + 1,
+          } : post
+        )),
+      };
+    case REMOVE_LIKE_SIDEBAR:
+      return {
+        ...state,
+        posts: state.posts.map((post) => (
+          post.id === action.payload ? {
+            ...post,
+            isVoted: false,
+            rate: post.rate - 1,
+          } : post
+        )),
       };
     default: return state;
   }

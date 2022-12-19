@@ -28,3 +28,7 @@ export const getPosts = async (q = '', offset = 0) => (
 export const getPostsByFriends = async () => apiFetch('/post/user/me/friends', 'get');
 
 export const getPostByOwner = async (owner) => apiFetch(`/post/user/${owner}`, 'get');
+
+export const addVote = async (postId) => apiFetch(`/post/${postId}/vote`, 'post');
+
+export const remoteVote = async (postId) => apiFetch(`/post/${postId}/unvote`, 'post');

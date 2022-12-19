@@ -47,6 +47,7 @@ module.exports = {
   },
 
   removeVote: async (req, res) => {
+    console.log('rodou');
     const { userId } = req.headers;
     const { targetId } = req.params;
 
