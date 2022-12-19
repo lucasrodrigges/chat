@@ -7,13 +7,12 @@ import { GlobalContext } from '../context/GlobalProvider';
 import './ReducedPostList.css';
 
 export default function ReducedPostList({ content, lastPage, nextPage }) {
-  const { likePostFromSidebar, unlikePostFromSidebar } = useContext(GlobalContext);
-
   return (
     <ul className="reduced_post-list" translate="no">
       {content.map(({
         author, body, id, rate, isVoted,
       }) => {
+        const { likePostFromSidebar, unlikePostFromSidebar } = useContext(GlobalContext);
         const rateRef = useRef();
 
         const vote = () => {
