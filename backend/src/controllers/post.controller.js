@@ -39,9 +39,19 @@ module.exports = {
   addVote: async (req, res) => {
     const { userId } = req.headers;
     const { targetId } = req.params;
-    const output = await postService.addVote(userId, targetId);
 
-    return res.status(201).json(output);
+    await postService.addVote(userId, targetId);
+
+    return res.status(200).end();
+  },
+
+  removeVote: async (req, res) => {
+    const { userId } = req.headers;
+    const { targetId } = req.params;
+
+    await postService.removeVote(userId, targetId);
+
+    return res.status(200).end();
   },
 
   deletePost: async (req, res) => {

@@ -48,6 +48,14 @@ module.exports = {
 
     if (!post) throw new HttpError(404, 'Post not found');
 
-    return post.addVote(userId);
+    await post.addVote(userId);
+  },
+
+  removeVote: async (userId, id) => {
+    const post = await Post.findByPk(id);
+
+    if (!post) throw new HttpError(404, 'Post not found');
+
+    await post.removeVote(userId);
   },
 };

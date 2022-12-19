@@ -37,9 +37,15 @@ route.post(
 );
 
 route.post(
-  '/post/vote/:targetId',
+  '/post/:targetId/vote',
   userValidations.validateToken,
   postController.addVote,
+);
+
+route.post(
+  '/post/:targetId/unvote',
+  userValidations.validateToken,
+  postController.removeVote,
 );
 
 route.delete(
