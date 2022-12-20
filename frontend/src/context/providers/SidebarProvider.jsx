@@ -81,14 +81,14 @@ export function SidebarProvider({ children }) {
     });
   };
 
-  const getFriendsSidebar = () => {
+  const getFriendsToSidebar = () => {
     getFriends(store.messages.friends.data.length).then(({ data, error }) => {
       if (error) return console.log(error);
       return activate({ type: GET_FRIENDS_SIDEBAR, payload: data });
     });
   };
 
-  const addFriendsSidebar = () => {
+  const addFriendsToSidebar = () => {
     getFriends(store.messages.friends.data.length).then(({ data, error }) => {
       if (error) return console.log(error);
       return activate({ type: ADD_FRIENDS_SIDEBAR, payload: data });
@@ -106,8 +106,8 @@ export function SidebarProvider({ children }) {
     addPostsToSidebar,
     likePostFromSidebar,
     unlikePostFromSidebar,
-    getFriendsSidebar,
-    addFriendsSidebar,
+    getFriendsToSidebar,
+    addFriendsToSidebar,
     resetSidebar,
   }));
 

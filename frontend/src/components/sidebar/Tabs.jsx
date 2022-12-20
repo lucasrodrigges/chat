@@ -25,8 +25,8 @@ export default function Tabs({ tab }) {
         <FriendList
           content={messages.friends.data}
           lastPage={messages.friends.lastPage}
-          nextPage={sidebarCtx.addFriendsSidebar}
-          getContent={sidebarCtx.getFriendsSidebar}
+          nextPage={sidebarCtx.addFriendsToSidebar}
+          getContent={sidebarCtx.getFriendsToSidebar}
         />
       );
     default:
