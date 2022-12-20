@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import fromNow from '../services/fromNow';
+import fromNow from '../../services/fromNow';
 
 import './PostCard.css';
 

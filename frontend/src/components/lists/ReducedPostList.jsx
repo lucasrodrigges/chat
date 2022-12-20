@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import ReducedPostCard from './ReducedPostCard';
-
+import ReducedPostCard from '../cards/ReducedPostCard';
 import './ReducedPostList.css';
 
 export default function ReducedPostList({ content, lastPage, nextPage }) {

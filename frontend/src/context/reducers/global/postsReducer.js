@@ -1,6 +1,6 @@
 import {
   GET_FEED, GET_USER_POSTS, GET_TRENDS, ADD_TRENDS,
-} from '../types';
+} from '../../types';
 
 export const postsInitialState = {
   feed: [],
