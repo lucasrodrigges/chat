@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-
 import './UserList.css';
 
 export default function UserList({ content, lastPage, nextPage }) {

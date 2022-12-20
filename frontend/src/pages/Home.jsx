@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import PostCard from '../components/PostCard';
+import PostCard from '../components/cards/PostCard';
 import { GlobalContext } from '../context/providers/GlobalProvider';
 
 import './Home.css';

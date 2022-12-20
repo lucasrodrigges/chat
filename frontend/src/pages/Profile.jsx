@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import PostCard from '../components/PostCard';
-import ProfileCard from '../components/ProfileCard';
+import PostCard from '../components/cards/PostCard';
+import ProfileCard from '../components/cards/ProfileCard';
 import { GlobalContext } from '../context/providers/GlobalProvider';
 import { getUserProfile } from '../services/axios';
 

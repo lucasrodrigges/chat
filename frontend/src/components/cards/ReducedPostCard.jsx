@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useRef } from 'react';
-import heart from '../assets/icons/heart.svg';
-import filledHeart from '../assets/icons/filledHeart.svg';
-import { SidebarContext } from '../context/providers/SidebarProvider';
+import heart from '../../assets/icons/heart.svg';
+import filledHeart from '../../assets/icons/filledHeart.svg';
+import { SidebarContext } from '../../context/providers/SidebarProvider';
 
 import './ReducedPostCard.css';
 
