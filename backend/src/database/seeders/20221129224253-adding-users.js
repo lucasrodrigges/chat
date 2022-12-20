@@ -40,7 +40,7 @@ module.exports = {
     }, {
       name: 'Gustavo Vasconcelos',
       user_name: 'lontra',
-      bio: 'namorado da Lary 💍',
+      bio: 'namorado da Lary',
       email: 'lontra@gmail.com',
       password: hashSync('12345678', genSaltSync(10)),
     }, {
