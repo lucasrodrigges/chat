@@ -4,10 +4,12 @@ import React, {
 } from 'react';
 
 import searchIcon from '../assets/icons/search.svg';
+import exitIcon from '../assets/icons/exit.svg';
 import { GlobalContext } from '../context/GlobalProvider';
 
 import ReducedPostList from './ReducedPostList';
 import UserList from './UserList';
+import FriendList from './FriendList';
 
 import './Sidebar.css';
 
@@ -16,29 +18,9 @@ export default function Sidebar() {
   const context = useContext(GlobalContext);
   const { users: { user } } = context;
 
-  const [search, setSearch] = useState('');
-  const [searchType, setSearchType] = useState('users');
+  const [mode, setMode] = useState('message');
 
   const sidebarRef = useRef();
-
-  const fetchResults = ({ reset } = {}) => {
-    if (reset) context.resetSidebar();
-
-    switch (searchType) {
-      case 'posts':
-        return context.getPostsToSidebar(currentSearch);
-      default: return context.getUsersToSidebar(currentSearch);
-    }
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (currentSearch === search || !search) return;
-
-    currentSearch = search;
-    fetchResults({ reset: true });
-  };
 
   const resize = ({ screenX }) => {
     const initialWidth = sidebarRef.current.offsetWidth;
@@ -58,45 +40,12 @@ export default function Sidebar() {
     window.addEventListener('mouseup', mouseUp);
   };
 
-  useEffect(() => {
-    const current = context.sidebar[searchType];
-
-    if (currentSearch && !current.data.length && !current.lastPage) {
-      fetchResults();
-    }
-  }, [searchType]);
-
   return (
     <div id="sidebar-wrapper">
       <section className="sidebar" ref={sidebarRef}>
-        <div className="sidebar-search">
-          <form className="search-bar" onSubmit={handleSubmit}>
-            <img src={searchIcon} alt="magnifying glass" />
-            <input type="text" onChange={(e) => setSearch(e.target.value)} />
-          </form>
-
-          <div className="search-types">
-            <input
-              className={searchType === 'users' ? 'active' : 'inactive'}
-              type="button"
-              value="Users"
-              translate="no"
-              onClick={() => setSearchType('users')}
-            />
-
-            <input
-              className={searchType === 'posts' ? 'active' : 'inactive'}
-              type="button"
-              value="Posts"
-              translate="no"
-              onClick={() => setSearchType('posts')}
-            />
-          </div>
-        </div>
-
-        <div className="sidebar-content">
-          <SearchResults type={searchType} />
-        </div>
+        { mode === 'search'
+          ? <SearchMode setMode={setMode} />
+          : <MessageMode setMode={setMode} /> }
 
         <div className="user_profile-sidebar">
           <div>
@@ -120,16 +69,140 @@ export default function Sidebar() {
   );
 }
 
-function SearchResults({ type }) {
-  const { sidebar, addPostsToSidebar, addUsersToSidebar } = useContext(GlobalContext);
+function SearchMode({ setMode }) {
+  const context = useContext(GlobalContext);
 
-  switch (type) {
+  const [search, setSearch] = useState('');
+  const [searchType, setSearchType] = useState('users');
+
+  const searchBarRef = useRef();
+
+  const fetchResults = ({ reset } = {}) => {
+    if (reset) context.resetSidebar();
+
+    switch (searchType) {
+      case 'posts':
+        return context.getPostsToSidebar(currentSearch);
+      default: return context.getUsersToSidebar(currentSearch);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (currentSearch === search || !search) return;
+
+    currentSearch = search;
+    fetchResults({ reset: true });
+  };
+
+  const exit = () => {
+    context.resetSidebar();
+    currentSearch = '';
+    setMode('message');
+  };
+
+  useEffect(() => {
+    const current = context.sidebar[searchType];
+
+    if (currentSearch && !current.data.length && !current.lastPage) {
+      fetchResults();
+    }
+  }, [searchType]);
+
+  useEffect(() => searchBarRef.current.focus());
+
+  return (
+    <>
+      <div className="sidebar-header">
+        <form className="search-bar active" onSubmit={handleSubmit}>
+          <img src={searchIcon} alt="magnifying glass" />
+          <input ref={searchBarRef} type="text" onChange={(e) => setSearch(e.target.value)} />
+          <button className="exit-btn" type="button" onClick={exit}>
+            <img src={exitIcon} alt="x" />
+          </button>
+        </form>
+
+        <div className="tab-choise">
+          <input
+            className={searchType === 'users' ? 'active' : 'inactive'}
+            type="button"
+            value="Users"
+            translate="no"
+            onClick={() => setSearchType('users')}
+          />
+
+          <input
+            className={searchType === 'posts' ? 'active' : 'inactive'}
+            type="button"
+            value="Posts"
+            translate="no"
+            onClick={() => setSearchType('posts')}
+          />
+        </div>
+      </div>
+
+      <div className="sidebar-content">
+        <SidebarTabs tab={searchType} />
+      </div>
+    </>
+  );
+}
+
+function MessageMode({ setMode }) {
+  const [tab, setTab] = useState('messages');
+
+  return (
+    <>
+      <div className="sidebar-header">
+        <button type="button" className="search-bar" onClick={() => setMode('search')}>
+          <img src={searchIcon} alt="magnifying glass" />
+        </button>
+
+        <div className="tab-choise">
+          <input
+            className={tab === 'messages' ? 'active' : 'inactive'}
+            type="button"
+            value="Messages"
+            translate="no"
+            onClick={() => setTab('messages')}
+          />
+
+          <input
+            className={tab === 'friends' ? 'active' : 'inactive'}
+            type="button"
+            value="Friends"
+            translate="no"
+            onClick={() => setTab('friends')}
+          />
+        </div>
+      </div>
+
+      <div className="sidebar-content">
+        <SidebarTabs tab={tab} />
+      </div>
+    </>
+  );
+}
+
+function SidebarTabs({ tab }) {
+  const { sidebar } = useContext(GlobalContext);
+
+  switch (tab) {
     case 'posts':
       return (
         <ReducedPostList
           content={sidebar.posts.data}
           lastPage={sidebar.posts.lastPage}
-          nextPage={() => addPostsToSidebar(currentSearch)}
+          nextPage={() => sidebar.addPostsToSidebar(currentSearch)}
+        />
+      );
+    case 'friends':
+      return (
+        <FriendList
+          content={sidebar.friends.data}
+          lastPage={sidebar.friends.lastPage}
+          nextPage={() => sidebar.addFriendsSidebar()}
         />
       );
     default:
@@ -137,7 +210,7 @@ function SearchResults({ type }) {
         <UserList
           content={sidebar.users.data}
           lastPage={sidebar.users.lastPage}
-          nextPage={() => addUsersToSidebar(currentSearch)}
+          nextPage={() => sidebar.addUsersToSidebar(currentSearch)}
         />
       );
   }

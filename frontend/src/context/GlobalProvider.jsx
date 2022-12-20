@@ -4,7 +4,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { reducers, initialState } from './reducers';
 import {
-  getPostByOwner, getPosts, getPostsByFriends, getUserProfile, getUsers, addVote, remoteVote,
+  getPostByOwner, getPosts, getPostsByFriends, getUserProfile, getUsers, addVote, remoteVote, getFriends,
 } from '../services/axios';
 import {
   GET_FEED,
@@ -17,6 +17,8 @@ import {
   GET_USERS_SIDEBAR,
   ADD_LIKE_SIDEBAR,
   REMOVE_LIKE_SIDEBAR,
+  GET_FRIENDS_SIDEBAR,
+  ADD_FRIENDS_SIDEBAR,
   RESET_SIDEBAR,
 } from './types';
 import { getFromLS } from '../services/localstorage';
@@ -78,7 +80,7 @@ export function GlobalProvider({ children }) {
   };
 
   const addUsersToSidebar = (q) => {
-    getUsers(q, store.sidebar.users.length).then(({ data, error }) => {
+    getUsers(q, store.sidebar.users.data.length).then(({ data, error }) => {
       if (error) return console.log(error);
       return activate({ type: ADD_USERS_SIDEBAR, payload: data });
     });
@@ -92,7 +94,7 @@ export function GlobalProvider({ children }) {
   };
 
   const addPostsToSidebar = (q) => {
-    getPosts(q, store.sidebar.posts.length).then(({ data, error }) => {
+    getPosts(q, store.sidebar.posts.data.length).then(({ data, error }) => {
       if (error) return console.log(error);
       return activate({ type: ADD_POSTS_SIDEBAR, payload: data });
     });
@@ -109,6 +111,20 @@ export function GlobalProvider({ children }) {
     activate({ type: REMOVE_LIKE_SIDEBAR, payload: postId });
     remoteVote(postId).then(({ error }) => {
       if (error) console.log(error);
+    });
+  };
+
+  const getFriendsSidebar = () => {
+    getFriends(store.sidebar.friends.data.length).then(({ data, error }) => {
+      if (error) return console.log(error);
+      return activate({ type: GET_FRIENDS_SIDEBAR, payload: data });
+    });
+  };
+
+  const addFriendsSidebar = () => {
+    getFriends(store.sidebar.friends.data.length).then(({ data, error }) => {
+      if (error) return console.log(error);
+      return activate({ type: ADD_FRIENDS_SIDEBAR, payload: data });
     });
   };
 
@@ -131,6 +147,8 @@ export function GlobalProvider({ children }) {
     addPostsToSidebar,
     likePostFromSidebar,
     unlikePostFromSidebar,
+    getFriendsSidebar,
+    addFriendsSidebar,
     resetSidebar,
   }));
 

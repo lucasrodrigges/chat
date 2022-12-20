@@ -69,7 +69,7 @@ class User extends Model {
 
   async getFriends() {
     return this.sequelize.query(`
-      SELECT u.name, u.id, u.picture
+      SELECT u.name, u.user_name AS userName, u.id, u.picture
       FROM chat.connections c1
         INNER JOIN chat.connections c2
           ON c2.user2_id = c1.user1_id AND c1.user2_id = c2.user1_id

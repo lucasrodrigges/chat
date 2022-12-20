@@ -5,6 +5,8 @@ import {
   ADD_USERS_SIDEBAR,
   ADD_LIKE_SIDEBAR,
   REMOVE_LIKE_SIDEBAR,
+  GET_FRIENDS_SIDEBAR,
+  ADD_FRIENDS_SIDEBAR,
   RESET_SIDEBAR,
 } from '../types';
 
@@ -14,6 +16,10 @@ export const sidebarInitialState = {
     lastPage: false,
   },
   posts: {
+    data: [],
+    lastPage: false,
+  },
+  friends: {
     data: [],
     lastPage: false,
   },
@@ -79,6 +85,22 @@ export const sidebarReducer = (state, action) => {
               rate: post.rate - 1,
             } : post
           )),
+        },
+      };
+    case GET_FRIENDS_SIDEBAR:
+      return {
+        ...state,
+        friends: {
+          data: action.payload,
+          lastPage: action.payload.length < 10,
+        },
+      };
+    case ADD_FRIENDS_SIDEBAR:
+      return {
+        ...state,
+        friends: {
+          data: [...state.friends.data, ...action.payload],
+          lastPage: action.payload.length < 10,
         },
       };
     case RESET_SIDEBAR:

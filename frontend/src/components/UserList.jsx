@@ -16,17 +16,15 @@ export default function UserList({ content, lastPage, nextPage }) {
         </li>
       ))}
 
-      {!lastPage && content.length ? (
-        <button
+      {!lastPage && content.length > 0 && (
+        <input
           type="button"
           className="see_more"
           translate="yes"
+          value="See more..."
           onClick={() => nextPage()}
-        >
-          See more...
-
-        </button>
-      ) : null}
+        />
+      )}
     </ul>
   );
 }
