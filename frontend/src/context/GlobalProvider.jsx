@@ -17,6 +17,7 @@ import {
   GET_USERS_SIDEBAR,
   ADD_LIKE_SIDEBAR,
   REMOVE_LIKE_SIDEBAR,
+  RESET_SIDEBAR,
 } from './types';
 import { getFromLS } from '../services/localstorage';
 
@@ -111,6 +112,8 @@ export function GlobalProvider({ children }) {
     });
   };
 
+  const resetSidebar = () => activate({ type: RESET_SIDEBAR });
+
   useEffect(() => {
     if (getFromLS('token')) getUser('me');
   }, [getFromLS('token')]);
@@ -128,6 +131,7 @@ export function GlobalProvider({ children }) {
     addPostsToSidebar,
     likePostFromSidebar,
     unlikePostFromSidebar,
+    resetSidebar,
   }));
 
   return (

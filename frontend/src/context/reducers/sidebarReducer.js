@@ -5,13 +5,18 @@ import {
   ADD_USERS_SIDEBAR,
   ADD_LIKE_SIDEBAR,
   REMOVE_LIKE_SIDEBAR,
+  RESET_SIDEBAR,
 } from '../types';
 
 export const sidebarInitialState = {
-  users: [],
-  posts: [],
-  lastUser: false,
-  lastPost: false,
+  users: {
+    data: [],
+    lastPage: false,
+  },
+  posts: {
+    data: [],
+    lastPage: false,
+  },
 };
 
 export const sidebarReducer = (state, action) => {
@@ -19,49 +24,66 @@ export const sidebarReducer = (state, action) => {
     case GET_USERS_SIDEBAR:
       return {
         ...state,
-        users: action.payload,
-        lastUser: action.payload.length < 10,
+        users: {
+          data: action.payload,
+          lastPage: action.payload.length < 10,
+        },
       };
     case ADD_USERS_SIDEBAR:
       return {
         ...state,
-        users: [...state.users, ...action.payload],
-        lastUser: action.payload.length < 10,
+        users: {
+          data: [...state.users.data, ...action.payload],
+          lastPage: action.payload.length < 10,
+        },
       };
     case GET_POSTS_SIDEBAR:
       return {
         ...state,
-        posts: action.payload,
-        lastPost: action.payload.length < 10,
+        posts: {
+          data: action.payload,
+          lastPage: action.payload.length < 10,
+        },
       };
     case ADD_POSTS_SIDEBAR:
       return {
         ...state,
-        posts: [...state.posts, ...action.payload],
-        lastPost: action.payload.length < 10,
+        posts: {
+          data: [...state.posts.data, ...action.payload],
+          lastPage: action.payload.length < 10,
+        },
       };
     case ADD_LIKE_SIDEBAR:
       return {
         ...state,
-        posts: state.posts.map((post) => (
-          post.id === action.payload ? {
-            ...post,
-            isVoted: true,
-            rate: post.rate + 1,
-          } : post
-        )),
+        posts: {
+          ...state.posts,
+          data: state.posts.data.map((post) => (
+            post.id === action.payload ? {
+              ...post,
+              isVoted: true,
+              rate: post.rate + 1,
+            } : post
+          )),
+        },
       };
     case REMOVE_LIKE_SIDEBAR:
       return {
         ...state,
-        posts: state.posts.map((post) => (
-          post.id === action.payload ? {
-            ...post,
-            isVoted: false,
-            rate: post.rate - 1,
-          } : post
-        )),
+        posts: {
+          ...state.posts,
+          data: state.posts.map((post) => (
+            post.id === action.payload ? {
+              ...post,
+              isVoted: false,
+              rate: post.rate - 1,
+            } : post
+          )),
+        },
       };
-    default: return state;
+    case RESET_SIDEBAR:
+      return sidebarInitialState;
+    default:
+      return state;
   }
 };
