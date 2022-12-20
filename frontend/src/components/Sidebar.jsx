@@ -1,5 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useContext, useRef } from 'react';
+import React, {
+  useState, useContext, useRef, useEffect,
+} from 'react';
+
 import searchIcon from '../assets/icons/search.svg';
 import { GlobalContext } from '../context/GlobalProvider';
 
@@ -14,13 +17,15 @@ export default function Sidebar() {
   const { users: { user } } = context;
 
   const [search, setSearch] = useState('');
-  const [searchType, setSearchType] = useState('person');
+  const [searchType, setSearchType] = useState('users');
 
   const sidebarRef = useRef();
 
-  const fetchResults = () => {
+  const fetchResults = ({ reset } = {}) => {
+    if (reset) context.resetSidebar();
+
     switch (searchType) {
-      case 'post':
+      case 'posts':
         return context.getPostsToSidebar(currentSearch);
       default: return context.getUsersToSidebar(currentSearch);
     }
@@ -32,7 +37,7 @@ export default function Sidebar() {
     if (currentSearch === search || !search) return;
 
     currentSearch = search;
-    fetchResults();
+    fetchResults({ reset: true });
   };
 
   const resize = ({ screenX }) => {
@@ -53,6 +58,14 @@ export default function Sidebar() {
     window.addEventListener('mouseup', mouseUp);
   };
 
+  useEffect(() => {
+    const current = context.sidebar[searchType];
+
+    if (currentSearch && !current.data.length && !current.lastPage) {
+      fetchResults();
+    }
+  }, [searchType]);
+
   return (
     <div id="sidebar-wrapper">
       <section className="sidebar" ref={sidebarRef}>
@@ -64,19 +77,19 @@ export default function Sidebar() {
 
           <div className="search-types">
             <input
-              className={searchType === 'person' ? 'active' : 'inactive'}
+              className={searchType === 'users' ? 'active' : 'inactive'}
               type="button"
-              value="Persons"
+              value="Users"
               translate="no"
-              onClick={() => setSearchType('person')}
+              onClick={() => setSearchType('users')}
             />
 
             <input
-              className={searchType === 'post' ? 'active' : 'inactive'}
+              className={searchType === 'posts' ? 'active' : 'inactive'}
               type="button"
               value="Posts"
               translate="no"
-              onClick={() => setSearchType('post')}
+              onClick={() => setSearchType('posts')}
             />
           </div>
         </div>
@@ -111,19 +124,19 @@ function SearchResults({ type }) {
   const { sidebar, addPostsToSidebar, addUsersToSidebar } = useContext(GlobalContext);
 
   switch (type) {
-    case 'post':
+    case 'posts':
       return (
         <ReducedPostList
-          content={sidebar.posts}
-          lastPage={sidebar.lastPost}
+          content={sidebar.posts.data}
+          lastPage={sidebar.posts.lastPage}
           nextPage={() => addPostsToSidebar(currentSearch)}
         />
       );
     default:
       return (
         <UserList
-          content={sidebar.users}
-          lastPage={sidebar.lastUser}
+          content={sidebar.users.data}
+          lastPage={sidebar.users.lastPage}
           nextPage={() => addUsersToSidebar(currentSearch)}
         />
       );
