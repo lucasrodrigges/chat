@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useContext } from 'react';
-import { GlobalContext } from '../context/GlobalProvider';
+import React, { useEffect } from 'react';
 
-export default function FriendList({ content, lastPage, nextPage }) {
-  const context = useContext(GlobalContext);
-
+export default function FriendList({
+  content, lastPage, nextPage, getContent,
+}) {
   useEffect(() => {
-    context.getFriendsSidebar();
+    getContent();
   }, []);
 
   return (

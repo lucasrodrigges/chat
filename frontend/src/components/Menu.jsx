@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { GlobalContext } from '../context/GlobalProvider';
+import { GlobalContext } from '../context/providers/GlobalProvider';
 import { getFromLS } from '../services/localstorage';
 
 import './Menu.css';

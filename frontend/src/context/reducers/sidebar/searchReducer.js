@@ -1,16 +1,16 @@
 import {
+  SET_CURRENT_SEARCH,
   GET_POSTS_SIDEBAR,
   GET_USERS_SIDEBAR,
   ADD_POSTS_SIDEBAR,
   ADD_USERS_SIDEBAR,
   ADD_LIKE_SIDEBAR,
   REMOVE_LIKE_SIDEBAR,
-  GET_FRIENDS_SIDEBAR,
-  ADD_FRIENDS_SIDEBAR,
   RESET_SIDEBAR,
-} from '../types';
+} from '../../types';
 
-export const sidebarInitialState = {
+export const searchInitialState = {
+  current: '',
   users: {
     data: [],
     lastPage: false,
@@ -19,14 +19,15 @@ export const sidebarInitialState = {
     data: [],
     lastPage: false,
   },
-  friends: {
-    data: [],
-    lastPage: false,
-  },
 };
 
-export const sidebarReducer = (state, action) => {
+export const searchReducer = (state, action) => {
   switch (action.type) {
+    case SET_CURRENT_SEARCH:
+      return {
+        ...state,
+        current: action.payload,
+      };
     case GET_USERS_SIDEBAR:
       return {
         ...state,
@@ -78,7 +79,7 @@ export const sidebarReducer = (state, action) => {
         ...state,
         posts: {
           ...state.posts,
-          data: state.posts.map((post) => (
+          data: state.posts.data.map((post) => (
             post.id === action.payload ? {
               ...post,
               isVoted: false,
@@ -87,24 +88,12 @@ export const sidebarReducer = (state, action) => {
           )),
         },
       };
-    case GET_FRIENDS_SIDEBAR:
-      return {
-        ...state,
-        friends: {
-          data: action.payload,
-          lastPage: action.payload.length < 10,
-        },
-      };
-    case ADD_FRIENDS_SIDEBAR:
-      return {
-        ...state,
-        friends: {
-          data: [...state.friends.data, ...action.payload],
-          lastPage: action.payload.length < 10,
-        },
-      };
     case RESET_SIDEBAR:
-      return sidebarInitialState;
+      return {
+        ...state,
+        posts: searchInitialState.posts,
+        users: searchInitialState.users,
+      };
     default:
       return state;
   }

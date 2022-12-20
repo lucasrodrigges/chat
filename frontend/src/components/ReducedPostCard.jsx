@@ -2,12 +2,12 @@
 import React, { useContext, useRef } from 'react';
 import heart from '../assets/icons/heart.svg';
 import filledHeart from '../assets/icons/filledHeart.svg';
-import { GlobalContext } from '../context/GlobalProvider';
+import { SidebarContext } from '../context/providers/SidebarProvider';
 
 import './ReducedPostCard.css';
 
 export default function ReducedPostCard({ post }) {
-  const { likePostFromSidebar, unlikePostFromSidebar } = useContext(GlobalContext);
+  const { likePostFromSidebar, unlikePostFromSidebar } = useContext(SidebarContext);
   const {
     author, body, id, rate, isVoted,
   } = post;

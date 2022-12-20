@@ -5,7 +5,8 @@ import React, {
 
 import searchIcon from '../assets/icons/search.svg';
 import exitIcon from '../assets/icons/exit.svg';
-import { GlobalContext } from '../context/GlobalProvider';
+import { GlobalContext } from '../context/providers/GlobalProvider';
+import { SidebarContext } from '../context/providers/SidebarProvider';
 
 import ReducedPostList from './ReducedPostList';
 import UserList from './UserList';
@@ -13,10 +14,8 @@ import FriendList from './FriendList';
 
 import './Sidebar.css';
 
-let currentSearch;
 export default function Sidebar() {
-  const context = useContext(GlobalContext);
-  const { users: { user } } = context;
+  const { users: { user } } = useContext(GlobalContext);
 
   const [mode, setMode] = useState('message');
 
@@ -70,7 +69,8 @@ export default function Sidebar() {
 }
 
 function SearchMode({ setMode }) {
-  const context = useContext(GlobalContext);
+  const sidebarCtx = useContext(SidebarContext);
+  const currentSearch = sidebarCtx.search.current;
 
   const [search, setSearch] = useState('');
   const [searchType, setSearchType] = useState('users');
@@ -78,12 +78,12 @@ function SearchMode({ setMode }) {
   const searchBarRef = useRef();
 
   const fetchResults = ({ reset } = {}) => {
-    if (reset) context.resetSidebar();
+    if (reset) sidebarCtx.resetSidebar();
 
     switch (searchType) {
       case 'posts':
-        return context.getPostsToSidebar(currentSearch);
-      default: return context.getUsersToSidebar(currentSearch);
+        return sidebarCtx.getPostsToSidebar(search);
+      default: return sidebarCtx.getUsersToSidebar(search);
     }
   };
 
@@ -92,20 +92,20 @@ function SearchMode({ setMode }) {
 
     if (currentSearch === search || !search) return;
 
-    currentSearch = search;
+    sidebarCtx.setCurrentSearch(search);
     fetchResults({ reset: true });
   };
 
   const exit = () => {
-    context.resetSidebar();
-    currentSearch = '';
+    sidebarCtx.resetSidebar();
+    sidebarCtx.setCurrentSearch('');
     setMode('message');
   };
 
   useEffect(() => {
-    const current = context.sidebar[searchType];
+    const currentType = sidebarCtx.search[searchType];
 
-    if (currentSearch && !current.data.length && !current.lastPage) {
+    if (currentSearch && !currentType.data.length && !currentType.lastPage) {
       fetchResults();
     }
   }, [searchType]);
@@ -186,31 +186,33 @@ function MessageMode({ setMode }) {
 }
 
 function SidebarTabs({ tab }) {
-  const { sidebar } = useContext(GlobalContext);
+  const sidebarCtx = useContext(SidebarContext);
+  const { search, messages } = sidebarCtx;
 
   switch (tab) {
     case 'posts':
       return (
         <ReducedPostList
-          content={sidebar.posts.data}
-          lastPage={sidebar.posts.lastPage}
-          nextPage={() => sidebar.addPostsToSidebar(currentSearch)}
+          content={search.posts.data}
+          lastPage={search.posts.lastPage}
+          nextPage={sidebarCtx.addPostsToSidebar}
         />
       );
     case 'friends':
       return (
         <FriendList
-          content={sidebar.friends.data}
-          lastPage={sidebar.friends.lastPage}
-          nextPage={() => sidebar.addFriendsSidebar()}
+          content={messages.friends.data}
+          lastPage={messages.friends.lastPage}
+          nextPage={sidebarCtx.addFriendsSidebar}
+          getContent={sidebarCtx.getFriendsSidebar}
         />
       );
     default:
       return (
         <UserList
-          content={sidebar.users.data}
-          lastPage={sidebar.users.lastPage}
-          nextPage={() => sidebar.addUsersToSidebar(currentSearch)}
+          content={search.users.data}
+          lastPage={search.users.lastPage}
+          nextPage={sidebarCtx.addUsersToSidebar}
         />
       );
   }
