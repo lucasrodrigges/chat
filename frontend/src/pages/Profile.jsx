@@ -10,7 +10,7 @@ export default function Profile() {
     users: { user }, posts: { userPosts }, getUserPosts,
   } = useContext(GlobalContext);
 
-  const [currUser, setCurrUser] = useState({});
+  const [currUser, setCurrUser] = useState(null);
   const [isAdmin, setAdmin] = useState(false);
 
   const { userName } = useParams();
@@ -21,12 +21,16 @@ export default function Profile() {
       setCurrUser(user);
       getUserPosts(user.id);
     } else {
-      getUserProfile(userName).then(({ data }) => {
+      getUserProfile(userName).then(({ data, error }) => {
+        if (error) return;
+
         setCurrUser(data);
         getUserPosts(data.id);
       });
     }
   }, [userName]);
+
+  if (!currUser) return <div>User not found</div>; // faremos um componente para isso no futuro.
 
   return (
     <div>

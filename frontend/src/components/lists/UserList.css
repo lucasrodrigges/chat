@@ -13,6 +13,11 @@
   animation: sidebar-Fade 0.8s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
+.user-list li a {
+  display: flex;
+  align-items: center;
+}
+
 @keyframes sidebar-Fade {
   from {
     transform: translateY(400px);

@@ -41,6 +41,9 @@ li {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+}
 
 span {
   color: #414141;

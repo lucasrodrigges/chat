@@ -24,12 +24,8 @@
   font-size: 0.8rem;
 }
 
-#sidebar span {
-  color: #181818;
-}
-
-#sidebar p {
-  font-size: 0.7rem;
+.sidebar ul {
+  margin-left: 6px;
 }
 
 .sidebar-header {

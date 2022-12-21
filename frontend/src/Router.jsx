@@ -10,10 +10,11 @@ export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route path="/:userName" element={<Profile />} />
       <Route path="/home" element={<Home />} />
       <Route path="/feed" element={<Feed />} />
       <Route path="/chat" element={<Chat />} />
-      <Route path="/:userName" element={<Profile />} />
+      <Route path="/chat/:userId" element={<Chat />} />
     </Routes>
   );
 }
