@@ -1,15 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
-
 import ReducedPostList from '../lists/ReducedPostList';
 import UserList from '../lists/UserList';
-import FriendList from '../lists/FriendList';
-
 import { SidebarContext } from '../../context/providers/SidebarProvider';
 
-export default function Tabs({ tab }) {
+export default function SearchTabs({ tab }) {
   const sidebarCtx = useContext(SidebarContext);
-  const { search, messages } = sidebarCtx;
+  const { search } = sidebarCtx;
 
   switch (tab) {
     case 'posts':
@@ -18,15 +15,6 @@ export default function Tabs({ tab }) {
           content={search.posts.data}
           lastPage={search.posts.lastPage}
           nextPage={sidebarCtx.addPostsToSidebar}
-        />
-      );
-    case 'friends':
-      return (
-        <FriendList
-          content={messages.friends.data}
-          lastPage={messages.friends.lastPage}
-          nextPage={sidebarCtx.addFriendsToSidebar}
-          getContent={sidebarCtx.getFriendsToSidebar}
         />
       );
     default:

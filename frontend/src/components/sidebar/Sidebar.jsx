@@ -5,7 +5,6 @@ import React, {
 
 import SearchMode from './SearchMode';
 import MessageMode from './MessageMode';
-import Tabs from './Tabs';
 
 import { GlobalContext } from '../../context/providers/GlobalProvider';
 
@@ -43,10 +42,6 @@ export default function Sidebar() {
         { mode === 'search'
           ? <SearchMode setMode={setMode} setTab={setTab} tab={tab} />
           : <MessageMode setMode={setMode} setTab={setTab} tab={tab} /> }
-
-        <div className="sidebar-content">
-          <Tabs tab={tab} />
-        </div>
 
         <div className="user_profile-sidebar">
           <div>
