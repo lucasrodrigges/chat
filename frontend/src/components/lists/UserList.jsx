@@ -1,17 +1,22 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './UserList.css';
 
 export default function UserList({ content, lastPage, nextPage }) {
   return (
     <ul className="user-list" translate="no">
-      {content.map(({ name, bio, id }) => (
+      {content.map(({
+        name, bio, id, userName,
+      }) => (
         <li key={id}>
-          <img className="user_image-quad" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="woman" />
-          <div>
-            <span className="user_name">{ name }</span>
-            <p className="post_text">{ bio }</p>
-          </div>
+          <Link to={`/${userName}`}>
+            <img className="user_image-quad" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="woman" />
+            <div>
+              <span className="user_name">{ name }</span>
+              <p className="post_text">{ bio }</p>
+            </div>
+          </Link>
         </li>
       ))}
 
