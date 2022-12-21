@@ -12,7 +12,7 @@ export default function Router() {
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Home />} />
       <Route path="/feed" element={<Feed />} />
-      <Route path="/chat" element={<Chat />} />
+      <Route path="/chat/:userName" element={<Chat />} />
       <Route path="/:userName" element={<Profile />} />
     </Routes>
   );

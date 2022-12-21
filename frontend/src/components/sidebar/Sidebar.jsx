@@ -7,15 +7,11 @@ import SearchMode from './SearchMode';
 import MessageMode from './MessageMode';
 
 import { GlobalContext } from '../../context/providers/GlobalProvider';
-
 import './Sidebar.css';
 
 export default function Sidebar() {
   const { users: { user } } = useContext(GlobalContext);
-
   const [mode, setMode] = useState('message');
-  const [tab, setTab] = useState('messages');
-
   const sidebarRef = useRef();
 
   const resize = ({ screenX }) => {
@@ -40,8 +36,8 @@ export default function Sidebar() {
     <div id="sidebar-wrapper">
       <section className="sidebar" ref={sidebarRef}>
         { mode === 'search'
-          ? <SearchMode setMode={setMode} setTab={setTab} tab={tab} />
-          : <MessageMode setMode={setMode} setTab={setTab} tab={tab} /> }
+          ? <SearchMode setMode={setMode} />
+          : <MessageMode setMode={setMode} /> }
 
         <div className="user_profile-sidebar">
           <div>
