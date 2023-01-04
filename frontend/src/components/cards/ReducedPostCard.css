@@ -1,10 +1,9 @@
-.reduced_post-list li {
+.reduced_post-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 18px 25px;
-  border-bottom: 1px solid #00000029;
   animation: sidebar-Fade 0.8s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
@@ -14,15 +13,15 @@
   overflow: hidden;
 }
 
-.reduced_post-list li .post-content {
+.reduced_post-card .post-content {
   display: block;
 }
 
-.reduced_post-list li p {
+.reduced_post-card p {
   color: #000000b8;
 }
 
-.reduced_post-list .user_image-quad {
+.reduced_post-card .user_image-quad {
   margin-right: 10px;
 }
 

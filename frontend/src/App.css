@@ -60,7 +60,13 @@ svg {
 }
 
 button:hover, svg:hover, input[type="button"]:hover {
-  transition: 0.3s;
+  transition: 0.1s;
   cursor: pointer;
-  color: #fab47b;
+  color: #fab47bb7;
+}
+
+.reduced_circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }

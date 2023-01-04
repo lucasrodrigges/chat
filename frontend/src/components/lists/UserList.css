@@ -9,7 +9,6 @@
   align-items: center;
   width: 100%;
   padding: 18px 25px;
-  border-bottom: 1px solid #00000029;
   animation: sidebar-Fade 0.8s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
