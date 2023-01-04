@@ -54,8 +54,8 @@ p {
 }
 
 svg {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   color: #C4C2C2;
 }
 
@@ -65,8 +65,18 @@ button:hover, svg:hover, input[type="button"]:hover {
   color: #fab47bb7;
 }
 
-.reduced_circle {
+.small_circle {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+}
+
+.small_quad {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.activated {
+  animation: activated 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
 }

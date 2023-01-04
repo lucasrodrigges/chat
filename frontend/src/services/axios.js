@@ -34,3 +34,5 @@ export const addVote = async (postId) => apiFetch(`/post/${postId}/vote`, 'post'
 export const remoteVote = async (postId) => apiFetch(`/post/${postId}/unvote`, 'post');
 
 export const getFriends = async (offset = 0) => apiFetch(`/user/me/connections/?offset=${offset}`, 'get');
+
+export const addFriend = async (target) => apiFetch(`/user/connections/${target}`, 'post');

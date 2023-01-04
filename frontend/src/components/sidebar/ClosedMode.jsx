@@ -23,9 +23,9 @@ export default function ClosedMode({ setMode }) {
 
       <button type="button" className="sidebar-content" onClick={() => setMode('message')}>
         { friends.data.map(({ id }) => (
-          <Link to={`chat/${id}`}>
-            <li key={id}>
-              <img className="reduced_circle" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="woman" />
+          <Link to={`chat/${id}`} key={id}>
+            <li>
+              <img className="small_circle" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="woman" />
             </li>
           </Link>
         )) }

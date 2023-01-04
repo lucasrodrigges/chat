@@ -23,7 +23,9 @@
 
 .closed_sidebar .sidebar-content {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .closed_sidebar ::-webkit-scrollbar {
