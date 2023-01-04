@@ -39,6 +39,23 @@ class User extends Model {
     });
   }
 
+  static async list(userId, q, offset) {
+    return this.sequelize.query(`
+      SELECT 
+        u.name, u.user_name AS userName, u.id, u.bio,
+        IF (ISNULL(c1.user1_id), 0, IF (ISNULL(c2.user1_id), 1, 2)) AS relationship
+      FROM chat.users u
+        LEFT JOIN chat.connections c1
+          ON (c1.user2_id = u.id AND c1.user1_id = ?)
+        LEFT JOIN chat.connections c2
+          ON (c2.user1_id = u.id AND c2.user2_id = c1.user1_id)
+      WHERE (u.user_name LIKE ? OR U.name LIKE ?)
+      LIMIT ?, 10`, {
+      type: QueryTypes.SELECT,
+      replacements: [userId, `%${q}%`, `%${q}%`, offset],
+    });
+  }
+
   async getInfo() {
     const [user] = await this.sequelize.query(`
       SELECT

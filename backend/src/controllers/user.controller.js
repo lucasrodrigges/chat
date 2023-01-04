@@ -23,7 +23,8 @@ module.exports = {
 
   getUsers: async (req, res) => {
     const { q, offset } = req.query;
-    const output = await userService.getUsers(q, offset);
+    const { userId } = req.headers;
+    const output = await userService.getUsers(userId, q, offset);
 
     return res.status(200).json(output);
   },

@@ -1,4 +1,4 @@
-const { or, like } = require('sequelize').Op;
+const { or } = require('sequelize').Op;
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
@@ -6,17 +6,7 @@ const { HttpError } = require('../utils/errors');
 const jwt = require('../auth/token');
 
 module.exports = {
-  getUsers: async (q = '', offset = 0) => User.findAll({
-    where: {
-      [or]: {
-        name: { [like]: `%${q}%` },
-        userName: { [like]: `%${q}%` },
-      },
-    },
-    attributes: { exclude: ['password'] },
-    offset: Number(offset),
-    limit: 10,
-  }),
+  getUsers: async (userId, q = '', offset = 0) => User.list(userId, q, Number(offset)),
 
   getUserById: async (id) => {
     const user = await User.findByPk(id, {
