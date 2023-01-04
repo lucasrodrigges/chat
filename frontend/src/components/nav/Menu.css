@@ -21,16 +21,13 @@
 
 .menu svg.active {
   transition: 0.3s;
-  animation: activated 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  animation: activated 0.4s cubic-bezier(0.23, 1, 0.320, 1);
   color: #FC9E4F;
 }
 
 @keyframes activated {
   30%{
-    transform: translateY(-30%);
-  }
-  70%{
-    transform: translateY(5%);
+    transform: translateY(-20%);
   }
   100%{
     transform: translateY(0);

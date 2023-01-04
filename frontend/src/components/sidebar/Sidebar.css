@@ -13,19 +13,21 @@
 }
 
 .sidebar {
+  position: relative;
   display: flex;
   flex-direction: column;
   background:#e3e3e36b;
   max-width: 35vw;
-  min-width: 220px;
+  min-width: 170px;
   height: 100vh;
   overflow: hidden;
-  box-shadow: 2px 0 7px 0 #0000001a;
+  box-shadow: 0 0 3px 0 #00000018;
   font-size: 0.8rem;
 }
 
-.sidebar ul {
-  margin-left: 6px;
+.sidebar {
+  width: 20vw;
+  transition: 0.1s;
 }
 
 .sidebar-header {
@@ -34,7 +36,7 @@
   flex-direction: column;
   align-items: center;
   min-height: 100px;
-  border-bottom: 2px solid #00000033;
+  border-bottom: 1px solid #00000018;
 }
 
 .search-bar .exit-btn {
@@ -94,8 +96,14 @@
   height: 18px;
 }
 
-.search-bar.active img {
-  transform: scale(1.1);
+.close-btn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.close-btn svg {
+  color: rgba(104, 104, 104, 0.621);
 }
 
 .tab-choise {
@@ -119,17 +127,32 @@
 }
 
 .sidebar-content {
+  width: 100%;
   flex-grow: 1;
   overflow-y: scroll;
+  padding: 0;
 }
 
 .user_profile-sidebar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 20px;
-  background: linear-gradient(to bottom, #e3e3e36b, #0000001c);
-  border-top: 1px solid #00000005;
+  padding: 5px 10px;
+  background-color: #d7d7d76b;
+}
+
+.sidebar .user_profile-sidebar {
+  animation: fade-o 0.3s linear;
+}
+
+@keyframes fade-o {
+  from {
+    opacity: 0;
+  };
+
+  to {
+    opacity: 1;
+  }
 }
 
 .user_profile-sidebar > div {
@@ -142,11 +165,6 @@
 .user_profile-sidebar div > div {
   display: flex;
   flex-direction: column;
-}
-
-.user_profile-sidebar img {
-  width: 35px;
-  height: 35px;
 }
 
 .user_profile-sidebar svg {

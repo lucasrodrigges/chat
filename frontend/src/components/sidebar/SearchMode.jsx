@@ -60,7 +60,11 @@ export default function SearchMode({ setMode }) {
       <div className="sidebar-header">
         <form className="search-bar active" onSubmit={handleSubmit}>
           <img src={searchIcon} alt="magnifying glass" />
-          <input ref={searchBarRef} type="text" onChange={(e) => setSearch(e.target.value)} />
+          <input
+            ref={searchBarRef}
+            type="text"
+            onChange={(e) => setSearch(e.target.value)}
+          />
           <button className="exit-btn" type="button" onClick={exit}>
             <img src={exitIcon} alt="x" />
           </button>
@@ -85,7 +89,7 @@ export default function SearchMode({ setMode }) {
         </div>
 
       </div>
-      <div className="sidebar-content">
+      <div type="button" className="sidebar-content">
         <SearchTabs tab={tab} />
       </div>
     </>

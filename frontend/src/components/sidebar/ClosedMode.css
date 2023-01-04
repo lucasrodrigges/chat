@@ -1,0 +1,37 @@
+.closed_sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(to bottom, #e3e3e36b, #0000001c 200%);
+}
+
+.closed_sidebar {
+  scrollbar-width: 0;
+  transition: 0.3s;
+  width: 70px;
+  max-width: 70px;
+  min-width: 60px;
+}
+
+.closed_sidebar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 0;
+  animation: fade-o 0.3s linear;
+}
+
+.closed_sidebar .sidebar-content {
+  display: flex;
+  justify-content: center;
+}
+
+.closed_sidebar ::-webkit-scrollbar {
+  width: 0;
+}
+
+.closed_sidebar .user_profile-sidebar {
+  justify-content: center;
+  background: linear-gradient(to bottom, #ededed6b, #00000033);
+  padding-top: 20px;
+}
