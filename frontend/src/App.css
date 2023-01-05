@@ -28,6 +28,15 @@
   overflow: hidden;
 }
 
+.app > div {
+  display: flex;
+}
+
+#main {
+  width: 100%;
+  padding: 0 1px;
+}
+
 button, input {
   background: none;
   border: none;

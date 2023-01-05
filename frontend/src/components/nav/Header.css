@@ -1,0 +1,22 @@
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  color: #f8f8f8;
+  background-color: #333533;
+  height: 50px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+#header h1 {
+  font-size: 1.1rem;
+}
+
+#header div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 110px;
+}
