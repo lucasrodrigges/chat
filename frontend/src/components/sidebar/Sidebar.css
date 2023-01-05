@@ -18,7 +18,7 @@
   flex-direction: column;
   background:#e3e3e36b;
   max-width: 35vw;
-  min-width: 170px;
+  min-width: 220px;
   height: 100vh;
   overflow: hidden;
   box-shadow: 0 0 3px 0 #00000018;
@@ -27,7 +27,7 @@
 
 .sidebar {
   width: 20vw;
-  transition: 0.1s;
+  transition: 0.6s;
 }
 
 .sidebar-header {
@@ -141,8 +141,14 @@
   background-color: #d7d7d76b;
 }
 
-.sidebar .user_profile-sidebar {
-  animation: fade-o 0.3s linear;
+@keyframes fade-o-half {
+  from {
+    opacity: 0.5;
+  };
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fade-o {
