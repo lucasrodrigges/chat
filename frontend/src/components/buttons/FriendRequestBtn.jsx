@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import { SidebarContext } from '../../context/providers/SidebarProvider';
 
 export default function FriendRequestBtn({ status, target }) {

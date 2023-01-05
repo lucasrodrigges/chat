@@ -19,15 +19,17 @@ export default function Sidebar() {
   const resize = ({ screenX }) => {
     const initialWidth = sidebarRef.current.offsetWidth;
 
-    const mouseMove = ({ clientX }) => {
-      const dif = clientX - screenX;
+    const mouseMove = (event) => {
+      const dif = event.screenX - screenX;
 
       sidebarRef.current.style.width = `${initialWidth + dif}px`;
+      sidebarRef.current.style.transition = '0s';
     };
 
     const mouseUp = () => {
       window.removeEventListener('mousemove', mouseMove);
       window.removeEventListener('mouseup', mouseUp);
+      sidebarRef.current.style.transition = '0.6s';
     };
 
     window.addEventListener('mousemove', mouseMove);
