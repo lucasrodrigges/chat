@@ -1,12 +1,6 @@
 /* eslint-disable react/prop-types */
-import React, {
-  useState, useContext, useRef,
-} from 'react';
-
-import SearchMode from './SearchMode';
-import MessageMode from './MessageMode';
-import ClosedMode from './ClosedMode';
-
+import React, { useState, useContext, useRef } from 'react';
+import SidebarModes from './SidebarModes';
 import { GlobalContext } from '../../context/providers/GlobalProvider';
 import './Sidebar.css';
 
@@ -41,11 +35,13 @@ export default function Sidebar() {
       <section className={mode === 'closed' ? 'closed_sidebar' : 'sidebar'} ref={sidebarRef}>
         <SidebarModes mode={mode} setMode={setMode} />
 
-        <button type="button" className="close-btn" onClick={() => setMode('closed')}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
-            <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V64zm128 0c0-17.7-14.3-32-32-32s-32 14.3-32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V64z" fill="currentColor" />
-          </svg>
-        </button>
+        {mode !== 'closed' && (
+          <button type="button" className="close-btn" onClick={() => setMode('closed')}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
+              <path d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V64zm128 0c0-17.7-14.3-32-32-32s-32 14.3-32 32V448c0 17.7 14.3 32 32 32s32-14.3 32-32V64z" fill="currentColor" />
+            </svg>
+          </button>
+        )}
 
         <div className="user_profile-sidebar">
           {mode !== 'closed' ? (
@@ -72,15 +68,4 @@ export default function Sidebar() {
       />
     </div>
   );
-}
-
-export function SidebarModes({ mode, setMode }) {
-  switch (mode) {
-    case 'search':
-      return <SearchMode setMode={setMode} />;
-    case 'message':
-      return <MessageMode setMode={setMode} />;
-    default:
-      return <ClosedMode setMode={setMode} />;
-  }
 }
