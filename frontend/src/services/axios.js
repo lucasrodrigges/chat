@@ -25,6 +25,10 @@ export const getPosts = async (q = '', offset = 0) => (
   apiFetch(`/post/?q=${q}&offset=${offset}`, 'get')
 );
 
+export const createPost = async (body) => apiFetch('/post/', 'post', { body });
+
+export const deletePost = async (id) => apiFetch(`/post/${id}`, 'delete');
+
 export const getPostsByFriends = async () => apiFetch('/post/user/me/friends', 'get');
 
 export const getPostByOwner = async (owner) => apiFetch(`/post/user/${owner}`, 'get');

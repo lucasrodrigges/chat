@@ -1,5 +1,5 @@
 import {
-  GET_FEED, GET_USER_POSTS, GET_TRENDS, ADD_TRENDS, ADD_LIKE, REMOVE_LIKE,
+  GET_FEED, GET_USER_POSTS, GET_TRENDS, ADD_TRENDS, ADD_LIKE, REMOVE_LIKE, REMOVE_POST, NEW_POST,
 } from '../../types';
 
 export const postsInitialState = {
@@ -68,6 +68,18 @@ export const postsReducer = (state, action) => {
             rate: post.rate - 1,
           } : post
         )),
+      };
+    case REMOVE_POST:
+      return {
+        ...state,
+        trends: state.trends.filter((post) => post.id !== action.payload),
+        userPosts: state.userPosts.filter((post) => post.id !== action.payload),
+      };
+    case NEW_POST:
+      return {
+        ...state,
+        trends: [action.payload, ...state.trends],
+        feed: [action.payload, ...state.feed],
       };
     default: return state;
   }

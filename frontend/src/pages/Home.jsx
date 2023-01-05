@@ -1,19 +1,25 @@
 import React, { useContext, useEffect } from 'react';
 import PostCard from '../components/cards/PostCard';
+import NewPost from '../components/inputs/NewPost';
 import { GlobalContext } from '../context/providers/GlobalProvider';
 
 import './Home.css';
 
 export default function Home() {
-  const { posts: { trends, lastTrend }, getTrends, addTrends } = useContext(GlobalContext);
+  const {
+    posts: { trends, lastTrend }, getTrends, addTrends, users: { user },
+  } = useContext(GlobalContext);
 
-  useEffect(() => getTrends(), []);
+  useEffect(() => {
+    getTrends();
+  }, []);
 
   return (
     <div className="home">
       <ul className="posts">
+        <NewPost from="home" />
         {trends.map((post) => (
-          <PostCard post={post} key={post.id} />
+          <PostCard post={post} user={user} key={post.id} />
         ))}
 
         { !lastTrend && trends.length ? (
