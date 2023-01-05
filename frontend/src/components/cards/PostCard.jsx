@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import fromNow from '../../services/fromNow';
 
 import './PostCard.css';
+import { GlobalContext } from '../../context/providers/GlobalProvider';
 
 export default function PostCard({ post }) {
   const {
-    body, rate, author, createdAt,
+    id, body, rate, author, createdAt, isVoted,
   } = post;
   const { userName, name } = author;
+  console.log(isVoted, id);
+
+  const { likePost, unlikePost } = useContext(GlobalContext);
 
   return (
     <li className="post-card_wrapper">
       <div className="post-card">
         <div className="post_user-info">
           <Link to={`/${userName}`}>
-            <img className="user_image-circle" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="woman" />
+            <img className="small_circle" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="woman" />
           </Link>
           <div>
             <h3>{name}</h3>
@@ -29,7 +33,15 @@ export default function PostCard({ post }) {
 
         <div className="post-content">
           <div className="post-rate">
-            <svg className="up-btn" width="29" height="21" viewBox="0 0 29 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              className={isVoted ? 'up-btn-on' : 'up-btn'}
+              width="29"
+              height="21"
+              viewBox="0 0 29 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              onClick={() => (!isVoted ? likePost(id) : unlikePost(id))}
+            >
               <path d="M0 17.1562L14.4502 0L29 17.2753L26.0417 20.7884L14.4502 7.02528L2.95857 20.669L0 17.1562Z" fill="currentColor" />
             </svg>
             <span>{rate}</span>

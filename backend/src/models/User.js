@@ -144,11 +144,13 @@ class User extends Model {
         u.name AS 'author.name',
         u.user_name AS 'author.userName',
         u.picture AS 'author.picture',
-        COUNT(v.post_id) AS 'rate'
+        COUNT(v.post_id) AS 'rate',
+      !ISNULL(v2.post_id) AS isVoted
       FROM chat.connections c
         INNER JOIN chat.posts p ON p.owner = c.user2_id
-        INNER JOIN chat.votes v ON v.post_id = p.id
         INNER JOIN chat.users u ON u.id = c.user2_id
+        LEFT JOIN chat.votes v ON v.post_id = p.id
+        LEFT JOIN chat.votes v2 ON v2.user_id = c.user1_id AND v2.post_id = p.id
       WHERE c.user1_id = ?
       GROUP BY p.id
       ORDER BY p.created_at DESC`, {
