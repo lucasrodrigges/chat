@@ -18,7 +18,7 @@ export default function Menu() {
   }, [pathname]);
 
   return (
-    <nav className="menu">
+    <nav className="menu" id="menu">
       <Link to="/feed">
         <svg className={pathname === '/feed' ? 'active' : 'inactive'} width="50" height="49" viewBox="0 0 50 49" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M7.69961 35.7056C4.00361 35.7056 0.995605 38.6861 0.995605 42.3551C0.995605 46.0251 4.00261 48.9951 7.69961 48.9951C11.3976 48.9951 14.3946 46.0266 14.3946 42.3551C14.3936 38.6861 11.3961 35.7056 7.69961 35.7056Z" fill="currentColor" />
