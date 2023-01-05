@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 
 import { SidebarContext } from '../../context/providers/SidebarProvider';
-
 import searchIcon from '../../assets/icons/search.svg';
 import exitIcon from '../../assets/icons/exit.svg';
 import SearchTabs from './SearchTabs';

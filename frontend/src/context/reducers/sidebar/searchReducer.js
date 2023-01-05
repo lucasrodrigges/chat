@@ -97,7 +97,7 @@ export const searchReducer = (state, action) => {
           data: state.users.data.map((user) => (
             user.id === action.payload ? {
               ...user,
-              relationship: 1,
+              relationship: user.relationship === 0 ? 1 : 3,
             } : user
           )),
         },

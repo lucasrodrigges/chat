@@ -43,16 +43,19 @@ class User extends Model {
     return this.sequelize.query(`
       SELECT 
         u.name, u.user_name AS userName, u.id, u.bio,
-        IF (ISNULL(c1.user1_id), 0, IF (ISNULL(c2.user1_id), 1, 2)) AS relationship
+        IF (ISNULL(c1.user1_id),
+          IF (ISNULL(c2.user1_id), 0, 2), 
+          IF (ISNULL(c2.user1_id), 1, 3)
+        ) AS relationship
       FROM chat.users u
         LEFT JOIN chat.connections c1
           ON (c1.user2_id = u.id AND c1.user1_id = ?)
         LEFT JOIN chat.connections c2
-          ON (c2.user1_id = u.id AND c2.user2_id = c1.user1_id)
+          ON (c2.user1_id = u.id AND c2.user2_id = ?)
       WHERE (u.user_name LIKE ? OR u.name LIKE ?)
       LIMIT ?, 10`, {
       type: QueryTypes.SELECT,
-      replacements: [userId, `%${q}%`, `%${q}%`, offset],
+      replacements: [userId, userId, `%${q}%`, `%${q}%`, offset],
     });
   }
 
