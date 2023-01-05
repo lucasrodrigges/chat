@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PostCard from '../components/cards/PostCard';
 import ProfileCard from '../components/cards/ProfileCard';
+import NewPost from '../components/inputs/NewPost';
 import { GlobalContext } from '../context/providers/GlobalProvider';
 import { getUserProfile } from '../services/axios';
 
@@ -36,8 +37,9 @@ export default function Profile() {
     <div>
       <ProfileCard user={currUser} isAdmin={isAdmin} />
       <div>
+        <NewPost from="profile" />
         {userPosts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard key={post.id} user={user} post={post} />
         ))}
       </div>
     </div>
