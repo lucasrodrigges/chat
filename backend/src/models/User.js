@@ -49,7 +49,7 @@ class User extends Model {
           ON (c1.user2_id = u.id AND c1.user1_id = ?)
         LEFT JOIN chat.connections c2
           ON (c2.user1_id = u.id AND c2.user2_id = c1.user1_id)
-      WHERE (u.user_name LIKE ? OR U.name LIKE ?)
+      WHERE (u.user_name LIKE ? OR u.name LIKE ?)
       LIMIT ?, 10`, {
       type: QueryTypes.SELECT,
       replacements: [userId, `%${q}%`, `%${q}%`, offset],
@@ -141,11 +141,13 @@ class User extends Model {
         u.name AS 'author.name',
         u.user_name AS 'author.userName',
         u.picture AS 'author.picture',
-        COUNT(v.post_id) AS 'rate'
+        COUNT(v.post_id) AS 'rate',
+      !ISNULL(v2.post_id) AS isVoted
       FROM chat.connections c
         INNER JOIN chat.posts p ON p.owner = c.user2_id
-        INNER JOIN chat.votes v ON v.post_id = p.id
         INNER JOIN chat.users u ON u.id = c.user2_id
+        LEFT JOIN chat.votes v ON v.post_id = p.id
+        LEFT JOIN chat.votes v2 ON v2.user_id = c.user1_id AND v2.post_id = p.id
       WHERE c.user1_id = ?
       GROUP BY p.id
       ORDER BY p.created_at DESC`, {
