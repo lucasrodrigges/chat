@@ -7,19 +7,26 @@
 .user-list li {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  padding: 18px 25px;
-  animation: sidebar-Fade 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  padding: 8px 25px;
+  animation: fade-t 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.user-list li svg {
+  color: #424242;
+  margin-left: 10px;
 }
 
 .user-list li a {
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
-@keyframes sidebar-Fade {
+@keyframes fade-t {
   from {
-    transform: translateY(400px);
+    transform: translateY(200px);
     opacity: 0;
   }
 
@@ -35,12 +42,6 @@
 
 .user-list li img {
   margin-right: 10px;
-}
-
-.user_image-quad {
-  border-radius: 10px;
-  width: 40px;
-  height: 40px;
 }
 
 .see_more:hover {

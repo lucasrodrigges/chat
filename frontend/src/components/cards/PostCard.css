@@ -1,10 +1,10 @@
 .post-card {
   min-width: 260px;
   margin: 30px 0;
-  animation: post-fade 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+  animation: post-size 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 }
 
-@keyframes post-fade {
+@keyframes post-size {
   from {
     transform: scale(0.8);
     opacity: 0;

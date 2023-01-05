@@ -4,7 +4,7 @@
   align-items: center;
   width: 100%;
   padding: 18px 25px;
-  animation: sidebar-Fade 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+  animation: fade-t 0.8s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
 .reduced_post-left {
@@ -21,7 +21,7 @@
   color: #000000b8;
 }
 
-.reduced_post-card .user_image-quad {
+.reduced_post-card img {
   margin-right: 10px;
 }
 
