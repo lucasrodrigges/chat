@@ -6,6 +6,7 @@ import {
   ADD_USERS_SIDEBAR,
   ADD_LIKE_SIDEBAR,
   REMOVE_LIKE_SIDEBAR,
+  CREATE_CONNECTION,
   RESET_SIDEBAR,
 } from '../../types';
 
@@ -85,6 +86,19 @@ export const searchReducer = (state, action) => {
               isVoted: false,
               rate: post.rate - 1,
             } : post
+          )),
+        },
+      };
+    case CREATE_CONNECTION:
+      return {
+        ...state,
+        users: {
+          ...state.users,
+          data: state.users.data.map((user) => (
+            user.id === action.payload ? {
+              ...user,
+              relationship: 1,
+            } : user
           )),
         },
       };

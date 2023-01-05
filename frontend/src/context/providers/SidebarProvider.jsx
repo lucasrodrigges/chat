@@ -4,7 +4,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { reducers, initialState } from '../reducers/sidebar';
 import {
-  getPosts, getUsers, addVote, remoteVote, getFriends,
+  getPosts, getUsers, addVote, remoteVote, getFriends, addFriend,
 } from '../../services/axios';
 import {
   SET_CURRENT_SEARCH,
@@ -16,6 +16,7 @@ import {
   REMOVE_LIKE_SIDEBAR,
   GET_FRIENDS_SIDEBAR,
   ADD_FRIENDS_SIDEBAR,
+  CREATE_CONNECTION,
   RESET_SIDEBAR,
 } from '../types';
 
@@ -95,6 +96,13 @@ export function SidebarProvider({ children }) {
     });
   };
 
+  const createConnection = (target) => {
+    addFriend(target).then(({ error }) => {
+      if (error) return console.log(error);
+      return activate({ type: CREATE_CONNECTION, payload: target });
+    });
+  };
+
   const resetSidebar = () => activate({ type: RESET_SIDEBAR });
 
   const storage = useMemo(() => ({
@@ -108,6 +116,7 @@ export function SidebarProvider({ children }) {
     unlikePostFromSidebar,
     getFriendsToSidebar,
     addFriendsToSidebar,
+    createConnection,
     resetSidebar,
   }));
 

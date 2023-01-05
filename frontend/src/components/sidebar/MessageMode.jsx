@@ -4,7 +4,7 @@ import searchIcon from '../../assets/icons/search.svg';
 import MessageTabs from './MessageTabs';
 
 export default function MessageMode({ setMode }) {
-  const [tab, setTab] = useState('messages');
+  const [tab, setTab] = useState('friends');
 
   return (
     <>
