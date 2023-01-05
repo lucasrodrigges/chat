@@ -4,13 +4,16 @@ import React, {
 import PropTypes from 'prop-types';
 import { reducers, initialState } from '../reducers/global';
 import {
-  getPostByOwner, getPosts, getPostsByFriends, getUserProfile,
+  addVote,
+  getPostByOwner, getPosts, getPostsByFriends, getUserProfile, remoteVote,
 } from '../../services/axios';
 import {
   GET_FEED,
   GET_USER_POSTS,
   GET_TRENDS, GET_USER,
   ADD_TRENDS,
+  ADD_LIKE,
+  REMOVE_LIKE,
 } from '../types';
 import { getFromLS } from '../../services/localstorage';
 
@@ -63,6 +66,20 @@ export function GlobalProvider({ children }) {
     });
   };
 
+  const likePost = (postId) => {
+    activate({ type: ADD_LIKE, payload: postId });
+    addVote(postId).then(({ error }) => {
+      if (error) console.log(error);
+    });
+  };
+
+  const unlikePost = (postId) => {
+    activate({ type: REMOVE_LIKE, payload: postId });
+    remoteVote(postId).then(({ error }) => {
+      if (error) console.log(error);
+    });
+  };
+
   useEffect(() => {
     if (getFromLS('token')) getUser('me');
   }, [getFromLS('token')]);
@@ -74,6 +91,8 @@ export function GlobalProvider({ children }) {
     getFeed,
     getUserPosts,
     addTrends,
+    likePost,
+    unlikePost,
   }));
 
   return (
