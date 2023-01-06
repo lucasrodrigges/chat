@@ -4,13 +4,19 @@ import React, {
 import PropTypes from 'prop-types';
 import { reducers, initialState } from '../reducers/global';
 import {
-  getPostByOwner, getPosts, getPostsByFriends, getUserProfile,
+  addVote,
+  createPost,
+  deletePost,
+  getPostByOwner, getPosts, getPostsByFriends, getUserProfile, remoteVote,
 } from '../../services/axios';
 import {
   GET_FEED,
   GET_USER_POSTS,
   GET_TRENDS, GET_USER,
   ADD_TRENDS,
+  ADD_LIKE,
+  REMOVE_LIKE,
+  REMOVE_POST,
 } from '../types';
 import { getFromLS } from '../../services/localstorage';
 
@@ -63,6 +69,35 @@ export function GlobalProvider({ children }) {
     });
   };
 
+  const newPost = (body, from) => {
+    createPost(body).then(({ error }) => {
+      if (error) return console.error(error);
+      if (from === 'profile') return getUserPosts('me');
+      return getTrends();
+    });
+  };
+
+  const likePost = (postId) => {
+    activate({ type: ADD_LIKE, payload: postId });
+    addVote(postId).then(({ error }) => {
+      if (error) console.log(error);
+    });
+  };
+
+  const unlikePost = (postId) => {
+    activate({ type: REMOVE_LIKE, payload: postId });
+    remoteVote(postId).then(({ error }) => {
+      if (error) console.log(error);
+    });
+  };
+
+  const removePost = (postId) => {
+    activate({ type: REMOVE_POST, payload: postId });
+    deletePost(postId).then(({ error }) => {
+      if (error) console.log(error);
+    });
+  };
+
   useEffect(() => {
     if (getFromLS('token')) getUser('me');
   }, [getFromLS('token')]);
@@ -74,6 +109,10 @@ export function GlobalProvider({ children }) {
     getFeed,
     getUserPosts,
     addTrends,
+    likePost,
+    unlikePost,
+    removePost,
+    newPost,
   }));
 
   return (
