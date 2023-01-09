@@ -5,7 +5,7 @@ import ProfileCard from '../components/cards/ProfileCard';
 import NewPost from '../components/inputs/NewPost';
 import Header from '../components/nav/Header';
 import { GlobalContext } from '../context/providers/GlobalProvider';
-import { getUserProfile } from '../services/axios';
+import { getUserProfile } from '../services/api/users';
 
 export default function Profile() {
   const {

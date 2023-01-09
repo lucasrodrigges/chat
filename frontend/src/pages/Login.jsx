@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EMAIL_RGX } from '../helpers/data';
-import { postLogin } from '../services/axios';
+import { login } from '../services/api/users';
 import { setToLS } from '../services/localstorage';
 
 export default function Login() {
@@ -24,7 +24,7 @@ export default function Login() {
     const { entry, password } = user;
     const { method } = validations;
 
-    const { error, data } = await postLogin({ [method]: entry, password });
+    const { error, data } = await login({ [method]: entry, password });
 
     if (!error) {
       setToLS('token', data.token);
