@@ -4,12 +4,14 @@ module.exports = {
       user1_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: { model: 'users', key: 'id' },
         primaryKey: true,
       },
       user2_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
         references: { model: 'users', key: 'id' },
         primaryKey: true,
       },
