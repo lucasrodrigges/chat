@@ -15,7 +15,6 @@ export default function App() {
       </div>
 
       <main id="main">
-        <Header />
         <Router />
       </main>
     </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import NotFound from './components/alerts/NotFound';
 import Chat from './pages/Chat';
 import Feed from './pages/Feed';
 import Home from './pages/Home';
@@ -13,6 +14,7 @@ export default function Router() {
       <Route path="/feed" element={<Feed />} />
       <Route path="/chat" element={<Chat />} />
       <Route path="/chat/:userId" element={<Chat />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

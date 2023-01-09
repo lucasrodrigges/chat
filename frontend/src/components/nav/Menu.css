@@ -18,7 +18,7 @@
   color: #FFFFFF;
 }
 
-.menu svg.active {
+.menu .active svg {
   transition: 0.3s;
   animation: activated 0.4s cubic-bezier(0.23, 1, 0.320, 1);
   color: #FC9E4F;

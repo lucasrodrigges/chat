@@ -1,26 +1,26 @@
+/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { chatContext } from '../../context/providers/ChatProvider';
 import './Header.css';
 
-export default function Header() {
+export default function Header({ chatMode }) {
   const { pathname } = useLocation();
   const { broad: { user } } = useContext(chatContext);
-  const chat = pathname.startsWith('/chat');
 
   const formatLocalName = () => (
-    `${pathname[1].toUpperCase()}${pathname.replace('/', '').slice(1)}`
+    `${pathname[1]?.toUpperCase()}${pathname.replace('/', '').slice(1)}`
   );
 
   return (
     <header id="header">
       <div>
-        {chat && user.name ? (
+        {chatMode && user.name ? (
           <div>
             <img className="small_circle" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80" alt="woman" />
-            <h1>{user.name}</h1>
+            <h1>{user?.name}</h1>
           </div>
-        ) : <h1>{formatLocalName()}</h1>}
+        ) : <h1>{chatMode ? 'Chat' : formatLocalName()}</h1>}
       </div>
 
       <div className="header-menu">
