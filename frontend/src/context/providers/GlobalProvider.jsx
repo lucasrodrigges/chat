@@ -3,12 +3,18 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { reducers, initialState } from '../reducers/global';
+import { getUserProfile } from '../../services/api/users';
+
 import {
   addVote,
   createPost,
   deletePost,
-  getPostByOwner, getPosts, getPostsByFriends, getUserProfile, remoteVote,
-} from '../../services/axios';
+  getPostByOwner,
+  getPosts,
+  getPostsByFriends,
+  remoteVote,
+} from '../../services/api/posts';
+
 import {
   GET_FEED,
   GET_USER_POSTS,

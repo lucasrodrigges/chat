@@ -2,8 +2,9 @@
 import React, { createContext, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { reducers, initialState } from '../reducers/chat';
-import { getUserProfile } from '../../services/axios';
 import { GET_USER_CHAT } from '../types';
+
+import { getUserProfile } from '../../services/api/users';
 
 export const chatContext = createContext();
 

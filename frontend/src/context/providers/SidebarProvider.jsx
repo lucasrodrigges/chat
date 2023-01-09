@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import React, {
   createContext, useReducer, useMemo,
 } from 'react';
-import PropTypes from 'prop-types';
 import { reducers, initialState } from '../reducers/sidebar';
-import {
-  getPosts, getUsers, addVote, remoteVote, getFriends, addFriend,
-} from '../../services/axios';
+import { getUsers, getFriends, addFriend } from '../../services/api/users';
+import { getPosts, addVote, remoteVote } from '../../services/api/posts';
+
 import {
   SET_CURRENT_SEARCH,
   ADD_POSTS_SIDEBAR,

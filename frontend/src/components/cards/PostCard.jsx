@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import fromNow from '../../services/fromNow';
+import { getInterval } from '../../services/time';
 
 import './PostCard.css';
 import { GlobalContext } from '../../context/providers/GlobalProvider';
@@ -28,7 +28,7 @@ export default function PostCard({ post, user }) {
             <h3>{name}</h3>
             <div>
               <span className="username">{`@${userName}`}</span>
-              <span translate="yes">{ fromNow(createdAt) }</span>
+              <span translate="yes">{ getInterval(createdAt) }</span>
             </div>
           </div>
         </div>
