@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PostCard from '../components/cards/PostCard';
 import NewPost from '../components/inputs/NewPost';
+import Header from '../components/nav/Header';
 import { GlobalContext } from '../context/providers/GlobalProvider';
 
 import './Home.css';
@@ -15,26 +16,30 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="home">
-      <ul className="posts">
-        <NewPost from="home" />
-        {trends.map((post) => (
-          <PostCard post={post} user={user} key={post.id} />
-        ))}
+    <>
+      <Header />
 
-        { !lastTrend && trends.length ? (
-          <button
-            type="button"
-            className="see_more"
-            translate="yes"
-            onClick={() => addTrends(trends.length)}
-          >
-            See more...
+      <div className="home">
+        <ul className="posts">
+          <NewPost from="home" />
+          {trends.map((post) => (
+            <PostCard post={post} user={user} key={post.id} />
+          ))}
 
-          </button>
-        ) : null }
-      </ul>
+          { !lastTrend && trends.length ? (
+            <button
+              type="button"
+              className="see_more"
+              translate="yes"
+              onClick={() => addTrends(trends.length)}
+            >
+              See more...
 
-    </div>
+            </button>
+          ) : null }
+        </ul>
+
+      </div>
+    </>
   );
 }

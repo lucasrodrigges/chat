@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import PostCard from '../components/cards/PostCard';
 import ProfileCard from '../components/cards/ProfileCard';
 import NewPost from '../components/inputs/NewPost';
+import Header from '../components/nav/Header';
 import { GlobalContext } from '../context/providers/GlobalProvider';
 import { getUserProfile } from '../services/axios';
 
@@ -34,14 +35,18 @@ export default function Profile() {
   if (!currUser) return <div>User not found</div>; // faremos um componente para isso no futuro.
 
   return (
-    <div>
-      <ProfileCard user={currUser} isAdmin={isAdmin} />
+    <>
+      <Header />
+
       <div>
-        <NewPost from="profile" />
-        {userPosts.map((post) => (
-          <PostCard key={post.id} user={user} post={post} />
-        ))}
+        <ProfileCard user={currUser} isAdmin={isAdmin} />
+        <div>
+          <NewPost from="profile" />
+          {userPosts.map((post) => (
+            <PostCard key={post.id} user={user} post={post} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
