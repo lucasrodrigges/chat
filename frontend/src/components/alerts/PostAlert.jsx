@@ -4,7 +4,6 @@ import { GlobalContext } from '../../context/providers/GlobalProvider';
 
 export default function PostAlert({ type, postId, setAlert }) {
   const { removePost } = useContext(GlobalContext);
-
   const deletePost = () => {
     removePost(postId);
     setAlert(false);
